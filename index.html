@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Greek Fit Kitchen | Big Greek Flavour. Zero Meal Prep. | Toronto &amp; Etobicoke</title>
+  <meta name="description" content="Healthy Greek meal preparation and scheduled delivery service. 6-meal plans from $59.94 CAD, 10% off 7+ meals. Choose 2 included sides per plate. Sunday &amp; Wednesday delivery." />
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            greek: {
+              blue: '#005b96',
+              deep: '#03396c',
+              light: '#6497b1',
+              dark: '#011f4b',
+              gold: '#d97706',
+              sand: '#fef3c7'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Google Fonts & Custom CSS -->
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/svg+xml" href="public/images/brand/greek-fit-kitchen-logo.svg" />
+</head>
+<body class="bg-slate-50 dark:bg-[#090d16] text-slate-900 dark:text-slate-100 antialiased min-h-screen flex flex-col selection:bg-sky-500 selection:text-white">
+
+  <!-- ================= TOP ANNOUNCEMENT & CUTOFF BAR ================= -->
+  <div class="bg-gradient-to-r from-greek-dark via-greek-deep to-sky-900 text-white text-xs py-2 px-4 border-b border-sky-400/20 relative z-50">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1 bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded text-[11px] uppercase tracking-wider">
+          🔥 Promo
+        </span>
+        <span class="font-medium">6-Meal Plan from <strong class="text-amber-300">$59.94 CAD</strong> · <strong>10% OFF</strong> orders of 7+ meals!</span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div id="cutoffCountdown" class="hidden md:inline-flex items-center gap-1 text-[11px] bg-slate-900/60 px-2.5 py-0.5 rounded-full border border-white/10">
+          <span>Loading Toronto delivery cutoff...</span>
+        </div>
+        <span class="text-white/40 hidden sm:inline">|</span>
+        <div class="flex items-center gap-1.5 text-[11px] text-sky-200">
+          <span>📍 Pickup at <strong>George the Greek</strong> (FREE)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MAIN HEADER & NAVIGATION ================= -->
+  <header class="sticky top-0 z-40 w-full glass-header border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-3 group focus:outline-none">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-sky-600 to-blue-800 flex items-center justify-center shadow-md shadow-sky-600/30 text-white font-bold text-xl group-hover:scale-105 transition-transform">
+          <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-extrabold text-lg sm:text-xl tracking-tight leading-none text-slate-900 dark:text-white flex items-center gap-1">
+            GREEK <span class="text-sky-500">FIT</span> KITCHEN
+          </span>
+          <span class="text-[10px] tracking-widest uppercase font-semibold text-slate-500 dark:text-slate-400 mt-1">
+            Healthy Meal Prep &amp; Delivery
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="hidden lg:flex items-center gap-8 font-medium text-sm text-slate-700 dark:text-slate-300">
+        <a href="#menuSection" class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">Menu Catalog</a>
+        <a href="#howItWorks" class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">How It Works</a>
+        <a href="#packagePricing" class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">6-Meal Package</a>
+        <a href="#deliveryCalculator" class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">Delivery Zones</a>
+        <a href="kitchen.html" class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-xs font-semibold text-sky-600 dark:text-sky-400 hover:bg-sky-50 dark:hover:bg-slate-700 transition">
+          <span>👨‍🍳 Kitchen Tablet App</span>
+        </a>
+      </nav>
+
+      <!-- Header Utilities: Light/Dark Theme Switcher (Mandatory Rule 1) & Shopping Cart -->
+      <div class="flex items-center gap-3">
+
+        <!-- Theme Toggle Button (Mandatory Requirement 1) -->
+        <button 
+          id="themeToggleBtn"
+          onclick="toggleTheme()" 
+          type="button"
+          aria-label="Toggle Light and Dark Theme"
+          class="w-10 h-10 rounded-full border border-slate-300 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-300 bg-white/80 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all focus:outline-none shadow-sm"
+        >
+          <!-- Moon Icon (Visible in Light mode to switch to dark) -->
+          <svg class="theme-icon-moon w-5 h-5 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+          </svg>
+          <!-- Sun Icon (Visible in Dark mode to switch to light) -->
+          <svg class="theme-icon-sun w-5 h-5 text-amber-400" style="display:none;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9h-1m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+          </svg>
+        </button>
+
+        <!-- Shopping Cart Icon Button -->
+        <button 
+          onclick="openCartDrawer()"
+          type="button" 
+          aria-label="View Shopping Cart"
+          class="relative p-2.5 rounded-full bg-sky-600 hover:bg-sky-500 text-white transition-all shadow-md shadow-sky-600/30 flex items-center justify-center focus:outline-none active:scale-95"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+          </svg>
+          <span class="cart-count-badge absolute -top-1.5 -right-1.5 w-5 h-5 bg-amber-500 text-slate-950 text-[11px] font-black rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900 shadow">
+            0
+          </span>
+        </button>
+
+        <!-- Order Now CTA Button -->
+        <a href="#menuSection" class="hidden sm:inline-flex items-center gap-1.5 py-2 px-4 rounded-xl font-bold text-xs bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 transition shadow">
+          <span>Order Now</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+          </svg>
+        </a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobileMenuBtn" type="button" aria-label="Open Mobile Menu" class="lg:hidden p-2 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileMenuDrawer" class="hidden lg:hidden border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-4 py-5 space-y-4">
+      <nav class="flex flex-col space-y-3 text-base font-semibold text-slate-800 dark:text-slate-200">
+        <a href="#menuSection" class="hover:text-sky-500">Menu Catalog (20 Meals)</a>
+        <a href="#howItWorks" class="hover:text-sky-500">How It Works</a>
+        <a href="#packagePricing" class="hover:text-sky-500">6-Meal Package ($59.94)</a>
+        <a href="#deliveryCalculator" class="hover:text-sky-500">Delivery Fee Calculator</a>
+        <a href="kitchen.html" class="text-sky-500 flex items-center gap-2">👨‍🍳 Kitchen Tablet App</a>
+      </nav>
+      <div class="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+        <span class="text-xs text-slate-500">Switch Color Theme</span>
+        <button onclick="toggleTheme()" class="flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700">
+          <span class="theme-icon-moon">🌙 Dark Mode</span>
+          <span class="theme-icon-sun" style="display:none;">☀️ Light Mode</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= HERO SLIDER SECTION ================= -->
+  <section class="relative bg-slate-900 text-white overflow-hidden hero-slider-container" id="heroSlider">
+    
+    <!-- SLIDE 1: Flyer Main Headline -->
+    <div class="slide-item active">
+      <img src="public/images/slider/slide-1-greek-feast.jpg" alt="Greek Souvlaki &amp; Meal Prep" class="w-full h-full object-cover opacity-35 filter brightness-75 scale-105 transition-transform duration-700" />
+      <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent"></div>
+      
+      <div class="absolute inset-0 flex items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div class="max-w-2xl space-y-5">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-500/20 border border-sky-400/30 backdrop-blur-md text-sky-300 text-xs font-bold tracking-wider uppercase">
+              <span>🇬🇷 Authentic Mediterranean Meal Prep</span>
+            </div>
+            
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight uppercase leading-none font-heading">
+              BIG GREEK <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-amber-300">FLAVOUR.</span><br />
+              ZERO MEAL PREP.
+            </h1>
+
+            <p class="text-base sm:text-lg text-slate-300 max-w-xl font-normal leading-relaxed">
+              Freshly cooked healthy Greek meals delivered to your doorstep every Sunday &amp; Wednesday. Packed with lean protein, authentic Aegean herbs, and custom sides.
+            </p>
+
+            <div class="flex flex-wrap items-center gap-4 pt-2">
+              <a href="#menuSection" class="px-7 py-3.5 bg-sky-500 hover:bg-sky-400 active:scale-95 text-slate-950 font-black rounded-xl text-sm transition-all shadow-lg shadow-sky-500/30 flex items-center gap-2">
+                <span>Explore Meals &amp; Order</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+              </a>
+              <button onclick="addSixMealPackage()" class="px-6 py-3.5 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold rounded-xl text-sm backdrop-blur-md transition-all flex items-center gap-2">
+                <span>Quick Add 6-Meal Pack ($59.94)</span>
+              </button>
+            </div>
+
+            <!-- Flyer Value Metric Tags -->
+            <div class="grid grid-cols-3 gap-3 pt-4 border-t border-white/10 max-w-md">
+              <div>
+                <span class="block text-2xl font-black text-amber-400">$59.94</span>
+                <span class="text-[11px] text-slate-400">6-Meal Plan Starter</span>
+              </div>
+              <div>
+                <span class="block text-2xl font-black text-sky-400">10% OFF</span>
+                <span class="text-[11px] text-slate-400">Orders of 7+ Meals</span>
+              </div>
+              <div>
+                <span class="block text-2xl font-black text-emerald-400">2 Sides</span>
+                <span class="text-[11px] text-slate-400">Included Per Plate</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: Your Meal Your Way -->
+    <div class="slide-item">
+      <img src="public/images/slider/slide-2-meal-prep.jpg" alt="Healthy Meal Prep Containers" class="w-full h-full object-cover opacity-35 filter brightness-75 scale-105 transition-transform duration-700" />
+      <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent"></div>
+      
+      <div class="absolute inset-0 flex items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div class="max-w-2xl space-y-5">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/20 border border-amber-400/30 backdrop-blur-md text-amber-300 text-xs font-bold tracking-wider uppercase">
+              <span>🥗 Completely Customizable Plates</span>
+            </div>
+            
+            <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight uppercase leading-none font-heading">
+              YOUR MEAL.<br />
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-sky-300">YOUR WAY.</span>
+            </h2>
+
+            <p class="text-base sm:text-lg text-slate-300 max-w-xl font-normal leading-relaxed">
+              20 delicious main dishes — from Souvlaki to Atlantic Salmon and Spinach Feta Chicken. Any plate comes with 2 gourmet sides of your choice!
+            </p>
+
+            <div class="flex flex-wrap items-center gap-4 pt-2">
+              <a href="#menuSection" class="px-7 py-3.5 bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-black rounded-xl text-sm transition-all shadow-lg shadow-amber-500/30 flex items-center gap-2">
+                <span>Build Your Plates</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+              </a>
+              <a href="#deliveryCalculator" class="px-6 py-3.5 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold rounded-xl text-sm backdrop-blur-md transition-all">
+                <span>Check Delivery Rates</span>
+              </a>
+            </div>
+
+            <div class="flex items-center gap-6 pt-4 text-xs text-slate-300">
+              <span class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> 11 Gourmet Sides Available</span>
+              <span class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> Macro &amp; Calorie Labeled</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: Scheduled Deliveries & Pickup -->
+    <div class="slide-item">
+      <img src="public/images/slider/slide-3-mediterranean.jpg" alt="Fresh Mediterranean Food" class="w-full h-full object-cover opacity-35 filter brightness-75 scale-105 transition-transform duration-700" />
+      <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent"></div>
+      
+      <div class="absolute inset-0 flex items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div class="max-w-2xl space-y-5">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 backdrop-blur-md text-emerald-300 text-xs font-bold tracking-wider uppercase">
+              <span>🚚 Sundays &amp; Wednesdays In Toronto</span>
+            </div>
+            
+            <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight uppercase leading-none font-heading">
+              ADVANCE PREP.<br />
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-sky-300">MAXIMUM FRESHNESS.</span>
+            </h2>
+
+            <p class="text-base sm:text-lg text-slate-300 max-w-xl font-normal leading-relaxed">
+              We prepare meals freshly in batches so food never sits around. Order before cutoff for prompt chilled delivery or pick up directly at George the Greek.
+            </p>
+
+            <div class="flex flex-wrap items-center gap-4 pt-2">
+              <a href="#deliveryCalculator" class="px-7 py-3.5 bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-black rounded-xl text-sm transition-all shadow-lg shadow-emerald-500/30 flex items-center gap-2">
+                <span>Calculate Delivery Fee</span>
+              </a>
+              <a href="#howItWorks" class="px-6 py-3.5 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold rounded-xl text-sm backdrop-blur-md transition-all">
+                <span>View Cutoff Schedules</span>
+              </a>
+            </div>
+
+            <div class="flex items-center gap-4 pt-4 text-xs text-slate-400">
+              <span>FREE Delivery under 2 km · $5 for 2–5 km · $1/km over 5 km</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slider Navigation Buttons -->
+    <button onclick="prevSlide()" aria-label="Previous Slide" class="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-md flex items-center justify-center transition border border-white/10">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+    </button>
+    <button onclick="nextSlide()" aria-label="Next Slide" class="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-md flex items-center justify-center transition border border-white/10">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+    </button>
+
+    <!-- Slider Dot Indicators -->
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+      <button onclick="goToSlide(0)" aria-label="Slide 1" class="slider-dot w-8 h-2 rounded-full bg-sky-400 transition-all"></button>
+      <button onclick="goToSlide(1)" aria-label="Slide 2" class="slider-dot w-2.5 h-2 rounded-full bg-white/40 hover:bg-white transition-all"></button>
+      <button onclick="goToSlide(2)" aria-label="Slide 3" class="slider-dot w-2.5 h-2 rounded-full bg-white/40 hover:bg-white transition-all"></button>
+    </div>
+  </section>
+
+  <!-- ================= FLYER HIGHLIGHTS & 6-MEAL PLAN BANNER ================= -->
+  <section class="py-12 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800" id="packagePricing">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-gradient-to-br from-slate-900 to-sky-950 rounded-3xl p-6 sm:p-10 text-white shadow-2xl relative overflow-hidden border border-sky-500/20">
+        
+        <!-- Background subtle glow -->
+        <div class="absolute -right-20 -top-20 w-80 h-80 bg-sky-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="lg:col-span-7 space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-500 text-slate-950 font-black text-xs uppercase tracking-wider">
+            ⭐ Official Flyer Package Deal
+          </div>
+
+          <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tight leading-tight">
+            6-Meal Plan <span class="text-amber-400">Starting From $59.94</span> CAD
+          </h2>
+
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Order your week of healthy meals with Greek Fit Kitchen. Enjoy chef-prepared lean proteins, slow-roasted lemon potatoes, wholesome rice, and fresh vegetables. Minimum order is 6 meals.
+          </p>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
+            <div class="p-3 bg-white/5 border border-white/10 rounded-xl">
+              <span class="text-xs text-slate-400 block">Single Meals</span>
+              <strong class="text-base text-white">Individually Priced</strong>
+            </div>
+            <div class="p-3 bg-white/5 border border-white/10 rounded-xl">
+              <span class="text-xs text-slate-400 block">Volume Discount</span>
+              <strong class="text-base text-emerald-400">10% OFF (7+ meals)</strong>
+            </div>
+            <div class="p-3 bg-white/5 border border-white/10 rounded-xl col-span-2 sm:col-span-1">
+              <span class="text-xs text-slate-400 block">Sides Rule</span>
+              <strong class="text-base text-sky-400">2 Sides Included</strong>
+            </div>
+          </div>
+
+          <div class="pt-3 flex flex-wrap items-center gap-4">
+            <button onclick="addSixMealPackage()" class="px-6 py-3 bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-black rounded-xl text-sm transition shadow-lg shadow-amber-500/30 flex items-center gap-2">
+              <span>⚡ One-Click Add 6-Meal Starter ($59.94)</span>
+            </button>
+            <a href="#menuSection" class="text-xs font-semibold text-sky-300 hover:text-white underline underline-offset-4">
+              Or pick individual custom meals →
+            </a>
+          </div>
+        </div>
+
+        <!-- Real Flyer Meal Trays Preview Photo -->
+        <div class="lg:col-span-5 relative">
+          <div class="relative rounded-2xl overflow-hidden border-2 border-white/20 shadow-2xl group">
+            <img src="public/images/meals/meal-prep-showcase.jpg" alt="Official Greek Fit Kitchen Meal Trays from Flyer" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div class="absolute bottom-0 inset-x-0 bg-slate-950/85 backdrop-blur-md p-3 text-xs flex items-center justify-between">
+              <div>
+                <p class="font-bold text-white">Fresh Greek Meal Prep Grid</p>
+                <p class="text-[10px] text-slate-400">Vacuum sealed, microwave &amp; freezer safe</p>
+              </div>
+              <span class="px-2 py-1 bg-sky-500/20 text-sky-300 rounded font-mono font-bold text-[11px]">
+                100% Clean
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= HOW IT WORKS & SCHEDULE CUTOFFS ================= -->
+  <section class="py-16 bg-slate-100/60 dark:bg-slate-900/40 greek-pattern-bg" id="howItWorks">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 bg-sky-100 dark:bg-sky-900/40 px-3 py-1 rounded-full">
+          Simple 4-Step Process
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tight text-slate-900 dark:text-white mt-3 font-heading">
+          HOW GREEK FIT KITCHEN WORKS
+        </h2>
+        <p class="text-slate-600 dark:text-slate-400 text-sm mt-2">
+          We operate as an advance scheduled meal-preparation business, ensuring zero food waste and maximum freshness for every customer.
+        </p>
+      </div>
+
+      <!-- Step Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        
+        <!-- Step 1 -->
+        <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800 text-center relative group hover:border-sky-500 transition-colors">
+          <div class="w-12 h-12 mx-auto rounded-full bg-sky-600/10 text-sky-600 dark:text-sky-400 font-black text-xl flex items-center justify-center mb-4">
+            1
+          </div>
+          <h3 class="font-bold text-base text-slate-900 dark:text-white mb-2">Select Your Meals</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            Choose a minimum of 6 meals from our 20 healthy Greek dishes. Order 7+ to get 10% OFF your entire meal prep order.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800 text-center relative group hover:border-sky-500 transition-colors">
+          <div class="w-12 h-12 mx-auto rounded-full bg-sky-600/10 text-sky-600 dark:text-sky-400 font-black text-xl flex items-center justify-center mb-4">
+            2
+          </div>
+          <h3 class="font-bold text-base text-slate-900 dark:text-white mb-2">Choose 2 Sides Free</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            Any plate comes with 2 included sides (lemon potatoes, rice pilaf, sautéed veggies, etc.), except Pasta al Greco.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800 text-center relative group hover:border-sky-500 transition-colors">
+          <div class="w-12 h-12 mx-auto rounded-full bg-sky-600/10 text-sky-600 dark:text-sky-400 font-black text-xl flex items-center justify-center mb-4">
+            3
+          </div>
+          <h3 class="font-bold text-base text-slate-900 dark:text-white mb-2">Schedule Delivery / Pickup</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            Pick Sunday or Wednesday. Sunday orders cutoff Friday 12pm; Wednesday cutoff Monday 12pm. Pickup at George the Greek is always free.
+          </p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800 text-center relative group hover:border-sky-500 transition-colors">
+          <div class="w-12 h-12 mx-auto rounded-full bg-sky-600/10 text-sky-600 dark:text-sky-400 font-black text-xl flex items-center justify-center mb-4">
+            4
+          </div>
+          <h3 class="font-bold text-base text-slate-900 dark:text-white mb-2">Heat, Eat &amp; Thrive</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            Arrives fresh and refrigerated. Ready in just 2 minutes in the microwave. Healthy, delicious Greek fuel with zero dish cleanup!
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Schedule Cutoffs Table -->
+      <div class="mt-12 glass-card rounded-2xl p-6 border border-slate-200 dark:border-slate-800 max-w-4xl mx-auto">
+        <h4 class="font-bold text-lg text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+          <span>📅 Official Scheduled Delivery &amp; Advance-Order Cutoffs</span>
+        </h4>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-slate-700 dark:text-slate-300">
+            <thead class="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white uppercase font-bold text-[11px]">
+              <tr>
+                <th class="p-3">Delivery Day</th>
+                <th class="p-3">Order Cutoff Deadline</th>
+                <th class="p-3">Delivery Window</th>
+                <th class="p-3">Status</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+              <tr>
+                <td class="p-3 font-bold text-sky-600 dark:text-sky-400">Sunday Delivery</td>
+                <td class="p-3">Order by <strong>Friday, 12:00 p.m.</strong> (Toronto time)</td>
+                <td class="p-3">10:00 a.m. – 2:00 p.m.</td>
+                <td class="p-3"><span class="px-2 py-0.5 bg-emerald-500/20 text-emerald-500 font-semibold rounded-full">Open for Booking</span></td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-sky-600 dark:text-sky-400">Wednesday Delivery</td>
+                <td class="p-3">Order by <strong>Monday, 12:00 p.m.</strong> (Toronto time)</td>
+                <td class="p-3">4:00 p.m. – 8:00 p.m.</td>
+                <td class="p-3"><span class="px-2 py-0.5 bg-emerald-500/20 text-emerald-500 font-semibold rounded-full">Open for Booking</span></td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-amber-500">In-Store Pickup</td>
+                <td class="p-3">Same advance cutoff applies</td>
+                <td class="p-3">George the Greek, 3575 Lake Shore Blvd W, Etobicoke</td>
+                <td class="p-3"><span class="px-2 py-0.5 bg-sky-500/20 text-sky-400 font-semibold rounded-full">FREE Pickup</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= FULL MENU CATALOG & CUSTOMIZER ================= -->
+  <section class="py-16 bg-white dark:bg-slate-900" id="menuSection">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">
+            Fresh Chef Prepped Menu
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tight text-slate-900 dark:text-white mt-1 font-heading">
+            EXPLORE ALL 20 MAIN DISHES
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+            Minimum order 6 meals · 10% volume discount applied at 7+ meals · All prices in CAD
+          </p>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button class="cat-filter-btn px-3.5 py-1.5 rounded-full text-xs font-bold transition-all bg-sky-600 text-white shadow-md" data-cat="all">
+            All Dishes (20)
+          </button>
+          <button class="cat-filter-btn px-3.5 py-1.5 rounded-full text-xs font-bold transition-all bg-slate-200/60 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700" data-cat="poultry">
+            Poultry
+          </button>
+          <button class="cat-filter-btn px-3.5 py-1.5 rounded-full text-xs font-bold transition-all bg-slate-200/60 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700" data-cat="beef">
+            Beef
+          </button>
+          <button class="cat-filter-btn px-3.5 py-1.5 rounded-full text-xs font-bold transition-all bg-slate-200/60 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700" data-cat="pork">
+            Pork
+          </button>
+          <button class="cat-filter-btn px-3.5 py-1.5 rounded-full text-xs font-bold transition-all bg-slate-200/60 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700" data-cat="seafood">
+            Seafood
+          </button>
+          <button class="cat-filter-btn px-3.5 py-1.5 rounded-full text-xs font-bold transition-all bg-slate-200/60 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700" data-cat="vegetarian">
+            Veggie
+          </button>
+          <button class="cat-filter-btn px-3.5 py-1.5 rounded-full text-xs font-bold transition-all bg-slate-200/60 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700" data-cat="pasta">
+            Pasta
+          </button>
+        </div>
+      </div>
+
+      <!-- Menu Grid Rendered by JS -->
+      <div id="menuGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Special Requests & Catering Callout from Flyer -->
+      <div class="mt-12 p-6 rounded-2xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+        <div>
+          <h4 class="font-bold text-base text-slate-900 dark:text-white">Can't find what you're looking for on our menu?</h4>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Contact us with your special dietary requests or for bulk family catering orders.</p>
+        </div>
+        <a href="mailto:info@leanmeal.ca?subject=Greek%20Fit%20Kitchen%20Special%20Request" class="px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl text-xs font-bold hover:bg-slate-800 dark:hover:bg-slate-100 transition whitespace-nowrap">
+          Contact for Catering
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= LIVE DELIVERY DISTANCE CALCULATOR ================= -->
+  <section class="py-16 bg-slate-100/70 dark:bg-slate-900/60 border-t border-b border-slate-200 dark:border-slate-800" id="deliveryCalculator">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="max-w-3xl mx-auto text-center mb-10">
+        <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 bg-sky-100 dark:bg-sky-900/40 px-3 py-1 rounded-full">
+          Transparent Rates
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tight text-slate-900 dark:text-white mt-3 font-heading">
+          DELIVERY ZONE &amp; DISTANCE CALCULATOR
+        </h2>
+        <p class="text-slate-600 dark:text-slate-400 text-sm mt-2">
+          Calculate your exact delivery fee from our Etobicoke kitchen. Orders are handled with refrigerated temperature-controlled logistics.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-5xl mx-auto items-stretch">
+        
+        <!-- Interactive Calculator Card -->
+        <div class="lg:col-span-7 glass-card p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col justify-between">
+          <div>
+            <h3 class="font-bold text-lg text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+              <span>📍 Check Delivery Fee to Your Address</span>
+            </h3>
+            <p class="text-xs text-slate-500 mb-6">
+              Enter your distance in kilometres from George the Greek (3575 Lake Shore Blvd W, Etobicoke):
+            </p>
+
+            <div class="space-y-4">
+              <div>
+                <label for="calcDistanceInput" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">
+                  Delivery Distance (Kilometres)
+                </label>
+                <div class="relative">
+                  <input 
+                    type="number" 
+                    id="calcDistanceInput" 
+                    min="0" 
+                    max="50" 
+                    step="0.5" 
+                    value="4.5"
+                    oninput="updateDistanceCalculatorUI()"
+                    class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-bold text-lg focus:ring-2 focus:ring-sky-500 focus:outline-none"
+                  />
+                  <span class="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400">
+                    KM
+                  </span>
+                </div>
+              </div>
+
+              <!-- Quick preset distance buttons -->
+              <div class="flex items-center gap-2 text-xs">
+                <span class="text-slate-400">Presets:</span>
+                <button type="button" onclick="document.getElementById('calcDistanceInput').value=1.5; updateDistanceCalculatorUI();" class="px-2.5 py-1 rounded bg-slate-200 dark:bg-slate-700 hover:bg-sky-500 hover:text-white transition">1.5 km (Local)</button>
+                <button type="button" onclick="document.getElementById('calcDistanceInput').value=4.0; updateDistanceCalculatorUI();" class="px-2.5 py-1 rounded bg-slate-200 dark:bg-slate-700 hover:bg-sky-500 hover:text-white transition">4.0 km (Mid)</button>
+                <button type="button" onclick="document.getElementById('calcDistanceInput').value=12; updateDistanceCalculatorUI();" class="px-2.5 py-1 rounded bg-slate-200 dark:bg-slate-700 hover:bg-sky-500 hover:text-white transition">12 km (GTA)</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Result Box -->
+          <div class="mt-8 p-5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center justify-between">
+            <div>
+              <span class="text-xs text-slate-500 dark:text-slate-400 block font-medium">Estimated Delivery Charge:</span>
+              <div id="calcResultFee" class="mt-0.5">
+                <span class="text-sky-400 font-bold text-2xl">$5.00 CAD</span>
+              </div>
+            </div>
+            <div id="calcResultBadge">
+              <span class="bg-sky-500/20 text-sky-400 text-xs px-2.5 py-1 rounded-full font-semibold">Standard Local Zone (2–5 km)</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Official Fee Tier Rules Card -->
+        <div class="lg:col-span-5 bg-gradient-to-br from-slate-900 to-sky-950 text-white p-6 sm:p-8 rounded-2xl border border-sky-500/20 flex flex-col justify-between">
+          <div>
+            <h4 class="font-bold text-lg mb-1 flex items-center gap-2">
+              <span>📋 Delivery Pricing Schedule</span>
+            </h4>
+            <p class="text-xs text-slate-400 mb-6">Updated schedule as per official requirements:</p>
+
+            <div class="space-y-4">
+              <div class="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10">
+                <div>
+                  <span class="font-bold text-sm block">Up to 2 km</span>
+                  <span class="text-[11px] text-slate-400">Immediate neighborhood zone</span>
+                </div>
+                <span class="font-extrabold text-emerald-400 text-lg">FREE</span>
+              </div>
+
+              <div class="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10">
+                <div>
+                  <span class="font-bold text-sm block">Over 2 km &amp; up to 5 km</span>
+                  <span class="text-[11px] text-slate-400">Etobicoke &amp; Lakeshore area</span>
+                </div>
+                <span class="font-extrabold text-sky-300 text-lg">$5.00 CAD</span>
+              </div>
+
+              <div class="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10">
+                <div>
+                  <span class="font-bold text-sm block">Over 5 km</span>
+                  <span class="text-[11px] text-slate-400">Greater Toronto delivery</span>
+                </div>
+                <span class="font-extrabold text-amber-300 text-lg">$1.00 / km</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pickup Info -->
+          <div class="mt-6 pt-5 border-t border-white/10 flex items-start gap-3 text-xs text-slate-300">
+            <span class="text-amber-400 text-base">📍</span>
+            <div>
+              <p class="font-bold text-white">Free Pickup Available:</p>
+              <p class="text-slate-400">George the Greek, 3575 Lake Shore Blvd W, Etobicoke, ON M8W 1P5</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= BRAND STORY & MANAGEMENT BADGES ================= -->
+  <section class="py-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        
+        <!-- Text & Badges -->
+        <div class="space-y-6">
+          <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 bg-sky-100 dark:bg-sky-900/40 px-3 py-1 rounded-full">
+            The Greek Fit Kitchen Standard
+          </span>
+
+          <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tight text-slate-900 dark:text-white font-heading">
+            CRAFTED WITH BIG FLAVOUR,<br />
+            ZERO ARTIFICIAL PRESERVATIVES.
+          </h2>
+
+          <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+            Greek Fit Kitchen is born from a collaboration between classic culinary mastery and athletic nutrition. Managed by beloved local staple <strong>George the Greek</strong> in Etobicoke and powered by the performance nutrition systems of <strong>Lean Meal</strong> (leanmeal.ca).
+          </p>
+
+          <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+            Every dish uses cold-pressed Aegean olive oil, high-grade lean meats, and whole ingredients cooked fresh for your scheduled Sunday or Wednesday delivery.
+          </p>
+
+          <!-- Dual Brand Trust Badges -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 flex items-center gap-3">
+              <img src="public/images/brand/george-the-greek.svg" alt="Managed by George the Greek" class="h-10 w-auto" />
+            </div>
+            <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 flex items-center gap-3">
+              <img src="public/images/brand/lean-meal.svg" alt="Powered by Lean Meal" class="h-10 w-auto" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 2-Page Flyer Visual Proof -->
+        <div class="grid grid-cols-2 gap-4">
+          <div class="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-lg group">
+            <img src="public/images/flyer-page-1.png" alt="Greek Fit Kitchen Flyer Page 1" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div class="p-2 bg-slate-900 text-center text-[10px] text-slate-300">
+              Flyer Page 1: 6-Meal Offer
+            </div>
+          </div>
+          <div class="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-lg group">
+            <img src="public/images/flyer-page-2.png" alt="Greek Fit Kitchen Flyer Page 2" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div class="p-2 bg-slate-900 text-center text-[10px] text-slate-300">
+              Flyer Page 2: Dishes &amp; Sides
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= KITCHEN TABLET SYSTEM CALLOUT ================= -->
+  <section class="py-12 bg-gradient-to-r from-sky-900 via-slate-900 to-greek-dark text-white relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-2 text-center md:text-left">
+        <span class="text-xs font-bold text-sky-300 uppercase tracking-wider">
+          Integrated Kitchen Display System (KDS)
+        </span>
+        <h3 class="text-2xl sm:text-3xl font-black">
+          KITCHEN TABLET APPLICATION INCLUDED
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-300 max-w-xl">
+          Complete tablet dashboard for kitchen staff to receive orders, manage Sunday/Wednesday batch preps, advance order statuses, and print tickets.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="kitchen.html" class="px-6 py-3 bg-white text-slate-900 font-extrabold text-xs rounded-xl shadow-lg hover:bg-slate-100 transition flex items-center gap-2">
+          <span>Launch Kitchen Tablet</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MEAL CUSTOMIZER MODAL ================= -->
+  <div id="mealCustomizerModal" class="hidden fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto border border-slate-200 dark:border-slate-800 shadow-2xl relative flex flex-col">
+      
+      <!-- Modal Header -->
+      <div class="sticky top-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between z-10">
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-sky-500">Meal Customizer</span>
+          <h3 id="customizerTitle" class="text-xl font-black text-slate-900 dark:text-white">Dish Name</h3>
+        </div>
+        <button onclick="closeMealCustomizer()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center font-bold">
+          ✕
+        </button>
+      </div>
+
+      <div class="p-6 space-y-5">
+        <!-- Dish Preview Banner -->
+        <div class="relative rounded-2xl overflow-hidden aspect-video bg-slate-100 dark:bg-slate-800">
+          <img id="customizerImg" src="" alt="Selected Dish" class="w-full h-full object-cover" />
+          <div class="absolute bottom-3 left-3 bg-slate-900/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full" id="customizerPrice">
+            $0.00 CAD
+          </div>
+        </div>
+
+        <p id="customizerDesc" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed"></p>
+
+        <!-- Included 2 Sides Section -->
+        <div id="customizerSidesSection" class="space-y-2">
+          <!-- Dynamically populated -->
+        </div>
+
+        <!-- Extra Sides (Optional +$4.99 each) -->
+        <div id="customizerExtraSidesSection" class="pt-3 border-t border-slate-200 dark:border-slate-800">
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 mb-1">
+            Extra Sides (+$4.99 CAD each) <span class="font-normal text-slate-400">(Optional)</span>
+          </label>
+          <div id="extraSidesList" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Special Dietary / Chef Notes -->
+        <div class="pt-2">
+          <label for="customizerNotes" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+            Special Instructions / Dietary Notes:
+          </label>
+          <input 
+            type="text" 
+            id="customizerNotes" 
+            placeholder="e.g. dressing on the side, extra lemon wedge, light salt..." 
+            class="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-sky-500 focus:outline-none"
+          />
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="sticky bottom-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-6 py-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-4">
+        <div>
+          <span class="text-[10px] text-slate-500 block uppercase font-medium">Plate Total:</span>
+          <span id="customizerAddBtnTotal" class="text-lg font-black text-sky-600 dark:text-sky-400">$0.00 CAD</span>
+        </div>
+        <button onclick="addCustomizedMealToCart()" class="py-3 px-6 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl transition shadow-lg shadow-sky-600/30 flex items-center gap-2">
+          <span>Add Plate to Cart</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= SHOPPING CART DRAWER ================= -->
+  <div id="cartDrawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-white dark:bg-slate-900 shadow-2xl border-l border-slate-200 dark:border-slate-800 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+    
+    <!-- Drawer Header -->
+    <div class="p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+        <h3 class="font-extrabold text-lg text-slate-900 dark:text-white">Your Meal Prep Cart</h3>
+      </div>
+      <button onclick="closeCartDrawer()" class="p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white">
+        ✕
+      </button>
+    </div>
+
+    <!-- Volume & Min 6 Meals Progress Banner -->
+    <div id="cartVolumeProgressBar" class="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
+      <!-- Injected by JS -->
+    </div>
+
+    <!-- Items List -->
+    <div id="cartItemsList" class="flex-1 overflow-y-auto p-4 space-y-3">
+      <!-- Injected by JS -->
+    </div>
+
+    <!-- Delivery Method Select in Cart -->
+    <div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 space-y-2 text-xs">
+      <div class="flex items-center justify-between font-bold text-slate-800 dark:text-slate-200">
+        <span>Fulfillment Method:</span>
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <label class="flex items-center gap-2 p-2 border border-slate-300 dark:border-slate-700 rounded-lg cursor-pointer bg-white dark:bg-slate-800">
+          <input type="radio" name="deliveryMethodRadio" value="delivery" checked class="text-sky-600" />
+          <span class="font-semibold">🚚 Delivery</span>
+        </label>
+        <label class="flex items-center gap-2 p-2 border border-slate-300 dark:border-slate-700 rounded-lg cursor-pointer bg-white dark:bg-slate-800">
+          <input type="radio" name="deliveryMethodRadio" value="pickup" class="text-sky-600" />
+          <span class="font-semibold">📍 Free Pickup</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Drawer Summary & Checkout Button -->
+    <div class="p-5 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-2 text-xs">
+      <div class="flex justify-between text-slate-600 dark:text-slate-400">
+        <span>Subtotal:</span>
+        <span id="cartSubtotal" class="font-semibold">$0.00 CAD</span>
+      </div>
+
+      <div id="cartDiscountRow" class="hidden flex justify-between text-emerald-500 font-bold">
+        <span>10% Volume Discount (7+ meals):</span>
+        <span id="cartDiscount">-$0.00 CAD</span>
+      </div>
+
+      <div class="flex justify-between text-slate-600 dark:text-slate-400">
+        <span>Delivery Fee (Distance Based):</span>
+        <span id="cartDeliveryFee" class="font-semibold">$5.00 CAD</span>
+      </div>
+
+      <div class="flex justify-between text-slate-600 dark:text-slate-400">
+        <span>Ontario HST (13%):</span>
+        <span id="cartTax" class="font-semibold">$0.00 CAD</span>
+      </div>
+
+      <div class="flex justify-between text-base font-black text-slate-900 dark:text-white pt-2 border-t border-slate-200 dark:border-slate-800">
+        <span>Total:</span>
+        <span id="cartGrandTotal" class="text-sky-600 dark:text-sky-400">$0.00 CAD</span>
+      </div>
+
+      <button 
+        id="cartCheckoutBtn"
+        onclick="openCheckoutModal()"
+        class="w-full mt-3 py-3 px-4 bg-sky-600 hover:bg-sky-500 active:scale-95 text-white font-black text-sm rounded-xl transition shadow-lg shadow-sky-600/30 flex items-center justify-center gap-2"
+      >
+        Proceed to Checkout
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ================= ONLINE ORDERING & CHECKOUT MODAL ================= -->
+  <div id="checkoutModal" class="hidden fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto border border-slate-200 dark:border-slate-800 shadow-2xl relative p-6">
+      
+      <div class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800">
+        <div>
+          <span class="text-xs font-bold text-sky-500 uppercase tracking-wider">Fast &amp; Secure Checkout</span>
+          <h3 class="text-xl font-black text-slate-900 dark:text-white">Complete Your Meal Prep Order</h3>
+        </div>
+        <button onclick="closeCheckoutModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center">
+          ✕
+        </button>
+      </div>
+
+      <form onsubmit="handleCheckoutSubmit(event)" class="mt-5 space-y-4 text-xs">
+        
+        <!-- Scheduled Date Selection -->
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">
+            Select Scheduled Delivery Batch
+          </label>
+          <select id="scheduledDeliveryDay" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white font-semibold focus:ring-2 focus:ring-sky-500">
+            <option value="Sunday (10:00 AM - 2:00 PM)">Sunday Delivery (10:00 AM - 2:00 PM)</option>
+            <option value="Wednesday (4:00 PM - 8:00 PM)">Wednesday Delivery (4:00 PM - 8:00 PM)</option>
+          </select>
+        </div>
+
+        <!-- Customer Contact -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="custName" class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Full Name</label>
+            <input required type="text" id="custName" placeholder="George Smith" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white" />
+          </div>
+          <div>
+            <label for="custPhone" class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Phone Number</label>
+            <input required type="tel" id="custPhone" placeholder="416-555-0199" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white" />
+          </div>
+        </div>
+
+        <div>
+          <label for="custEmail" class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Email (For Confirmation Receipt)</label>
+          <input required type="email" id="custEmail" placeholder="george@example.com" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white" />
+        </div>
+
+        <!-- Delivery Address Input Box -->
+        <div id="deliveryAddressInputBox">
+          <label for="custAddress" class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Delivery Street Address &amp; Unit</label>
+          <input type="text" id="custAddress" placeholder="3500 Lake Shore Blvd W, Apt 4B, Etobicoke" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white" />
+        </div>
+
+        <!-- Pickup Info Box (When pickup chosen) -->
+        <div id="pickupLocationInfoBox" class="hidden p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-amber-600 dark:text-amber-400">
+          📍 <strong>Pickup Location:</strong> George the Greek, 3575 Lake Shore Blvd W, Etobicoke, ON M8W 1P5. (Delivery fee waived).
+        </div>
+
+        <!-- Payment Details Simulation -->
+        <div class="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-3">
+          <label class="block font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+            Online Credit Card Payment
+          </label>
+          <div>
+            <input required type="text" placeholder="Card Number (e.g. 4500 •••• •••• 1234)" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white font-mono" />
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <input required type="text" placeholder="MM / YY" class="px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white font-mono" />
+            <input required type="text" placeholder="CVC (3 digits)" class="px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white font-mono" />
+          </div>
+        </div>
+
+        <div class="pt-3 flex items-center justify-between">
+          <div>
+            <span class="text-slate-500">Total Charged:</span>
+            <span id="checkoutTotalDisplay" class="font-black text-base text-sky-600 dark:text-sky-400 block">$0.00 CAD</span>
+          </div>
+          <button type="submit" class="py-3 px-6 bg-sky-600 hover:bg-sky-500 text-white font-bold rounded-xl shadow-lg shadow-sky-600/30">
+            Confirm &amp; Place Order 🔒
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ================= CONFIRMATION MODAL ================= -->
+  <div id="confirmationModal" class="hidden fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 border border-slate-200 dark:border-slate-800 shadow-2xl text-center space-y-4">
+      <div class="w-14 h-14 mx-auto rounded-full bg-emerald-500/20 text-emerald-500 flex items-center justify-center text-2xl font-black">
+        ✓
+      </div>
+
+      <h3 class="text-2xl font-black text-slate-900 dark:text-white">Order Confirmed!</h3>
+      <p class="text-xs text-slate-500">
+        Your order has been routed to our kitchen prep team. We will fresh-cook and deliver per your selected schedule!
+      </p>
+
+      <div id="confirmationOrderDetails"></div>
+
+      <div class="pt-3 flex gap-3">
+        <button onclick="closeConfirmationModal()" class="flex-1 py-2.5 bg-sky-600 text-white font-bold text-xs rounded-xl">
+          Done
+        </button>
+        <a href="kitchen.html" class="flex-1 py-2.5 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs rounded-xl flex items-center justify-center gap-1">
+          <span>View on Tablet</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="mt-auto bg-slate-950 text-white pt-16 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pb-12">
+        
+        <!-- Brand Bio -->
+        <div class="lg:col-span-2 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-blue-800 flex items-center justify-center text-white font-bold text-lg">
+              🇬🇷
+            </div>
+            <span class="font-black text-xl tracking-tight text-white">
+              GREEK <span class="text-sky-400">FIT</span> KITCHEN
+            </span>
+          </div>
+
+          <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+            Big Greek flavour. Zero meal prep. Convenient scheduled meal ordering and delivery across Etobicoke and the Greater Toronto Area.
+          </p>
+
+          <div class="flex items-center gap-4 pt-2">
+            <img src="public/images/brand/george-the-greek.svg" alt="George the Greek" class="h-8 w-auto opacity-80" />
+            <img src="public/images/brand/lean-meal.svg" alt="Lean Meal" class="h-8 w-auto opacity-80" />
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-sky-400">Navigation</h4>
+          <ul class="space-y-2 text-xs text-slate-400">
+            <li><a href="#menuSection" class="hover:text-white transition">Menu Catalog</a></li>
+            <li><a href="#packagePricing" class="hover:text-white transition">6-Meal Plan ($59.94)</a></li>
+            <li><a href="#howItWorks" class="hover:text-white transition">How It Works</a></li>
+            <li><a href="#deliveryCalculator" class="hover:text-white transition">Delivery Fee Calculator</a></li>
+            <li><a href="kitchen.html" class="hover:text-white transition">Kitchen Tablet View</a></li>
+          </ul>
+        </div>
+
+        <!-- Delivery Schedule -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-sky-400">Scheduled Days</h4>
+          <div class="text-xs text-slate-400 space-y-2">
+            <p><strong class="text-white">Sunday Delivery:</strong><br />Order by Friday 12:00 p.m.</p>
+            <p><strong class="text-white">Wednesday Delivery:</strong><br />Order by Monday 12:00 p.m.</p>
+            <p class="text-[11px] text-slate-500">Toronto Local Time</p>
+          </div>
+        </div>
+
+        <!-- Pickup Location -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-sky-400">Pickup Location</h4>
+          <div class="text-xs text-slate-400 space-y-1">
+            <p class="font-bold text-white">George the Greek</p>
+            <p>3575 Lake Shore Blvd W</p>
+            <p>Etobicoke, ON M8W 1P5</p>
+            <p class="text-emerald-400 font-semibold pt-1">Pickup is always FREE</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Copyright Bar -->
+      <div class="border-t border-slate-800/80 py-6 text-center text-xs text-slate-500">
+        <p>&copy; 2026 Greek Fit Kitchen. Managed by George the Greek. Powered by Lean Meal. All prices in CAD.</p>
+      </div>
+
+      <!-- ================= MANDATORY REQUIREMENT 2: PENTA SERVICES CREDIT BOTTOM BAR ================= -->
+      <div class="border-t border-white/[0.08] py-4">
+        <div class="flex flex-wrap items-center justify-center gap-x-3.5 gap-y-2.5 text-center text-[13px] text-white/50">
+          <span>Website designed &amp; developed by</span>
+          <a href="https://pentaservices.co.uk/en/?utm_source=referral&amp;utm_medium=site-credit" target="_blank" rel="noopener noreferrer" title="Penta Services: web design, development, SEO &amp; AI" class="group inline-flex items-center">
+            <img alt="Penta Services" width="94" height="40" class="h-9 w-auto rounded-md opacity-90 transition group-hover:-translate-y-px group-hover:opacity-100" src="public/images/brand/penta-services-logo.svg" />
+          </a>
+          <span>Web design, SEO &amp; digital solutions · <a href="https://pentaservices.co.uk/en/?utm_source=referral&amp;utm_medium=site-credit" target="_blank" rel="noopener noreferrer" class="ltr text-white/75 hover:text-white underline-offset-2 hover:underline transition-colors">pentaservices.co.uk</a></span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Core JavaScript -->
+  <script src="app.js"></script>
+</body>
+</html>
