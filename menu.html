@@ -214,7 +214,1006 @@
 
     <!-- 20 Dishes Grid -->
     <div id="menuGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      <!-- Injected by app.js -->
+
+      <!-- Meal Card: Grilled Chicken -->
+      <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="grilled-chicken" data-category="chicken">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+          <img 
+            src="public/images/meals/grilled-chicken.jpg" 
+            alt="Grilled Chicken" 
+            loading="lazy"
+            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>
+            <span class="bg-greek-gold text-greek-navy text-[10px] font-black px-2 py-0.5 rounded-full shadow-sm">Popular</span>
+          </div>
+          <div class="absolute bottom-3 right-3 bg-greek-navy/90 text-white font-mono font-black text-sm px-2.5 py-1 rounded-xl shadow-lg border border-white/10">
+            $12.99 <span class="text-[10px] font-normal text-greek-gold">CAD</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-sm sm:text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight break-words">
+                Grilled Chicken
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+              Tender herb-marinated chicken breast flame-grilled with Greek oregano, garlic, and extra virgin olive oil.
+            </p>
+            
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-wrap">
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">420 cal</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-gold">48g protein</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">18g carbs</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">9g fat</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-white/5">
+            <button 
+              onclick="openMealSidesModal('grilled-chicken')" 
+              class="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-[#101D3A] text-white hover:bg-greek-gold hover:text-[#101D3A] dark:bg-white/10 dark:hover:bg-greek-gold dark:hover:text-[#101D3A] transition shadow-sm flex items-center justify-center gap-1.5"
+            >
+              <span>Select Meal & Sides</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Card: Chilly Chicken -->
+      <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="chilly-chicken" data-category="chicken">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+          <img 
+            src="public/images/meals/chilly-chicken.jpg" 
+            alt="Chilly Chicken" 
+            loading="lazy"
+            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>
+            
+          </div>
+          <div class="absolute bottom-3 right-3 bg-greek-navy/90 text-white font-mono font-black text-sm px-2.5 py-1 rounded-xl shadow-lg border border-white/10">
+            $13.99 <span class="text-[10px] font-normal text-greek-gold">CAD</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-sm sm:text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight break-words">
+                Chilly Chicken
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+              Lean chicken breast tossed in a zesty Mediterranean chili and herb glaze for a vibrant metabolic kick.
+            </p>
+            
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-wrap">
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">430 cal</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-gold">46g protein</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">22g carbs</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">10g fat</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-white/5">
+            <button 
+              onclick="openMealSidesModal('chilly-chicken')" 
+              class="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-[#101D3A] text-white hover:bg-greek-gold hover:text-[#101D3A] dark:bg-white/10 dark:hover:bg-greek-gold dark:hover:text-[#101D3A] transition shadow-sm flex items-center justify-center gap-1.5"
+            >
+              <span>Select Meal & Sides</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Card: Salmon -->
+      <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="salmon" data-category="fish">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+          <img 
+            src="public/images/meals/salmon.jpg" 
+            alt="Salmon" 
+            loading="lazy"
+            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>
+            <span class="bg-greek-gold text-greek-navy text-[10px] font-black px-2 py-0.5 rounded-full shadow-sm">Popular</span>
+          </div>
+          <div class="absolute bottom-3 right-3 bg-greek-navy/90 text-white font-mono font-black text-sm px-2.5 py-1 rounded-xl shadow-lg border border-white/10">
+            $14.99 <span class="text-[10px] font-normal text-greek-gold">CAD</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-sm sm:text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight break-words">
+                Salmon
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+              Pan-seared Atlantic salmon fillet with sea salt, cracked black pepper, oregano, and fresh lemon essence.
+            </p>
+            
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-wrap">
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">490 cal</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-gold">44g protein</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">14g carbs</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">18g fat</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-white/5">
+            <button 
+              onclick="openMealSidesModal('salmon')" 
+              class="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-[#101D3A] text-white hover:bg-greek-gold hover:text-[#101D3A] dark:bg-white/10 dark:hover:bg-greek-gold dark:hover:text-[#101D3A] transition shadow-sm flex items-center justify-center gap-1.5"
+            >
+              <span>Select Meal & Sides</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Card: Spinach & Feta Stuffed Chicken -->
+      <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="spinach-feta-chicken" data-category="chicken">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+          <img 
+            src="public/images/meals/spinach-feta-chicken.jpg" 
+            alt="Spinach & Feta Stuffed Chicken" 
+            loading="lazy"
+            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>
+            <span class="bg-greek-gold text-greek-navy text-[10px] font-black px-2 py-0.5 rounded-full shadow-sm">Popular</span>
+          </div>
+          <div class="absolute bottom-3 right-3 bg-greek-navy/90 text-white font-mono font-black text-sm px-2.5 py-1 rounded-xl shadow-lg border border-white/10">
+            $14.99 <span class="text-[10px] font-normal text-greek-gold">CAD</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-sm sm:text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight break-words">
+                Spinach & Feta Stuffed Chicken
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+              Lean chicken breast stuffed with authentic Greek feta, wilted baby spinach, and roasted garlic cloves.
+            </p>
+            
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-wrap">
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">470 cal</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-gold">51g protein</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">15g carbs</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">13g fat</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-white/5">
+            <button 
+              onclick="openMealSidesModal('spinach-feta-chicken')" 
+              class="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-[#101D3A] text-white hover:bg-greek-gold hover:text-[#101D3A] dark:bg-white/10 dark:hover:bg-greek-gold dark:hover:text-[#101D3A] transition shadow-sm flex items-center justify-center gap-1.5"
+            >
+              <span>Select Meal & Sides</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Card: Tandoori Chicken -->
+      <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="tandoori-chicken" data-category="chicken">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+          <img 
+            src="public/images/meals/tandoori-chicken.jpg" 
+            alt="Tandoori Chicken" 
+            loading="lazy"
+            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>
+            
+          </div>
+          <div class="absolute bottom-3 right-3 bg-greek-navy/90 text-white font-mono font-black text-sm px-2.5 py-1 rounded-xl shadow-lg border border-white/10">
+            $14.99 <span class="text-[10px] font-normal text-greek-gold">CAD</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-sm sm:text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight break-words">
+                Tandoori Chicken
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+              Greek-yogurt and aromatic spice-marinated chicken fillet, roasted tender with caramelized edges.
+            </p>
+            
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-wrap">
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">440 cal</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-gold">47g protein</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">16g carbs</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">11g fat</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-white/5">
+            <button 
+              onclick="openMealSidesModal('tandoori-chicken')" 
+              class="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-[#101D3A] text-white hover:bg-greek-gold hover:text-[#101D3A] dark:bg-white/10 dark:hover:bg-greek-gold dark:hover:text-[#101D3A] transition shadow-sm flex items-center justify-center gap-1.5"
+            >
+              <span>Select Meal & Sides</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Card: Chicken Mushroom Sauce -->
+      <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="chicken-mushroom" data-category="chicken">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+          <img 
+            src="public/images/meals/chicken-mushroom.jpg" 
+            alt="Chicken Mushroom Sauce" 
+            loading="lazy"
+            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>
+            
+          </div>
+          <div class="absolute bottom-3 right-3 bg-greek-navy/90 text-white font-mono font-black text-sm px-2.5 py-1 rounded-xl shadow-lg border border-white/10">
+            $13.99 <span class="text-[10px] font-normal text-greek-gold">CAD</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-sm sm:text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight break-words">
+                Chicken Mushroom Sauce
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+              Succulent chicken breast smothered in a savory, simmered cremini mushroom reduction with Greek herbs.
+            </p>
+            
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-wrap">
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">450 cal</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-gold">47g protein</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">19g carbs</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">12g fat</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-white/5">
+            <button 
+              onclick="openMealSidesModal('chicken-mushroom')" 
+              class="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-[#101D3A] text-white hover:bg-greek-gold hover:text-[#101D3A] dark:bg-white/10 dark:hover:bg-greek-gold dark:hover:text-[#101D3A] transition shadow-sm flex items-center justify-center gap-1.5"
+            >
+              <span>Select Meal & Sides</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Card: Chicken Fajita -->
+      <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="chicken-fajita" data-category="chicken">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+          <img 
+            src="public/images/meals/chicken-fajita.jpg" 
+            alt="Chicken Fajita" 
+            loading="lazy"
+            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>
+            
+          </div>
+          <div class="absolute bottom-3 right-3 bg-greek-navy/90 text-white font-mono font-black text-sm px-2.5 py-1 rounded-xl shadow-lg border border-white/10">
+            $12.99 <span class="text-[10px] font-normal text-greek-gold">CAD</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-sm sm:text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight break-words">
+                Chicken Fajita
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+              Sliced grilled chicken breast sautéed with sweet bell peppers, red onions, and smoky Mediterranean spices.
+            </p>
+            
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-wrap">
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">410 cal</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-gold">45g protein</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">20g carbs</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">9g fat</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-white/5">
+            <button 
+              onclick="openMealSidesModal('chicken-fajita')" 
+              class="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-[#101D3A] text-white hover:bg-greek-gold hover:text-[#101D3A] dark:bg-white/10 dark:hover:bg-greek-gold dark:hover:text-[#101D3A] transition shadow-sm flex items-center justify-center gap-1.5"
+            >
+              <span>Select Meal & Sides</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Card: Beef Fajita -->
+      <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="beef-fajita" data-category="beef">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+          <img 
+            src="public/images/meals/beef-fajita.jpg" 
+            alt="Beef Fajita" 
+            loading="lazy"
+            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>
+            
+          </div>
+          <div class="absolute bottom-3 right-3 bg-greek-navy/90 text-white font-mono font-black text-sm px-2.5 py-1 rounded-xl shadow-lg border border-white/10">
+            $14.99 <span class="text-[10px] font-normal text-greek-gold">CAD</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-sm sm:text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight break-words">
+                Beef Fajita
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+              Char-broiled strips of tender Canadian flank beef seared with colorful sweet peppers and charred sweet onions.
+            </p>
+            
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-wrap">
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">480 cal</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-gold">44g protein</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">19g carbs</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">16g fat</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-white/5">
+            <button 
+              onclick="openMealSidesModal('beef-fajita')" 
+              class="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-[#101D3A] text-white hover:bg-greek-gold hover:text-[#101D3A] dark:bg-white/10 dark:hover:bg-greek-gold dark:hover:text-[#101D3A] transition shadow-sm flex items-center justify-center gap-1.5"
+            >
+              <span>Select Meal & Sides</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Card: Beef Mushroom Sauce -->
+      <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="beef-mushroom" data-category="beef">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+          <img 
+            src="public/images/meals/beef-mushroom.jpg" 
+            alt="Beef Mushroom Sauce" 
+            loading="lazy"
+            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>
+            <span class="bg-greek-gold text-greek-navy text-[10px] font-black px-2 py-0.5 rounded-full shadow-sm">Popular</span>
+          </div>
+          <div class="absolute bottom-3 right-3 bg-greek-navy/90 text-white font-mono font-black text-sm px-2.5 py-1 rounded-xl shadow-lg border border-white/10">
+            $14.99 <span class="text-[10px] font-normal text-greek-gold">CAD</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-sm sm:text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight break-words">
+                Beef Mushroom Sauce
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+              Slow-braised lean beef medallions topped with a rich garlic mushroom glaze and garden fresh parsley.
+            </p>
+            
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-wrap">
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">510 cal</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-gold">46g protein</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">17g carbs</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">18g fat</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-white/5">
+            <button 
+              onclick="openMealSidesModal('beef-mushroom')" 
+              class="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-[#101D3A] text-white hover:bg-greek-gold hover:text-[#101D3A] dark:bg-white/10 dark:hover:bg-greek-gold dark:hover:text-[#101D3A] transition shadow-sm flex items-center justify-center gap-1.5"
+            >
+              <span>Select Meal & Sides</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Card: Smoked Turkey Breast -->
+      <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="smoked-turkey" data-category="other">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+          <img 
+            src="public/images/meals/smoked-turkey.jpg" 
+            alt="Smoked Turkey Breast" 
+            loading="lazy"
+            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>
+            
+          </div>
+          <div class="absolute bottom-3 right-3 bg-greek-navy/90 text-white font-mono font-black text-sm px-2.5 py-1 rounded-xl shadow-lg border border-white/10">
+            $13.99 <span class="text-[10px] font-normal text-greek-gold">CAD</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-sm sm:text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight break-words">
+                Smoked Turkey Breast
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+              Naturally hardwood-smoked lean turkey breast carved into tender slices with fragrant rosemary jus.
+            </p>
+            
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-wrap">
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">390 cal</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-gold">50g protein</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">14g carbs</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">7g fat</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-white/5">
+            <button 
+              onclick="openMealSidesModal('smoked-turkey')" 
+              class="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-[#101D3A] text-white hover:bg-greek-gold hover:text-[#101D3A] dark:bg-white/10 dark:hover:bg-greek-gold dark:hover:text-[#101D3A] transition shadow-sm flex items-center justify-center gap-1.5"
+            >
+              <span>Select Meal & Sides</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Card: Chicken Leg Plate -->
+      <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="chicken-leg" data-category="chicken">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+          <img 
+            src="public/images/meals/chicken-leg.jpg" 
+            alt="Chicken Leg Plate" 
+            loading="lazy"
+            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>
+            
+          </div>
+          <div class="absolute bottom-3 right-3 bg-greek-navy/90 text-white font-mono font-black text-sm px-2.5 py-1 rounded-xl shadow-lg border border-white/10">
+            $10.99 <span class="text-[10px] font-normal text-greek-gold">CAD</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-sm sm:text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight break-words">
+                Chicken Leg Plate
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+              Slow-roasted bone-in chicken leg quarters seasoned with aromatic garlic, wild thyme, and fresh lemon.
+            </p>
+            
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-wrap">
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">460 cal</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-gold">42g protein</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">12g carbs</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">14g fat</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-white/5">
+            <button 
+              onclick="openMealSidesModal('chicken-leg')" 
+              class="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-[#101D3A] text-white hover:bg-greek-gold hover:text-[#101D3A] dark:bg-white/10 dark:hover:bg-greek-gold dark:hover:text-[#101D3A] transition shadow-sm flex items-center justify-center gap-1.5"
+            >
+              <span>Select Meal & Sides</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Card: Chicken Fillet -->
+      <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="chicken-fillet" data-category="chicken">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+          <img 
+            src="public/images/meals/chicken-fillet.jpg" 
+            alt="Chicken Fillet" 
+            loading="lazy"
+            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>
+            
+          </div>
+          <div class="absolute bottom-3 right-3 bg-greek-navy/90 text-white font-mono font-black text-sm px-2.5 py-1 rounded-xl shadow-lg border border-white/10">
+            $12.99 <span class="text-[10px] font-normal text-greek-gold">CAD</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-sm sm:text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight break-words">
+                Chicken Fillet
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+              Ultra-lean grilled chicken breast fillet prepared simply with Greek lemon, sea salt, and extra virgin olive oil.
+            </p>
+            
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-wrap">
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">400 cal</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-gold">49g protein</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">14g carbs</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">8g fat</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-white/5">
+            <button 
+              onclick="openMealSidesModal('chicken-fillet')" 
+              class="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-[#101D3A] text-white hover:bg-greek-gold hover:text-[#101D3A] dark:bg-white/10 dark:hover:bg-greek-gold dark:hover:text-[#101D3A] transition shadow-sm flex items-center justify-center gap-1.5"
+            >
+              <span>Select Meal & Sides</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Card: Veggie Souvlaki -->
+      <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="veggie-souvlaki" data-category="vegetarian">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+          <img 
+            src="public/images/meals/veggie-souvlaki.jpg" 
+            alt="Veggie Souvlaki" 
+            loading="lazy"
+            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>
+            
+          </div>
+          <div class="absolute bottom-3 right-3 bg-greek-navy/90 text-white font-mono font-black text-sm px-2.5 py-1 rounded-xl shadow-lg border border-white/10">
+            $11.99 <span class="text-[10px] font-normal text-greek-gold">CAD</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-sm sm:text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight break-words">
+                Veggie Souvlaki
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+              Skewered char-grilled zucchini, bell peppers, cremini mushrooms, and red onions with Greek herb marinade.
+            </p>
+            
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-wrap">
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">320 cal</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-gold">14g protein</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">34g carbs</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">8g fat</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-white/5">
+            <button 
+              onclick="openMealSidesModal('veggie-souvlaki')" 
+              class="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-[#101D3A] text-white hover:bg-greek-gold hover:text-[#101D3A] dark:bg-white/10 dark:hover:bg-greek-gold dark:hover:text-[#101D3A] transition shadow-sm flex items-center justify-center gap-1.5"
+            >
+              <span>Select Meal & Sides</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Card: Chicken Souvlaki Plate -->
+      <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="chicken-souvlaki" data-category="chicken">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+          <img 
+            src="public/images/meals/chicken-souvlaki.jpg" 
+            alt="Chicken Souvlaki Plate" 
+            loading="lazy"
+            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>
+            <span class="bg-greek-gold text-greek-navy text-[10px] font-black px-2 py-0.5 rounded-full shadow-sm">Popular</span>
+          </div>
+          <div class="absolute bottom-3 right-3 bg-greek-navy/90 text-white font-mono font-black text-sm px-2.5 py-1 rounded-xl shadow-lg border border-white/10">
+            $12.99 <span class="text-[10px] font-normal text-greek-gold">CAD</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-sm sm:text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight break-words">
+                Chicken Souvlaki Plate
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+              Traditional skewers of cubed chicken breast marinated in lemon, garlic, white wine, and Greek mountain oregano.
+            </p>
+            
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-wrap">
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">430 cal</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-gold">48g protein</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">16g carbs</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">10g fat</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-white/5">
+            <button 
+              onclick="openMealSidesModal('chicken-souvlaki')" 
+              class="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-[#101D3A] text-white hover:bg-greek-gold hover:text-[#101D3A] dark:bg-white/10 dark:hover:bg-greek-gold dark:hover:text-[#101D3A] transition shadow-sm flex items-center justify-center gap-1.5"
+            >
+              <span>Select Meal & Sides</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Card: Beef Souvlaki Plate -->
+      <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="beef-souvlaki" data-category="beef">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+          <img 
+            src="public/images/meals/beef-souvlaki.jpg" 
+            alt="Beef Souvlaki Plate" 
+            loading="lazy"
+            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>
+            <span class="bg-greek-gold text-greek-navy text-[10px] font-black px-2 py-0.5 rounded-full shadow-sm">Popular</span>
+          </div>
+          <div class="absolute bottom-3 right-3 bg-greek-navy/90 text-white font-mono font-black text-sm px-2.5 py-1 rounded-xl shadow-lg border border-white/10">
+            $13.99 <span class="text-[10px] font-normal text-greek-gold">CAD</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-sm sm:text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight break-words">
+                Beef Souvlaki Plate
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+              Tender sirloin steak skewers grilled over open flame with extra virgin olive oil and fragrant spices.
+            </p>
+            
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-wrap">
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">470 cal</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-gold">45g protein</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">15g carbs</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">15g fat</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-white/5">
+            <button 
+              onclick="openMealSidesModal('beef-souvlaki')" 
+              class="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-[#101D3A] text-white hover:bg-greek-gold hover:text-[#101D3A] dark:bg-white/10 dark:hover:bg-greek-gold dark:hover:text-[#101D3A] transition shadow-sm flex items-center justify-center gap-1.5"
+            >
+              <span>Select Meal & Sides</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Card: Pork Souvlaki Plate -->
+      <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="pork-souvlaki" data-category="pork">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+          <img 
+            src="public/images/meals/pork-souvlaki.jpg" 
+            alt="Pork Souvlaki Plate" 
+            loading="lazy"
+            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>
+            <span class="bg-greek-gold text-greek-navy text-[10px] font-black px-2 py-0.5 rounded-full shadow-sm">Popular</span>
+          </div>
+          <div class="absolute bottom-3 right-3 bg-greek-navy/90 text-white font-mono font-black text-sm px-2.5 py-1 rounded-xl shadow-lg border border-white/10">
+            $9.99 <span class="text-[10px] font-normal text-greek-gold">CAD</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-sm sm:text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight break-words">
+                Pork Souvlaki Plate
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+              Authentic Greek street-style marinated pork tenderloin skewers with vibrant lemon and crushed oregano.
+            </p>
+            
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-wrap">
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">440 cal</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-gold">43g protein</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">14g carbs</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">13g fat</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-white/5">
+            <button 
+              onclick="openMealSidesModal('pork-souvlaki')" 
+              class="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-[#101D3A] text-white hover:bg-greek-gold hover:text-[#101D3A] dark:bg-white/10 dark:hover:bg-greek-gold dark:hover:text-[#101D3A] transition shadow-sm flex items-center justify-center gap-1.5"
+            >
+              <span>Select Meal & Sides</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Card: Spinach Pie Dinner -->
+      <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="spinach-pie" data-category="vegetarian">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+          <img 
+            src="public/images/meals/spinach-pie.jpg" 
+            alt="Spinach Pie Dinner" 
+            loading="lazy"
+            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>
+            
+          </div>
+          <div class="absolute bottom-3 right-3 bg-greek-navy/90 text-white font-mono font-black text-sm px-2.5 py-1 rounded-xl shadow-lg border border-white/10">
+            $12.99 <span class="text-[10px] font-normal text-greek-gold">CAD</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-sm sm:text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight break-words">
+                Spinach Pie Dinner
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+              Traditional homemade Spanakopita with flaky phyllo pastry, organic baby spinach, scallions, and sheep's milk feta.
+            </p>
+            
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-wrap">
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">450 cal</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-gold">18g protein</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">42g carbs</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">22g fat</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-white/5">
+            <button 
+              onclick="openMealSidesModal('spinach-pie')" 
+              class="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-[#101D3A] text-white hover:bg-greek-gold hover:text-[#101D3A] dark:bg-white/10 dark:hover:bg-greek-gold dark:hover:text-[#101D3A] transition shadow-sm flex items-center justify-center gap-1.5"
+            >
+              <span>Select Meal & Sides</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Card: Pasta al Greco -->
+      <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="pasta-al-greco" data-category="other">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+          <img 
+            src="public/images/meals/pasta-al-greco.jpg" 
+            alt="Pasta al Greco" 
+            loading="lazy"
+            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 text-[10px] font-black px-2 py-0.5 rounded-full border border-amber-300 dark:border-amber-700/50">Complete Plate (No Sides)</span>
+            
+          </div>
+          <div class="absolute bottom-3 right-3 bg-greek-navy/90 text-white font-mono font-black text-sm px-2.5 py-1 rounded-xl shadow-lg border border-white/10">
+            $9.99 <span class="text-[10px] font-normal text-greek-gold">CAD</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-sm sm:text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight break-words">
+                Pasta al Greco
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+              Penne pasta tossed in rich Greek roasted tomato sauce, virgin olive oil, fragrant basil, and crumbled sheep's feta. (Complete dish — no sides included).
+            </p>
+            
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-wrap">
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">460 cal</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-gold">16g protein</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">68g carbs</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">12g fat</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-white/5">
+            <button 
+              onclick="openMealSidesModal('pasta-al-greco')" 
+              class="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-[#101D3A] text-white hover:bg-greek-gold hover:text-[#101D3A] dark:bg-white/10 dark:hover:bg-greek-gold dark:hover:text-[#101D3A] transition shadow-sm flex items-center justify-center gap-1.5"
+            >
+              <span>Add to Plan</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Card: Smoked Pork Loin -->
+      <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="smoked-pork-loin" data-category="pork">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+          <img 
+            src="public/images/meals/smoked-pork-loin.jpg" 
+            alt="Smoked Pork Loin" 
+            loading="lazy"
+            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>
+            
+          </div>
+          <div class="absolute bottom-3 right-3 bg-greek-navy/90 text-white font-mono font-black text-sm px-2.5 py-1 rounded-xl shadow-lg border border-white/10">
+            $12.99 <span class="text-[10px] font-normal text-greek-gold">CAD</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-sm sm:text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight break-words">
+                Smoked Pork Loin
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+              Tender center-cut pork loin, lightly smoked with natural applewood and served with aromatic citrus jus.
+            </p>
+            
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-wrap">
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">460 cal</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-gold">46g protein</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">14g carbs</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">13g fat</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-white/5">
+            <button 
+              onclick="openMealSidesModal('smoked-pork-loin')" 
+              class="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-[#101D3A] text-white hover:bg-greek-gold hover:text-[#101D3A] dark:bg-white/10 dark:hover:bg-greek-gold dark:hover:text-[#101D3A] transition shadow-sm flex items-center justify-center gap-1.5"
+            >
+              <span>Select Meal & Sides</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Card: Turkey Souvlaki Plate -->
+      <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="turkey-souvlaki" data-category="other">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+          <img 
+            src="public/images/meals/turkey-souvlaki.jpg" 
+            alt="Turkey Souvlaki Plate" 
+            loading="lazy"
+            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>
+            
+          </div>
+          <div class="absolute bottom-3 right-3 bg-greek-navy/90 text-white font-mono font-black text-sm px-2.5 py-1 rounded-xl shadow-lg border border-white/10">
+            $13.99 <span class="text-[10px] font-normal text-greek-gold">CAD</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-sm sm:text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight break-words">
+                Turkey Souvlaki Plate
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+              Lean cubed turkey breast skewers flame-broiled with lemon, garlic, Greek sea salt, and extra virgin olive oil.
+            </p>
+            
+            <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-wrap">
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">410 cal</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-gold">49g protein</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">14g carbs</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">8g fat</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 flex items-center justify-between gap-2 border-t border-slate-100 dark:border-white/5">
+            <button 
+              onclick="openMealSidesModal('turkey-souvlaki')" 
+              class="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-[#101D3A] text-white hover:bg-greek-gold hover:text-[#101D3A] dark:bg-white/10 dark:hover:bg-greek-gold dark:hover:text-[#101D3A] transition shadow-sm flex items-center justify-center gap-1.5"
+            >
+              <span>Select Meal & Sides</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Value Promo Footer Card -->

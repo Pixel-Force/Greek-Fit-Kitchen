@@ -602,7 +602,7 @@ function renderMenuGrid() {
 
     return `
       <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300">
-        <div class="relative overflow-hidden aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
           <img 
             src="${meal.image}" 
             alt="${meal.name}" 
@@ -1958,7 +1958,7 @@ window.addEventListener("storage", (e) => {
 // ==========================================
 // 19. INITIALIZATION HOOK
 // ==========================================
-document.addEventListener("DOMContentLoaded", () => {
+function initApp() {
   initTheme();
   initHeroSlider();
   updateUserUI();
@@ -2005,4 +2005,10 @@ document.addEventListener("DOMContentLoaded", () => {
       mobileDrawer.classList.toggle("hidden");
     });
   }
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initApp);
+} else {
+  initApp();
+}

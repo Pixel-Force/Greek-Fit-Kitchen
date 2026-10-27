@@ -271,3 +271,15 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   white-space: nowrap !important;
   flex-shrink: 0 !important;
 }
+
+/* Mobile Responsive Image Height Protections */
+@media (max-width: 639px) {
+  .meal-card .relative {
+    height: 180px !important;
+  }
+  .meal-card img {
+    height: 100% !important;
+    width: 100% !important;
+    object-fit: cover !important;
+  }
+}
