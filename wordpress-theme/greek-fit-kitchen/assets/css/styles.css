@@ -1,0 +1,209 @@
+/* ==========================================================================
+   Greek Fit Kitchen - Master Production Stylesheet
+   "BIG GREEK FLAVOUR. ZERO MEAL PREP."
+   Managed by George the Greek · Powered by Lean Meal
+   Designed & Developed by Penta Services
+
+   Color Tokens:
+   - Deep Navy: #101D3A (Primary brand, navigation, headings, footer, dark backgrounds)
+   - Rich Navy: #172A4D (Secondary dark surfaces, cards, containers)
+   - Vibrant Golden Yellow: #F5C542 (Primary CTAs, promos, badges, selected states)
+   - Golden Yellow Hover: #E5B432
+   - Warm Off-White: #FAF9F5 (Primary page background in light mode)
+   - Pure White: #FFFFFF (Cards, modals, content surfaces)
+   - Charcoal Body Text: #292D35
+   - Muted Gray: #737987 (Secondary info, supporting text)
+   - Soft Border: #E7E8EC (Dividers, input outlines)
+   - Success Green: #23845B (Confirmed orders, positive savings)
+   - Error Red: #C83D45 (Validation errors, warnings)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=Cinzel:wght@700;800&display=swap');
+
+:root {
+  --color-deep-navy: #101D3A;
+  --color-rich-navy: #172A4D;
+  --color-gold: #F5C542;
+  --color-gold-hover: #E5B432;
+  --color-bg-page: #FAF9F5;
+  --color-bg-surface: #FFFFFF;
+  --color-text-body: #292D35;
+  --color-text-muted: #737987;
+  --color-border: #E7E8EC;
+  --color-success: #23845B;
+  --color-error: #C83D45;
+
+  /* Font Families */
+  --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-greek: 'Cinzel', serif;
+}
+
+html.dark {
+  --color-bg-page: #0C162C;
+  --color-bg-surface: #101D3A;
+  --color-rich-navy: #172A4D;
+  --color-text-body: #F3F4F6;
+  --color-text-muted: #9CA3AF;
+  --color-border: rgba(255, 255, 255, 0.1);
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg-page);
+  color: var(--color-text-body);
+  transition: background-color 0.25s ease, color 0.25s ease;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-greek {
+  font-family: var(--font-greek);
+}
+
+.font-numeric {
+  font-family: var(--font-body);
+  font-feature-settings: "tnum" 1, "cv05" 1;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(16, 29, 58, 0.05);
+}
+.dark ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+::-webkit-scrollbar-thumb {
+  background: #172A4D;
+  border-radius: 4px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #F5C542;
+}
+
+/* Glass Header */
+.glass-header {
+  background: rgba(16, 29, 58, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Primary CTA Buttons */
+.btn-gold {
+  background-color: #F5C542;
+  color: #101D3A;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 14px rgba(245, 197, 66, 0.35);
+}
+.btn-gold:hover {
+  background-color: #E5B432;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(245, 197, 66, 0.45);
+}
+.btn-gold:active {
+  transform: translateY(0);
+}
+
+.btn-navy {
+  background-color: #101D3A;
+  color: #FFFFFF;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-navy:hover {
+  background-color: #172A4D;
+  transform: translateY(-1px);
+}
+
+.btn-outline-gold {
+  border: 2px solid #F5C542;
+  color: #F5C542;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+.btn-outline-gold:hover {
+  background-color: #F5C542;
+  color: #101D3A;
+}
+
+/* Hero Slider */
+.hero-slider-container {
+  position: relative;
+  overflow: hidden;
+  min-height: 600px;
+  max-height: 720px;
+}
+@media (max-width: 768px) {
+  .hero-slider-container {
+    min-height: 520px;
+    max-height: none;
+  }
+}
+
+.slide-item {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1.02);
+  z-index: 1;
+}
+
+.slide-item.active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  z-index: 10;
+}
+
+/* Product & Meal Cards */
+.meal-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.meal-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px -8px rgba(16, 29, 58, 0.12);
+}
+.dark .meal-card:hover {
+  box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.6);
+  border-color: rgba(245, 197, 66, 0.4);
+}
+
+/* Kanban Columns in Kitchen KDS */
+.kanban-col {
+  min-height: calc(100vh - 210px);
+}
+
+/* Print Ticket Styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printableTicket, #printableTicket * {
+    visibility: visible;
+  }
+  #printableTicket {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    font-size: 14pt;
+    color: #000;
+  }
+}

@@ -1,0 +1,134 @@
+/*
+Theme Name: Greek Fit Kitchen
+Theme URI: https://pentaservices.co.uk
+Author: Penta Services
+Author URI: https://pentaservices.co.uk
+Description: Ultra-fast, next-level healthy meal preparation and scheduled delivery WordPress theme for Greek Fit Kitchen. Features interactive hero slider, 6-meal minimum plan ($59.94 CAD), 10% volume discount for 7+ meals, 2-side customization per dish, Sunday/Wednesday cutoff countdown, distance-based delivery calculator ($5.99 + $0.99/km), credit card payment gateway, and kitchen tablet display app.
+Version: 2.0.0
+Tested up to: 6.7
+Requires at least: 6.0
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: greek-fit-kitchen
+Tags: e-commerce, food-and-drink, custom-colors, custom-menu, featured-images, responsive-layout, theme-options
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --gfk-primary: #0C2B54;
+  --gfk-primary-dark: #071526;
+  --gfk-accent-gold: #F5BA13;
+  --gfk-accent-gold-hover: #DE9B08;
+  --gfk-accent-lime: #82B82A;
+  --gfk-bg: #F9F8F5;
+  --gfk-card-bg: #FFFFFF;
+  --gfk-text: #1E293B;
+  --gfk-text-muted: #64748B;
+  --gfk-border: #E2E8F0;
+}
+
+html.dark {
+  --gfk-bg: #071526;
+  --gfk-card-bg: #0E223D;
+  --gfk-text: #F8FAFC;
+  --gfk-text-muted: #94A3B8;
+  --gfk-border: rgba(255, 255, 255, 0.1);
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--gfk-bg);
+  color: var(--gfk-text);
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.25s ease, color 0.25s ease;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: 'Outfit', sans-serif;
+}
+
+.font-greek {
+  font-family: 'Cinzel', serif;
+}
+
+/* Glassmorphism Header */
+.glass-header {
+  background: rgba(12, 43, 84, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Buttons */
+.btn-gold {
+  background-color: #F5BA13;
+  color: #0C2B54;
+  font-weight: 800;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(245, 186, 19, 0.35);
+}
+.btn-gold:hover {
+  background-color: #DE9B08;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(245, 186, 19, 0.45);
+}
+
+.btn-navy {
+  background-color: #0C2B54;
+  color: #FFFFFF;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+.btn-navy:hover {
+  background-color: #081D3B;
+  transform: translateY(-1px);
+}
+
+.btn-lime {
+  background-color: #82B82A;
+  color: #FFFFFF;
+  font-weight: 800;
+  transition: all 0.2s ease;
+}
+.btn-lime:hover {
+  background-color: #6EA31E;
+}
+
+/* Hero Slider */
+.hero-slider-container {
+  position: relative;
+  overflow: hidden;
+  min-height: 580px;
+}
+.slide-item {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1.02);
+  z-index: 1;
+}
+.slide-item.active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  z-index: 10;
+}
+
+/* Meal Cards */
+.meal-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.meal-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px -8px rgba(12, 43, 84, 0.12);
+}
+.dark .meal-card:hover {
+  box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.5);
+  border-color: rgba(245, 186, 19, 0.35);
+}

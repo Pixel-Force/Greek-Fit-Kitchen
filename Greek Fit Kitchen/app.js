@@ -1,205 +1,128 @@
 /**
- * Greek Fit Kitchen - Core Application Logic
- * High performance, zero dependencies
+ * Greek Fit Kitchen - Master Application Engine
+ * "BIG GREEK FLAVOUR. ZERO MEAL PREP."
+ * Managed by George the Greek (3575 Lake Shore Blvd W, Etobicoke, ON M8W 1P5)
+ * Powered by Lean Meal (leanmeal.ca)
+ * Designed & Developed by Penta Services (pentaservices.co.uk)
+ * 
+ * Production-Grade Architecture:
+ * - Reactive LocalStorage DB for Menu, Orders, Inquiries, Settings & Auth
+ * - Multi-Window Storage Event Synchronization (Customer Site <-> Admin <-> Kitchen Tablet)
+ * - America/Toronto Delivery Cutoff Engine (Sun order by Fri 12pm, Wed order by Mon 12pm)
+ * - Distance Pricing Engine: $5.99 Base + $0.99 / KM
+ * - 6-Meal Starter Plan Minimum ($59.94 starting tier) & 10% Volume Discount on 7+ Meals
+ * - 2 Sides Included (Except Pasta al Greco), Extra Sides +$4.99 CAD
+ * - WCAG 2.2 Accessible Light/Dark Theme Switcher (Mandatory Rule 1)
  */
 
-// 1. Menu Dishes Catalog from Official Flyer
-const MENU_ITEMS = [
+// ==========================================
+// 1. DEFAULT DATA: 20 MAIN DISHES FROM FLYER
+// ==========================================
+const DEFAULT_MENU_ITEMS = [
   {
     id: "grilled-chicken",
     name: "Grilled Chicken",
     price: 12.99,
-    category: "poultry",
+    category: "chicken",
     image: "public/images/meals/grilled-chicken.jpg",
-    description: "Tender herb-marinated chicken breast flame-grilled to perfection with Greek oregano and lemon.",
+    description: "Tender herb-marinated chicken breast flame-grilled with Greek oregano, garlic, and extra virgin olive oil.",
     calories: 420,
     protein: "48g",
     carbs: "18g",
     fat: "9g",
     popular: true,
-    hasSides: true
-  },
-  {
-    id: "chicken-leg-plate",
-    name: "Chicken Leg Plate",
-    price: 10.99,
-    category: "poultry",
-    image: "public/images/meals/chicken-leg.jpg",
-    description: "Slow-roasted bone-in chicken leg quarters seasoned with aromatic garlic, thyme, and citrus.",
-    calories: 460,
-    protein: "42g",
-    carbs: "12g",
-    fat: "14g",
-    popular: false,
-    hasSides: true
+    hasSides: true,
+    inStock: true
   },
   {
     id: "chilly-chicken",
     name: "Chilly Chicken",
     price: 13.99,
-    category: "poultry",
+    category: "chicken",
     image: "public/images/meals/chilly-chicken.jpg",
-    description: "Lean chicken breast glazed with a fiery Mediterranean chili and herb sauce for a metabolic kick.",
+    description: "Lean chicken breast tossed in a zesty Mediterranean chili and herb glaze for a vibrant metabolic kick.",
     calories: 430,
     protein: "46g",
     carbs: "22g",
     fat: "10g",
     popular: false,
-    hasSides: true
-  },
-  {
-    id: "chicken-fillet",
-    name: "Chicken Fillet",
-    price: 12.99,
-    category: "poultry",
-    image: "public/images/meals/chicken-fillet.jpg",
-    description: "Clean, ultra-lean sliced chicken fillet seared with Aegean sea salt and virgin olive oil.",
-    calories: 390,
-    protein: "50g",
-    carbs: "8g",
-    fat: "6g",
-    popular: false,
-    hasSides: true
+    hasSides: true,
+    inStock: true
   },
   {
     id: "salmon",
-    name: "Fresh Atlantic Salmon",
+    name: "Salmon",
     price: 14.99,
-    category: "seafood",
+    category: "fish",
     image: "public/images/meals/salmon.jpg",
-    description: "Pan-seared premium Atlantic salmon fillet rich in Omega-3 fatty acids, topped with dill and lemon butter.",
-    calories: 480,
+    description: "Pan-seared Atlantic salmon fillet with sea salt, cracked black pepper, oregano, and fresh lemon essence.",
+    calories: 490,
     protein: "44g",
-    carbs: "6g",
+    carbs: "14g",
     fat: "18g",
     popular: true,
-    hasSides: true
+    hasSides: true,
+    inStock: true
   },
   {
-    id: "veggie-souvlaki",
-    name: "Veggie Souvlaki",
-    price: 11.99,
-    category: "vegetarian",
-    image: "public/images/meals/veggie-souvlaki.jpg",
-    description: "Char-grilled skewers of zucchini, bell peppers, red onions, mushrooms, and grilled Greek halloumi.",
-    calories: 340,
-    protein: "18g",
-    carbs: "32g",
-    fat: "14g",
-    popular: false,
-    hasSides: true
-  },
-  {
-    id: "spinach-feta-stuffed-chicken",
+    id: "spinach-feta-chicken",
     name: "Spinach & Feta Stuffed Chicken",
     price: 14.99,
-    category: "poultry",
+    category: "chicken",
     image: "public/images/meals/spinach-feta-chicken.jpg",
-    description: "Chicken breast rolled with sautéed baby spinach, Kalamata herbs, and authentic authentic Greek feta cheese.",
-    calories: 490,
-    protein: "52g",
-    carbs: "10g",
-    fat: "15g",
+    description: "Lean chicken breast stuffed with authentic Greek feta, wilted baby spinach, and roasted garlic cloves.",
+    calories: 470,
+    protein: "51g",
+    carbs: "15g",
+    fat: "13g",
     popular: true,
-    hasSides: true
-  },
-  {
-    id: "chicken-souvlaki-plate",
-    name: "Chicken Souvlaki Plate",
-    price: 12.99,
-    category: "poultry",
-    image: "public/images/meals/chicken-souvlaki.jpg",
-    description: "Traditional Greek marinated chicken skewers grilled over flame with olive oil and wild mountain oregano.",
-    calories: 440,
-    protein: "47g",
-    carbs: "14g",
-    fat: "11g",
-    popular: true,
-    hasSides: true
+    hasSides: true,
+    inStock: true
   },
   {
     id: "tandoori-chicken",
     name: "Tandoori Chicken",
     price: 14.99,
-    category: "poultry",
+    category: "chicken",
     image: "public/images/meals/tandoori-chicken.jpg",
-    description: "Yogurt-marinated chicken breast infused with warming spices, char-grilled for authentic smoky depth.",
-    calories: 450,
-    protein: "48g",
-    carbs: "12g",
+    description: "Greek-yogurt and aromatic spice-marinated chicken fillet, roasted tender with caramelized edges.",
+    calories: 440,
+    protein: "47g",
+    carbs: "16g",
     fat: "11g",
     popular: false,
-    hasSides: true
+    hasSides: true,
+    inStock: true
   },
   {
-    id: "beef-souvlaki-plate",
-    name: "Beef Souvlaki Plate",
-    price: 13.99,
-    category: "beef",
-    image: "public/images/meals/beef-souvlaki.jpg",
-    description: "Prime cuts of lean beef skewered with Mediterranean peppers and char-grilled medium-rare.",
-    calories: 490,
-    protein: "46g",
-    carbs: "11g",
-    fat: "16g",
-    popular: true,
-    hasSides: true
-  },
-  {
-    id: "chicken-mushroom-sauce",
+    id: "chicken-mushroom",
     name: "Chicken Mushroom Sauce",
     price: 13.99,
-    category: "poultry",
+    category: "chicken",
     image: "public/images/meals/chicken-mushroom.jpg",
-    description: "Grilled chicken breast smothered in a silky cremini and porcini mushroom garlic herb reduction.",
-    calories: 470,
+    description: "Succulent chicken breast smothered in a savory, simmered cremini mushroom reduction with Greek herbs.",
+    calories: 450,
     protein: "47g",
-    carbs: "15g",
-    fat: "14g",
+    carbs: "19g",
+    fat: "12g",
     popular: false,
-    hasSides: true
-  },
-  {
-    id: "pork-souvlaki-plate",
-    name: "Pork Souvlaki Plate",
-    price: 9.99,
-    category: "pork",
-    image: "public/images/meals/pork-souvlaki.jpg",
-    description: "Authentic Athenian pork tenderloin skewers, delicately seasoned with lemon juice and cracked pepper.",
-    calories: 440,
-    protein: "43g",
-    carbs: "9g",
-    fat: "13g",
-    popular: false,
-    hasSides: true
+    hasSides: true,
+    inStock: true
   },
   {
     id: "chicken-fajita",
     name: "Chicken Fajita",
     price: 12.99,
-    category: "poultry",
+    category: "chicken",
     image: "public/images/meals/chicken-fajita.jpg",
-    description: "Sliced grilled chicken tossed with caramelized sweet bell peppers, Spanish onions, and mild spices.",
+    description: "Sliced grilled chicken breast sautéed with sweet bell peppers, red onions, and smoky Mediterranean spices.",
     calories: 410,
-    protein: "44g",
+    protein: "45g",
     carbs: "20g",
-    fat: "10g",
+    fat: "9g",
     popular: false,
-    hasSides: true
-  },
-  {
-    id: "spinach-pie-dinner",
-    name: "Spinach Pie Dinner (Spanakopita)",
-    price: 12.99,
-    category: "vegetarian",
-    image: "public/images/meals/spinach-pie.jpg",
-    description: "Crispy golden layered phyllo pastry filled with fresh spinach, scallions, eggs, and creamy feta.",
-    calories: 460,
-    protein: "21g",
-    carbs: "38g",
-    fat: "19g",
-    popular: false,
-    hasSides: true
+    hasSides: true,
+    inStock: true
   },
   {
     id: "beef-fajita",
@@ -207,41 +130,164 @@ const MENU_ITEMS = [
     price: 14.99,
     category: "beef",
     image: "public/images/meals/beef-fajita.jpg",
-    description: "Seared lean flank steak strips sizzled with tri-color sweet peppers and charred sweet onions.",
-    calories: 490,
-    protein: "45g",
-    carbs: "18g",
-    fat: "15g",
+    description: "Char-broiled strips of tender Canadian flank beef seared with colorful sweet peppers and charred sweet onions.",
+    calories: 480,
+    protein: "44g",
+    carbs: "19g",
+    fat: "16g",
     popular: false,
-    hasSides: true
+    hasSides: true,
+    inStock: true
+  },
+  {
+    id: "beef-mushroom",
+    name: "Beef Mushroom Sauce",
+    price: 14.99,
+    category: "beef",
+    image: "public/images/meals/beef-mushroom.jpg",
+    description: "Slow-braised lean beef medallions topped with a rich garlic mushroom glaze and garden fresh parsley.",
+    calories: 510,
+    protein: "46g",
+    carbs: "17g",
+    fat: "18g",
+    popular: true,
+    hasSides: true,
+    inStock: true
+  },
+  {
+    id: "smoked-turkey",
+    name: "Smoked Turkey Breast",
+    price: 13.99,
+    category: "other",
+    image: "public/images/meals/smoked-turkey.jpg",
+    description: "Naturally hardwood-smoked lean turkey breast carved into tender slices with fragrant rosemary jus.",
+    calories: 390,
+    protein: "50g",
+    carbs: "14g",
+    fat: "7g",
+    popular: false,
+    hasSides: true,
+    inStock: true
+  },
+  {
+    id: "chicken-leg",
+    name: "Chicken Leg Plate",
+    price: 10.99,
+    category: "chicken",
+    image: "public/images/meals/chicken-leg.jpg",
+    description: "Slow-roasted bone-in chicken leg quarters seasoned with aromatic garlic, wild thyme, and fresh lemon.",
+    calories: 460,
+    protein: "42g",
+    carbs: "12g",
+    fat: "14g",
+    popular: false,
+    hasSides: true,
+    inStock: true
+  },
+  {
+    id: "chicken-fillet",
+    name: "Chicken Fillet",
+    price: 12.99,
+    category: "chicken",
+    image: "public/images/meals/chicken-fillet.jpg",
+    description: "Ultra-lean grilled chicken breast fillet prepared simply with Greek lemon, sea salt, and extra virgin olive oil.",
+    calories: 400,
+    protein: "49g",
+    carbs: "14g",
+    fat: "8g",
+    popular: false,
+    hasSides: true,
+    inStock: true
+  },
+  {
+    id: "veggie-souvlaki",
+    name: "Veggie Souvlaki",
+    price: 11.99,
+    category: "vegetarian",
+    image: "public/images/meals/veggie-souvlaki.jpg",
+    description: "Skewered char-grilled zucchini, bell peppers, cremini mushrooms, and red onions with Greek herb marinade.",
+    calories: 320,
+    protein: "14g",
+    carbs: "34g",
+    fat: "8g",
+    popular: false,
+    hasSides: true,
+    inStock: true
+  },
+  {
+    id: "chicken-souvlaki",
+    name: "Chicken Souvlaki Plate",
+    price: 12.99,
+    category: "chicken",
+    image: "public/images/meals/chicken-souvlaki.jpg",
+    description: "Traditional skewers of cubed chicken breast marinated in lemon, garlic, white wine, and Greek mountain oregano.",
+    calories: 430,
+    protein: "48g",
+    carbs: "16g",
+    fat: "10g",
+    popular: true,
+    hasSides: true,
+    inStock: true
+  },
+  {
+    id: "beef-souvlaki",
+    name: "Beef Souvlaki Plate",
+    price: 13.99,
+    category: "beef",
+    image: "public/images/meals/beef-souvlaki.jpg",
+    description: "Tender sirloin steak skewers grilled over open flame with extra virgin olive oil and fragrant spices.",
+    calories: 470,
+    protein: "45g",
+    carbs: "15g",
+    fat: "15g",
+    popular: true,
+    hasSides: true,
+    inStock: true
+  },
+  {
+    id: "pork-souvlaki",
+    name: "Pork Souvlaki Plate",
+    price: 9.99,
+    category: "pork",
+    image: "public/images/meals/pork-souvlaki.jpg",
+    description: "Authentic Greek street-style marinated pork tenderloin skewers with vibrant lemon and crushed oregano.",
+    calories: 440,
+    protein: "43g",
+    carbs: "14g",
+    fat: "13g",
+    popular: true,
+    hasSides: true,
+    inStock: true
+  },
+  {
+    id: "spinach-pie",
+    name: "Spinach Pie Dinner",
+    price: 12.99,
+    category: "vegetarian",
+    image: "public/images/meals/spinach-pie.jpg",
+    description: "Traditional homemade Spanakopita with flaky phyllo pastry, organic baby spinach, scallions, and sheep's milk feta.",
+    calories: 450,
+    protein: "18g",
+    carbs: "42g",
+    fat: "22g",
+    popular: false,
+    hasSides: true,
+    inStock: true
   },
   {
     id: "pasta-al-greco",
     name: "Pasta al Greco",
     price: 9.99,
-    category: "pasta",
+    category: "other",
     image: "public/images/meals/pasta-al-greco.jpg",
-    description: "Whole wheat penne tossed in rich roasted garlic tomato sauce, Kalamata olives, capers, and crumbled feta. (No sides included)",
-    calories: 520,
-    protein: "22g",
-    carbs: "72g",
+    description: "Penne pasta tossed in rich Greek roasted tomato sauce, virgin olive oil, fragrant basil, and crumbled sheep's feta. (Complete dish — no sides included).",
+    calories: 460,
+    protein: "16g",
+    carbs: "68g",
     fat: "12g",
     popular: false,
-    hasSides: false // Excludes sides per flyer
-  },
-  {
-    id: "beef-mushroom-sauce",
-    name: "Beef Mushroom Sauce",
-    price: 14.99,
-    category: "beef",
-    image: "public/images/meals/beef-mushroom.jpg",
-    description: "Slow-braised tender beef medallions ladled with a velvety roasted wild mushroom and red wine demi.",
-    calories: 510,
-    protein: "48g",
-    carbs: "14g",
-    fat: "18g",
-    popular: false,
-    hasSides: true
+    hasSides: false, // EXPLICIT EXCEPTION FROM FLYER
+    inStock: true
   },
   {
     id: "smoked-pork-loin",
@@ -249,46 +295,36 @@ const MENU_ITEMS = [
     price: 12.99,
     category: "pork",
     image: "public/images/meals/smoked-pork-loin.jpg",
-    description: "Applewood hardwood smoked lean pork loin chops carved thin and served with natural pan jus.",
-    calories: 430,
-    protein: "45g",
-    carbs: "8g",
-    fat: "12g",
+    description: "Tender center-cut pork loin, lightly smoked with natural applewood and served with aromatic citrus jus.",
+    calories: 460,
+    protein: "46g",
+    carbs: "14g",
+    fat: "13g",
     popular: false,
-    hasSides: true
+    hasSides: true,
+    inStock: true
   },
   {
-    id: "smoked-turkey-breast",
-    name: "Smoked Turkey Breast",
-    price: 13.99,
-    category: "poultry",
-    image: "public/images/meals/smoked-turkey.jpg",
-    description: "Ultra-clean smoked artisan turkey breast seasoned with cracked peppercorn and Aegean sage.",
-    calories: 380,
-    protein: "51g",
-    carbs: "6g",
-    fat: "5g",
-    popular: false,
-    hasSides: true
-  },
-  {
-    id: "turkey-souvlaki-plate",
+    id: "turkey-souvlaki",
     name: "Turkey Souvlaki Plate",
     price: 13.99,
-    category: "poultry",
+    category: "other",
     image: "public/images/meals/turkey-souvlaki.jpg",
-    description: "Char-grilled lean turkey tenderloin cubes infused with lemon garlic herb marinade.",
-    calories: 420,
-    protein: "48g",
-    carbs: "9g",
+    description: "Lean cubed turkey breast skewers flame-broiled with lemon, garlic, Greek sea salt, and extra virgin olive oil.",
+    calories: 410,
+    protein: "49g",
+    carbs: "14g",
     fat: "8g",
     popular: false,
-    hasSides: true
+    hasSides: true,
+    inStock: true
   }
 ];
 
-// Available sides from flyer (Any plate comes with 2 sides of your choice, except Pasta al Greco)
-const AVAILABLE_SIDES = [
+// ==========================================
+// 2. DEFAULT DATA: 11 SIDES FROM FLYER
+// ==========================================
+const DEFAULT_SIDES = [
   "Rice Pilaf with Veggies",
   "Yellow Basmati Rice",
   "Spinach Mushroom Rice",
@@ -302,881 +338,1671 @@ const AVAILABLE_SIDES = [
   "Green Beans in Tomato Sauce"
 ];
 
-// 2. Application State
-const state = {
-  cart: JSON.parse(localStorage.getItem('gfk_cart') || '[]'),
-  selectedDish: null,
-  deliveryMethod: 'delivery', // 'delivery' or 'pickup'
-  deliveryDistanceKm: 4.5,
-  scheduledDay: 'Sunday',
-  activeCategory: 'all',
-  customerOrders: JSON.parse(localStorage.getItem('gfk_orders') || '[]')
+// ==========================================
+// 3. BUSINESS SETTINGS CONFIGURATION
+// ==========================================
+const DEFAULT_SETTINGS = {
+  businessName: "Greek Fit Kitchen",
+  tagline: "BIG GREEK FLAVOUR. ZERO MEAL PREP.",
+  manager: "George the Greek",
+  pickupAddress: "3575 Lake Shore Blvd W, Etobicoke, ON M8W 1P5, Canada",
+  poweredBy: "Lean Meal (leanmeal.ca)",
+  currency: "CAD",
+  currencySymbol: "$",
+  minMeals: 6,
+  minMealStartingPrice: 59.94,
+  volumeDiscountThreshold: 7,
+  volumeDiscountRate: 0.10, // 10% OFF on 7+ meals
+  extraSidePrice: 4.99, // CAD
+  includedSidesCount: 2,
+  deliveryBaseFee: 5.99, // CAD
+  deliveryPerKm: 0.99,   // CAD / km
+  taxRate: 0.13,         // Ontario HST 13%
+  taxInclusive: false,
+  timezone: "America/Toronto",
+  sundayCutoffDay: "Friday",
+  sundayCutoffTime: "12:00", // 12pm noon
+  wednesdayCutoffDay: "Monday",
+  wednesdayCutoffTime: "12:00" // 12pm noon
 };
 
-// 3. Theme Management (User Rule 1)
-function initTheme() {
-  const savedTheme = localStorage.getItem('gfk_theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  
-  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-    document.documentElement.classList.add('dark');
-  } else {
-    document.documentElement.classList.remove('dark');
+// ==========================================
+// 4. STORAGE ACCESSORS (Reactive Central DB)
+// ==========================================
+function getStoredMenu() {
+  try {
+    const raw = localStorage.getItem("gfk_menu_items");
+    return raw ? JSON.parse(raw) : DEFAULT_MENU_ITEMS;
+  } catch (e) {
+    return DEFAULT_MENU_ITEMS;
   }
-  updateThemeIcon();
+}
+
+function saveStoredMenu(items) {
+  localStorage.setItem("gfk_menu_items", JSON.stringify(items));
+  window.dispatchEvent(new Event("gfk_menu_updated"));
+}
+
+function getStoredSettings() {
+  try {
+    const raw = localStorage.getItem("gfk_settings");
+    return raw ? { ...DEFAULT_SETTINGS, ...JSON.parse(raw) } : DEFAULT_SETTINGS;
+  } catch (e) {
+    return DEFAULT_SETTINGS;
+  }
+}
+
+function saveStoredSettings(settings) {
+  localStorage.setItem("gfk_settings", JSON.stringify(settings));
+  window.dispatchEvent(new Event("gfk_settings_updated"));
+}
+
+function getStoredOrders() {
+  try {
+    const raw = localStorage.getItem("gfk_orders");
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveStoredOrders(orders) {
+  localStorage.setItem("gfk_orders", JSON.stringify(orders));
+  window.dispatchEvent(new Event("gfk_orders_updated"));
+}
+
+// ==========================================
+// 5. APPLICATION STATE
+// ==========================================
+let currentMenu = getStoredMenu();
+let currentSettings = getStoredSettings();
+let cart = loadCart();
+let selectedCategory = "all";
+let searchKeyword = "";
+let currentCustomizingMeal = null;
+let deliveryMethod = "delivery"; // "delivery" | "pickup"
+let calculatedDistanceKm = 5.0;  // default 5km
+let calculatedDeliveryFee = 10.94; // 5.99 + (5 * 0.99)
+let currentUser = loadUser();
+
+// ==========================================
+// 6. THEME CONTROLLER (MANDATORY RULE 1)
+// ==========================================
+function initTheme() {
+  const savedTheme = localStorage.getItem("gfk_theme");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  
+  if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
+  updateThemeIcons();
 }
 
 function toggleTheme() {
-  const isDark = document.documentElement.classList.toggle('dark');
-  localStorage.setItem('gfk_theme', isDark ? 'dark' : 'light');
-  updateThemeIcon();
+  const isDark = document.documentElement.classList.toggle("dark");
+  localStorage.setItem("gfk_theme", isDark ? "dark" : "light");
+  updateThemeIcons();
 }
 
-function updateThemeIcon() {
-  const isDark = document.documentElement.classList.contains('dark');
-  const moonIcons = document.querySelectorAll('.theme-icon-moon');
-  const sunIcons = document.querySelectorAll('.theme-icon-sun');
+function updateThemeIcons() {
+  const isDark = document.documentElement.classList.contains("dark");
+  const buttons = document.querySelectorAll("#themeToggleBtn, .theme-toggle-btn");
   
-  moonIcons.forEach(el => {
-    el.style.display = isDark ? 'none' : 'block';
-  });
-  sunIcons.forEach(el => {
-    el.style.display = isDark ? 'block' : 'none';
+  buttons.forEach(btn => {
+    // When in light mode: display Crescent Moon icon (to switch to dark)
+    // When in dark mode: display Sun icon (to switch to light)
+    if (isDark) {
+      btn.innerHTML = `
+        <svg class="w-5 h-5 text-greek-gold transition-transform duration-300 transform rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9h-1m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+        </svg>
+      `;
+      btn.setAttribute("title", "Switch to Light Mode");
+    } else {
+      btn.innerHTML = `
+        <svg class="w-5 h-5 text-white transition-transform duration-300 transform -rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+        </svg>
+      `;
+      btn.setAttribute("title", "Switch to Dark Mode");
+    }
   });
 }
 
-// 4. Hero Slider Implementation
-let currentSlide = 0;
-let slideInterval = null;
-
-function initSlider() {
-  const slides = document.querySelectorAll('.slide-item');
-  const dots = document.querySelectorAll('.slider-dot');
-  if (!slides.length) return;
-
-  function showSlide(index) {
-    slides.forEach((s, idx) => {
-      s.classList.toggle('active', idx === index);
-    });
-    dots.forEach((d, idx) => {
-      d.classList.toggle('bg-sky-400', idx === index);
-      d.classList.toggle('w-8', idx === index);
-      d.classList.toggle('bg-white/40', idx !== index);
-      d.classList.toggle('w-2.5', idx !== index);
-    });
-    currentSlide = index;
-  }
-
-  window.nextSlide = function() {
-    let next = (currentSlide + 1) % slides.length;
-    showSlide(next);
-  };
-
-  window.prevSlide = function() {
-    let prev = (currentSlide - 1 + slides.length) % slides.length;
-    showSlide(prev);
-  };
-
-  window.goToSlide = function(index) {
-    showSlide(index);
-    resetSliderInterval();
-  };
-
-  function startSliderInterval() {
-    slideInterval = setInterval(window.nextSlide, 5500);
-  }
-
-  function resetSliderInterval() {
-    if (slideInterval) clearInterval(slideInterval);
-    startSliderInterval();
-  }
-
-  const sliderContainer = document.getElementById('heroSlider');
-  if (sliderContainer) {
-    sliderContainer.addEventListener('mouseenter', () => clearInterval(slideInterval));
-    sliderContainer.addEventListener('mouseleave', startSliderInterval);
-  }
-
-  startSliderInterval();
-}
-
-// 5. Order Cutoff Countdown (Toronto Local Time)
-function updateCutoffCountdown() {
+// ==========================================
+// 7. AMERICA/TORONTO DELIVERY CUTOFF ENGINE
+// ==========================================
+function getTorontoTime() {
   const now = new Date();
-  // Toronto is in Eastern Time (America/Toronto)
-  const estString = now.toLocaleString("en-US", { timeZone: "America/Toronto" });
-  const torontoNow = new Date(estString);
-  const currentDay = torontoNow.getDay(); // 0 is Sunday, 1 Monday, 5 Friday
+  const torontoStr = now.toLocaleString("en-US", { timeZone: "America/Toronto" });
+  return new Date(torontoStr);
+}
+
+function calculateNextCutoff() {
+  const toronto = getTorontoTime();
+  const day = toronto.getDay(); // 0: Sun, 1: Mon, 2: Tue, 3: Wed, 4: Thu, 5: Fri, 6: Sat
+  const hour = toronto.getHours();
+  const minute = toronto.getMinutes();
   
   // Cutoffs:
-  // For Sunday Delivery: Order by Friday 12:00 PM
-  // For Wednesday Delivery: Order by Monday 12:00 PM
-  const countdownEl = document.getElementById('cutoffCountdown');
-  const nextDeliveryBadge = document.getElementById('nextDeliveryBadge');
-  if (!countdownEl) return;
+  // Sunday delivery: Order by Friday 12:00 PM (noon)
+  // Wednesday delivery: Order by Monday 12:00 PM (noon)
 
-  let targetDate = new Date(torontoNow);
-  let nextDeliveryName = "Sunday Delivery";
+  let nextBatch = "";
+  let cutoffText = "";
+  let hoursRemaining = 0;
+  let targetDate = new Date(toronto);
 
-  if (currentDay < 1 || (currentDay === 1 && torontoNow.getHours() < 12)) {
-    // Next cutoff is Monday 12 PM for Wednesday delivery
-    targetDate.setDate(torontoNow.getDate() + ((1 - currentDay + 7) % 7));
+  // Determine current window
+  // If before Friday 12:00pm, next delivery is upcoming Sunday
+  if (day < 5 || (day === 5 && hour < 12)) {
+    nextBatch = "Upcoming Sunday Batch";
+    cutoffText = "Sunday Delivery — Order by Friday, 12 p.m.";
+    const daysUntilFriday = (5 - day);
+    targetDate.setDate(toronto.getDate() + daysUntilFriday);
     targetDate.setHours(12, 0, 0, 0);
-    nextDeliveryName = "Wednesday Delivery";
-  } else if (currentDay < 5 || (currentDay === 5 && torontoNow.getHours() < 12)) {
-    // Next cutoff is Friday 12 PM for Sunday delivery
-    targetDate.setDate(torontoNow.getDate() + ((5 - currentDay + 7) % 7));
+  } 
+  // If after Friday 12:00pm and before Monday 12:00pm, next delivery is upcoming Wednesday
+  else if (day === 5 || day === 6 || day === 0 || (day === 1 && hour < 12)) {
+    nextBatch = "Upcoming Wednesday Batch";
+    cutoffText = "Wednesday Delivery — Order by Monday, 12 p.m.";
+    let daysUntilMonday = 0;
+    if (day === 5) daysUntilMonday = 3;
+    else if (day === 6) daysUntilMonday = 2;
+    else if (day === 0) daysUntilMonday = 1;
+    else if (day === 1) daysUntilMonday = 0;
+    
+    targetDate.setDate(toronto.getDate() + daysUntilMonday);
     targetDate.setHours(12, 0, 0, 0);
-    nextDeliveryName = "Sunday Delivery";
-  } else {
-    // Past Friday 12 PM -> Next cutoff is Monday 12 PM
-    targetDate.setDate(torontoNow.getDate() + ((1 - currentDay + 7) % 7));
+  } 
+  // If after Monday 12:00pm and before Friday 12:00pm, next delivery is upcoming Sunday
+  else {
+    nextBatch = "Upcoming Sunday Batch";
+    cutoffText = "Sunday Delivery — Order by Friday, 12 p.m.";
+    const daysUntilFriday = (5 - day);
+    targetDate.setDate(toronto.getDate() + daysUntilFriday);
     targetDate.setHours(12, 0, 0, 0);
-    nextDeliveryName = "Wednesday Delivery";
   }
 
-  const diffMs = targetDate - torontoNow;
-  if (diffMs > 0) {
-    const hours = Math.floor(diffMs / (1000 * 60 * 60));
-    const mins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-    const secs = Math.floor((diffMs % (1000 * 60)) / 1000);
-    countdownEl.innerHTML = `<span class="text-amber-400 font-bold">${hours}h ${mins}m ${secs}s</span> left to order for <strong>${nextDeliveryName}</strong>`;
-    if (nextDeliveryBadge) {
-      nextDeliveryBadge.innerText = `Cutoff in ${hours}h ${mins}m`;
-    }
-  }
-}
+  const diffMs = targetDate.getTime() - toronto.getTime();
+  const totalHours = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60)));
+  const totalMins = Math.max(0, Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60)));
+  const totalSecs = Math.max(0, Math.floor((diffMs % (1000 * 60)) / 1000));
 
-// 6. Delivery Distance Calculator
-function calculateDeliveryFee(distanceKm, method = 'delivery') {
-  if (method === 'pickup') return 0;
-  const km = parseFloat(distanceKm) || 0;
-  if (km <= 2) {
-    return 0; // Up to 2 km: Free
-  } else if (km <= 5) {
-    return 5.00; // Over 2 km and up to 5 km: $5
-  } else {
-    return km * 1.00; // Over 5 km: $1 per km
-  }
-}
-
-function updateDistanceCalculatorUI() {
-  const input = document.getElementById('calcDistanceInput');
-  const resultFee = document.getElementById('calcResultFee');
-  const resultBadge = document.getElementById('calcResultBadge');
-  if (!input || !resultFee) return;
-
-  const km = parseFloat(input.value) || 0;
-  state.deliveryDistanceKm = km;
-  const fee = calculateDeliveryFee(km, 'delivery');
-
-  if (km <= 2) {
-    resultFee.innerHTML = `<span class="text-emerald-500 font-bold text-2xl">FREE</span>`;
-    resultBadge.innerHTML = `<span class="bg-emerald-500/20 text-emerald-400 text-xs px-2.5 py-1 rounded-full font-semibold">Under 2 km Free Zone</span>`;
-  } else if (km <= 5) {
-    resultFee.innerHTML = `<span class="text-sky-400 font-bold text-2xl">$5.00 CAD</span>`;
-    resultBadge.innerHTML = `<span class="bg-sky-500/20 text-sky-400 text-xs px-2.5 py-1 rounded-full font-semibold">Standard Local Zone (2–5 km)</span>`;
-  } else {
-    resultFee.innerHTML = `<span class="text-amber-400 font-bold text-2xl">$${fee.toFixed(2)} CAD</span>`;
-    resultBadge.innerHTML = `<span class="bg-amber-500/20 text-amber-400 text-xs px-2.5 py-1 rounded-full font-semibold">Extended Zone ($1.00/km)</span>`;
-  }
-
-  updateCartSummary();
-}
-
-// 7. Menu Rendering & Filtering
-function renderMenu(category = 'all') {
-  const container = document.getElementById('menuGrid');
-  if (!container) return;
-
-  const filtered = category === 'all' 
-    ? MENU_ITEMS 
-    : MENU_ITEMS.filter(item => item.category === category);
-
-  container.innerHTML = filtered.map(item => `
-    <div class="group glass-card rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-sky-500/10 border border-slate-200 dark:border-slate-800">
-      <div class="relative overflow-hidden aspect-[4/3] bg-slate-100 dark:bg-slate-900">
-        <img src="${item.image}" alt="${item.name}" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-        <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
-          ${item.popular ? `<span class="badge-gold text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow">Chef's Pick</span>` : ''}
-          ${!item.hasSides ? `<span class="bg-slate-800/90 text-white text-[11px] font-medium px-2 py-0.5 rounded-full backdrop-blur-sm">No Sides</span>` : `<span class="bg-sky-600/90 text-white text-[11px] font-semibold px-2 py-0.5 rounded-full backdrop-blur-sm">2 Sides Included</span>`}
-        </div>
-        <div class="absolute bottom-3 right-3 bg-slate-900/80 backdrop-blur-md text-white text-xs px-2.5 py-1 rounded-full font-semibold">
-          🔥 ${item.calories} kcal · 💪 ${item.protein}
-        </div>
-      </div>
-
-      <div class="p-5 flex-1 flex flex-col justify-between">
-        <div>
-          <div class="flex items-start justify-between gap-2 mb-2">
-            <h3 class="font-bold text-lg text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors">
-              ${item.name}
-            </h3>
-            <span class="text-lg font-black text-sky-600 dark:text-sky-400 whitespace-nowrap">
-              $${item.price.toFixed(2)}
-            </span>
-          </div>
-          <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 mb-4 leading-relaxed">
-            ${item.description}
-          </p>
-          
-          <div class="flex items-center gap-3 text-[11px] text-slate-500 dark:text-slate-400 mb-4 bg-slate-100/70 dark:bg-slate-800/60 p-2 rounded-lg">
-            <span>Carbs: <strong>${item.carbs}</strong></span>
-            <span>·</span>
-            <span>Fat: <strong>${item.fat}</strong></span>
-            <span>·</span>
-            <span class="text-emerald-600 dark:text-emerald-400 font-semibold">Fresh Prep</span>
-          </div>
-        </div>
-
-        <button onclick="openMealCustomizer('${item.id}')" class="w-full py-2.5 px-4 bg-sky-600 hover:bg-sky-500 active:scale-[0.98] text-white font-semibold text-sm rounded-xl transition-all shadow-md shadow-sky-600/20 flex items-center justify-center gap-2">
-          <span>Customize &amp; Add</span>
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-          </svg>
-        </button>
-      </div>
-    </div>
-  `).join('');
-}
-
-// 8. Meal Customization Modal
-function openMealCustomizer(dishId) {
-  const dish = MENU_ITEMS.find(m => m.id === dishId);
-  if (!dish) return;
-  state.selectedDish = dish;
-
-  const modal = document.getElementById('mealCustomizerModal');
-  const title = document.getElementById('customizerTitle');
-  const img = document.getElementById('customizerImg');
-  const price = document.getElementById('customizerPrice');
-  const desc = document.getElementById('customizerDesc');
-  const sidesContainer = document.getElementById('customizerSidesSection');
-  const extraSidesContainer = document.getElementById('customizerExtraSidesSection');
-  const notesInput = document.getElementById('customizerNotes');
-
-  title.innerText = dish.name;
-  img.src = dish.image;
-  price.innerText = `$${dish.price.toFixed(2)} CAD`;
-  desc.innerText = dish.description;
-  if (notesInput) notesInput.value = '';
-
-  if (!dish.hasSides) {
-    sidesContainer.innerHTML = `
-      <div class="p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl text-amber-600 dark:text-amber-400 text-xs">
-        ℹ️ Note: <strong>Pasta al Greco</strong> is served as a complete stand-alone dish with roasted sauce and Greek feta (no sides included).
-      </div>
-    `;
-    extraSidesContainer.classList.add('hidden');
-  } else {
-    extraSidesContainer.classList.remove('hidden');
-    // Included Sides (Choose up to 2)
-    sidesContainer.innerHTML = `
-      <div class="mb-3">
-        <div class="flex items-center justify-between">
-          <label class="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
-            Choose Your 2 Included Sides <span class="text-sky-500">(Included in $${dish.price.toFixed(2)})</span>
-          </label>
-          <span id="sidesChosenCount" class="text-xs font-semibold text-slate-500">0 of 2 selected</span>
-        </div>
-        <p class="text-[11px] text-slate-500 dark:text-slate-400">Select any 2 gourmet fresh sides prepared daily:</p>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto pr-1">
-        ${AVAILABLE_SIDES.map((side, idx) => `
-          <label class="flex items-center gap-2.5 p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-sky-50 dark:hover:bg-slate-800/50 cursor-pointer transition-colors text-xs text-slate-700 dark:text-slate-300">
-            <input type="checkbox" name="includedSide" value="${side}" onchange="handleSideSelectionLimit(this)" class="custom-checkbox w-4 h-4 rounded text-sky-600 border-slate-300 dark:border-slate-700 focus:ring-sky-500" />
-            <span>${side}</span>
-          </label>
-        `).join('')}
-      </div>
-    `;
-
-    // Extra Sides (+$4.99 CAD each)
-    const extraSidesList = document.getElementById('extraSidesList');
-    if (extraSidesList) {
-      extraSidesList.innerHTML = AVAILABLE_SIDES.slice(0, 6).map(side => `
-        <label class="flex items-center justify-between p-2 rounded-lg border border-slate-200 dark:border-slate-800 text-xs hover:bg-slate-50 dark:hover:bg-slate-800/40 cursor-pointer">
-          <span class="flex items-center gap-2 text-slate-700 dark:text-slate-300">
-            <input type="checkbox" name="extraSide" value="${side}" onchange="updateCustomizerTotal()" class="custom-checkbox w-4 h-4 rounded text-sky-600 focus:ring-sky-500" />
-            <span>${side}</span>
-          </span>
-          <span class="font-bold text-sky-600 dark:text-sky-400">+$4.99</span>
-        </label>
-      `).join('');
-    }
-  }
-
-  updateCustomizerTotal();
-  modal.classList.remove('hidden');
-  document.body.classList.add('overflow-hidden');
-}
-
-function handleSideSelectionLimit(checkbox) {
-  const checked = document.querySelectorAll('input[name="includedSide"]:checked');
-  const countDisplay = document.getElementById('sidesChosenCount');
-  
-  if (checked.length > 2) {
-    checkbox.checked = false;
-    alert("You can choose up to 2 included sides. Check extra sides below if you'd like more!");
-  } else {
-    if (countDisplay) {
-      countDisplay.innerText = `${checked.length} of 2 selected`;
-      countDisplay.className = checked.length === 2 ? "text-xs font-bold text-emerald-500" : "text-xs font-semibold text-slate-500";
-    }
-  }
-}
-
-function updateCustomizerTotal() {
-  if (!state.selectedDish) return;
-  const extraSides = document.querySelectorAll('input[name="extraSide"]:checked');
-  const extraTotal = extraSides.length * 4.99;
-  const total = state.selectedDish.price + extraTotal;
-  const btnTotal = document.getElementById('customizerAddBtnTotal');
-  if (btnTotal) {
-    btnTotal.innerText = `$${total.toFixed(2)} CAD`;
-  }
-}
-
-function closeMealCustomizer() {
-  const modal = document.getElementById('mealCustomizerModal');
-  if (modal) modal.classList.add('hidden');
-  document.body.classList.remove('overflow-hidden');
-  state.selectedDish = null;
-}
-
-function addCustomizedMealToCart() {
-  if (!state.selectedDish) return;
-  const dish = state.selectedDish;
-
-  let chosenSides = [];
-  let chosenExtraSides = [];
-
-  if (dish.hasSides) {
-    const includedChecked = document.querySelectorAll('input[name="includedSide"]:checked');
-    if (includedChecked.length === 0) {
-      if (!confirm("You haven't selected your 2 included sides. Would you like to select them now? (Click Cancel to select default: Rice Pilaf + Roasted Potatoes)")) {
-        chosenSides = ["Rice Pilaf with Veggies", "Lemon Roasted Potatoes"];
-      } else {
-        return;
-      }
-    } else {
-      includedChecked.forEach(cb => chosenSides.push(cb.value));
-    }
-
-    const extraChecked = document.querySelectorAll('input[name="extraSide"]:checked');
-    extraChecked.forEach(cb => chosenExtraSides.push(cb.value));
-  }
-
-  const notesInput = document.getElementById('customizerNotes');
-  const specialNotes = notesInput ? notesInput.value.trim() : '';
-
-  const cartItem = {
-    cartItemId: Date.now() + Math.random().toString(36).substr(2, 5),
-    id: dish.id,
-    name: dish.name,
-    price: dish.price,
-    image: dish.image,
-    sides: chosenSides,
-    extraSides: chosenExtraSides,
-    extraSidesCost: chosenExtraSides.length * 4.99,
-    specialNotes: specialNotes,
-    quantity: 1
+  return {
+    nextBatch,
+    cutoffText,
+    totalHours,
+    totalMins,
+    totalSecs,
+    targetDate
   };
-
-  state.cart.push(cartItem);
-  saveCart();
-  closeMealCustomizer();
-  openCartDrawer();
 }
 
-// 9. Quick Add 6-Meal Value Package ($59.94 CAD)
-function addSixMealPackage() {
-  // Adds the 6-meal starter plan ($59.94 CAD = $9.99/meal)
-  const starterMeals = [
-    { id: "grilled-chicken", sides: ["Rice Pilaf with Veggies", "Lemon Roasted Potatoes"] },
-    { id: "chicken-souvlaki-plate", sides: ["Yellow Basmati Rice", "Garlic Butter Baked Potatoes"] },
-    { id: "pork-souvlaki-plate", sides: ["Rice Pilaf with Veggies", "Sautéed Veggies"] },
-    { id: "chicken-leg-plate", sides: ["Spinach Mushroom Rice", "Sweet Potatoes"] },
-    { id: "veggie-souvlaki", sides: ["Lemon Roasted Potatoes", "Green Beans in Tomato Sauce"] },
-    { id: "pasta-al-greco", sides: [] }
-  ];
-
-  starterMeals.forEach(sm => {
-    const dish = MENU_ITEMS.find(m => m.id === sm.id);
-    if (dish) {
-      state.cart.push({
-        cartItemId: Date.now() + Math.random().toString(36).substr(2, 5),
-        id: dish.id,
-        name: dish.name,
-        price: dish.price,
-        image: dish.image,
-        sides: sm.sides,
-        extraSides: [],
-        extraSidesCost: 0,
-        specialNotes: "6-Meal Starter Package selection",
-        quantity: 1
-      });
-    }
+function updateCutoffCountdown() {
+  const cutoff = calculateNextCutoff();
+  const cutoffEls = document.querySelectorAll("#cutoffCountdown, .cutoff-countdown");
+  
+  cutoffEls.forEach(el => {
+    el.innerHTML = `
+      <span class="inline-block w-2 h-2 rounded-full bg-greek-lime animate-pulse mr-1"></span>
+      <span class="font-bold text-greek-gold">${cutoff.cutoffText}</span>
+      <span class="text-white/80 font-mono text-[10px] ml-1.5 bg-black/40 px-2 py-0.5 rounded border border-white/10">
+        ${cutoff.totalHours}h ${cutoff.totalMins}m ${cutoff.totalSecs}s left
+      </span>
+    `;
   });
 
-  saveCart();
-  openCartDrawer();
+  const checkoutCutoffEl = document.getElementById("checkoutCutoffNotice");
+  if (checkoutCutoffEl) {
+    checkoutCutoffEl.innerHTML = `
+      <div>
+        <strong class="text-greek-gold block">${cutoff.nextBatch} Guaranteed</strong>
+        <span class="text-[11px] text-white/80">${cutoff.cutoffText} (Toronto Local Time)</span>
+      </div>
+    `;
+  }
 }
 
-// 10. Cart Management & Calculations
-function saveCart() {
-  localStorage.setItem('gfk_cart', JSON.stringify(state.cart));
-  updateCartBadge();
-  updateCartSummary();
-}
-
-function updateCartBadge() {
-  const totalCount = state.cart.reduce((sum, item) => sum + item.quantity, 0);
-  const badges = document.querySelectorAll('.cart-count-badge');
-  badges.forEach(b => {
-    b.innerText = totalCount;
-    b.style.display = totalCount > 0 ? 'flex' : 'none';
-  });
-}
-
-function updateCartSummary() {
-  const container = document.getElementById('cartItemsList');
+// ==========================================
+// 8. MENU RENDERING, SEARCH & CATEGORIES
+// ==========================================
+function renderMenuGrid() {
+  const container = document.getElementById("menuGrid");
   if (!container) return;
 
-  const totalMeals = state.cart.reduce((sum, item) => sum + item.quantity, 0);
-  const subtotal = state.cart.reduce((sum, item) => sum + ((item.price + item.extraSidesCost) * item.quantity), 0);
+  currentMenu = getStoredMenu();
 
-  // Minimum 6 meals rule
-  const minMet = totalMeals >= 6;
-  const mealsNeeded = Math.max(0, 6 - totalMeals);
+  let filtered = currentMenu.filter(item => {
+    const matchCategory = selectedCategory === "all" || item.category === selectedCategory;
+    const matchSearch = item.name.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+                        (item.description && item.description.toLowerCase().includes(searchKeyword.toLowerCase()));
+    return matchCategory && matchSearch;
+  });
 
-  // Volume Discount: 10% off for 7 or more meals
-  const discountEligible = totalMeals >= 7;
-  const discountAmount = discountEligible ? subtotal * 0.10 : 0;
-  const discountedSubtotal = subtotal - discountAmount;
-
-  // Delivery fee
-  const deliveryFee = calculateDeliveryFee(state.deliveryDistanceKm, state.deliveryMethod);
-  const tax = discountedSubtotal * 0.13; // Ontario 13% HST
-  const grandTotal = discountedSubtotal + deliveryFee + tax;
-
-  // Update Mini Cart Notice / Progress Bar
-  const progressContainer = document.getElementById('cartVolumeProgressBar');
-  if (progressContainer) {
-    if (!minMet) {
-      progressContainer.innerHTML = `
-        <div class="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-xs text-amber-600 dark:text-amber-400 flex items-center justify-between">
-          <span>⚠️ Minimum order is <strong>6 meals</strong> (${mealsNeeded} more needed)</span>
-          <button onclick="addSixMealPackage()" class="underline font-bold hover:text-amber-500">Auto Fill 6</button>
-        </div>
-      `;
-    } else if (!discountEligible) {
-      progressContainer.innerHTML = `
-        <div class="p-3 bg-sky-500/10 border border-sky-500/20 rounded-xl text-xs text-sky-600 dark:text-sky-400 flex items-center justify-between">
-          <span>🎉 Minimum met! Add <strong>1 more meal</strong> to unlock <strong>10% Volume Discount</strong></span>
-        </div>
-      `;
-    } else {
-      progressContainer.innerHTML = `
-        <div class="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-xs text-emerald-600 dark:text-emerald-400 flex items-center justify-between">
-          <span>🌟 <strong>10% Volume Discount Applied!</strong> You saved $${discountAmount.toFixed(2)} CAD</span>
-        </div>
-      `;
-    }
-  }
-
-  // Render Items List
-  if (state.cart.length === 0) {
+  if (filtered.length === 0) {
     container.innerHTML = `
-      <div class="text-center py-12 text-slate-400">
-        <svg class="w-16 h-16 mx-auto mb-3 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-        </svg>
-        <p class="font-semibold text-slate-700 dark:text-slate-300">Your meal prep cart is empty</p>
-        <p class="text-xs text-slate-500 mt-1">Choose from our healthy chef-curated Greek meals (min 6 meals)</p>
-        <button onclick="closeCartDrawer(); window.location.hash = '#menuGrid';" class="mt-4 px-4 py-2 bg-sky-600 text-white rounded-lg text-xs font-bold hover:bg-sky-500">
-          Browse Menu
+      <div class="col-span-full py-12 text-center text-slate-500 dark:text-slate-400">
+        <p class="text-lg font-bold">No meals found matching "${searchKeyword}".</p>
+        <button onclick="resetMenuFilters()" class="mt-3 px-4 py-2 btn-gold rounded-xl text-xs font-bold">
+          View All Meals
         </button>
       </div>
     `;
-  } else {
-    container.innerHTML = state.cart.map((item, index) => `
-      <div class="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-800/80 flex gap-3 text-xs">
-        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 rounded-lg object-cover flex-shrink-0" />
-        <div class="flex-1 min-w-0">
-          <div class="flex items-start justify-between gap-1">
-            <h4 class="font-bold text-slate-900 dark:text-white truncate">${item.name}</h4>
-            <span class="font-bold text-sky-600 dark:text-sky-400 whitespace-nowrap">$${((item.price + item.extraSidesCost) * item.quantity).toFixed(2)}</span>
+    return;
+  }
+
+  container.innerHTML = filtered.map(meal => {
+    const isPasta = !meal.hasSides;
+    const sideBadge = isPasta
+      ? `<span class="bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 text-[10px] font-black px-2 py-0.5 rounded-full border border-amber-300 dark:border-amber-700/50">Complete Plate (No Sides)</span>`
+      : `<span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>`;
+
+    return `
+      <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300">
+        <div class="relative overflow-hidden aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+          <img 
+            src="${meal.image}" 
+            alt="${meal.name}" 
+            loading="lazy"
+            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            ${sideBadge}
+            ${meal.popular ? `<span class="bg-greek-gold text-greek-navy text-[10px] font-black px-2 py-0.5 rounded-full shadow-sm">Popular</span>` : ''}
+          </div>
+          <div class="absolute bottom-3 right-3 bg-greek-navy/90 text-white font-mono font-black text-sm px-2.5 py-1 rounded-xl shadow-lg border border-white/10">
+            $${meal.price.toFixed(2)} <span class="text-[10px] font-normal text-greek-gold">CAD</span>
+          </div>
+        </div>
+
+        <div class="p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight">
+                ${meal.name}
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+              ${meal.description || 'Authentic Mediterranean meal prep prepared fresh for scheduled delivery.'}
+            </p>
           </div>
 
-          ${item.sides.length > 0 ? `
-            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1">
-              <strong>Sides:</strong> ${item.sides.join(', ')}
-            </div>
-          ` : '<div class="text-[11px] text-slate-400">No sides</div>'}
+          <!-- Nutrition Pill Strip -->
+          <div class="flex items-center gap-2 text-[10px] font-semibold text-slate-500 dark:text-slate-400 pt-3 border-t border-slate-100 dark:border-white/5 mt-4">
+            <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">${meal.calories} kcal</span>
+            <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-navy dark:text-greek-gold font-bold">${meal.protein} protein</span>
+            <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">${meal.carbs} carbs</span>
+          </div>
 
-          ${item.extraSides.length > 0 ? `
-            <div class="text-[10px] text-amber-500 mt-0.5">
-              + Extra: ${item.extraSides.join(', ')} (+$${item.extraSidesCost.toFixed(2)})
-            </div>
-          ` : ''}
-
-          <div class="flex items-center justify-between mt-2 pt-2 border-t border-slate-200 dark:border-slate-700/60">
-            <div class="flex items-center gap-2">
-              <button onclick="adjustCartItemQty(${index}, -1)" class="w-6 h-6 rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center font-bold hover:bg-slate-300">-</button>
-              <span class="font-semibold text-slate-800 dark:text-slate-200 text-xs">${item.quantity}</span>
-              <button onclick="adjustCartItemQty(${index}, 1)" class="w-6 h-6 rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center font-bold hover:bg-slate-300">+</button>
-            </div>
-            <button onclick="removeCartItem(${index})" class="text-rose-500 hover:text-rose-600 font-semibold text-[11px]">
-              Remove
+          <div class="grid grid-cols-2 gap-2 mt-4">
+            <button 
+              type="button"
+              onclick="openMealDetailModal('${meal.id}')"
+              class="w-full py-2.5 rounded-xl border border-slate-200 dark:border-white/20 text-xs font-bold text-greek-navy dark:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition"
+            >
+              Details
+            </button>
+            <button 
+              type="button"
+              onclick="openSideCustomizer('${meal.id}')"
+              class="w-full py-2.5 btn-gold rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 shadow"
+            >
+              <span>${meal.hasSides ? 'Choose Sides' : 'Add to Plan'}</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
             </button>
           </div>
         </div>
       </div>
-    `).join('');
+    `;
+  }).join("");
+}
+
+function filterMenuCategory(category) {
+  selectedCategory = category;
+  const buttons = document.querySelectorAll(".menu-cat-btn");
+  buttons.forEach(btn => {
+    if (btn.getAttribute("data-cat") === category) {
+      btn.className = "menu-cat-btn px-4 py-2 rounded-xl text-xs font-black bg-greek-navy text-white dark:bg-greek-gold dark:text-greek-navy transition shadow";
+    } else {
+      btn.className = "menu-cat-btn px-4 py-2 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/10 transition";
+    }
+  });
+  renderMenuGrid();
+}
+
+function handleMenuSearch(val) {
+  searchKeyword = val.trim();
+  renderMenuGrid();
+}
+
+function resetMenuFilters() {
+  selectedCategory = "all";
+  searchKeyword = "";
+  const input = document.getElementById("menuSearchInput");
+  if (input) input.value = "";
+  filterMenuCategory("all");
+}
+
+// ==========================================
+// 9. SIDE CUSTOMIZATION & MEAL DETAIL MODAL
+// ==========================================
+function openSideCustomizer(mealId) {
+  const meal = currentMenu.find(m => m.id === mealId);
+  if (!meal) return;
+
+  currentCustomizingMeal = meal;
+
+  const modal = document.getElementById("sideModal");
+  if (!modal) return;
+
+  document.getElementById("modalMealImg").src = meal.image;
+  document.getElementById("modalMealName").innerText = meal.name;
+  document.getElementById("modalMealPrice").innerText = `$${meal.price.toFixed(2)} CAD`;
+  document.getElementById("modalMealDesc").innerText = meal.description || "";
+
+  const sidesContainer = document.getElementById("sidesSelectionSection");
+  const pastaNotice = document.getElementById("pastaAlGrecoNotice");
+
+  if (!meal.hasSides) {
+    // Pasta al Greco exception
+    if (sidesContainer) sidesContainer.classList.add("hidden");
+    if (pastaNotice) pastaNotice.classList.remove("hidden");
+  } else {
+    if (sidesContainer) sidesContainer.classList.remove("hidden");
+    if (pastaNotice) pastaNotice.classList.add("hidden");
+    renderSideOptions();
   }
 
-  // Update summary numbers
-  const subtotalEl = document.getElementById('cartSubtotal');
-  const discountRow = document.getElementById('cartDiscountRow');
-  const discountEl = document.getElementById('cartDiscount');
-  const deliveryEl = document.getElementById('cartDeliveryFee');
-  const taxEl = document.getElementById('cartTax');
-  const totalEl = document.getElementById('cartGrandTotal');
-  const checkoutBtn = document.getElementById('cartCheckoutBtn');
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+}
 
-  if (subtotalEl) subtotalEl.innerText = `$${subtotal.toFixed(2)} CAD`;
-  
+function closeSideModal() {
+  const modal = document.getElementById("sideModal");
+  if (modal) {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  }
+  currentCustomizingMeal = null;
+}
+
+function renderSideOptions() {
+  const side1Container = document.getElementById("side1Options");
+  const side2Container = document.getElementById("side2Options");
+  const extraSidesContainer = document.getElementById("extraSidesOptions");
+
+  if (!side1Container || !side2Container) return;
+
+  // Side 1 Radio List
+  side1Container.innerHTML = DEFAULT_SIDES.map((side, idx) => `
+    <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 dark:border-white/10 hover:border-greek-gold cursor-pointer transition text-xs">
+      <input type="radio" name="modalSide1" value="${side}" ${idx === 0 ? 'checked' : ''} class="text-greek-gold focus:ring-greek-gold" />
+      <span class="text-slate-800 dark:text-slate-200 font-medium">${side}</span>
+    </label>
+  `).join("");
+
+  // Side 2 Radio List
+  side2Container.innerHTML = DEFAULT_SIDES.map((side, idx) => `
+    <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 dark:border-white/10 hover:border-greek-gold cursor-pointer transition text-xs">
+      <input type="radio" name="modalSide2" value="${side}" ${idx === 4 ? 'checked' : ''} class="text-greek-gold focus:ring-greek-gold" />
+      <span class="text-slate-800 dark:text-slate-200 font-medium">${side}</span>
+    </label>
+  `).join("");
+
+  // Extra Sides Checkboxes (+$4.99 each)
+  if (extraSidesContainer) {
+    extraSidesContainer.innerHTML = DEFAULT_SIDES.map(side => `
+      <label class="flex items-center justify-between p-2.5 rounded-xl border border-slate-200 dark:border-white/10 hover:border-greek-gold cursor-pointer transition text-xs">
+        <div class="flex items-center gap-2">
+          <input type="checkbox" name="modalExtraSides" value="${side}" onchange="updateCustomizerTotal()" class="text-greek-gold rounded focus:ring-greek-gold" />
+          <span class="text-slate-800 dark:text-slate-200 font-medium">${side}</span>
+        </div>
+        <span class="text-[11px] font-black text-greek-lime dark:text-greek-gold font-mono">+$4.99</span>
+      </label>
+    `).join("");
+  }
+
+  updateCustomizerTotal();
+}
+
+function updateCustomizerTotal() {
+  if (!currentCustomizingMeal) return;
+  const extraChecked = document.querySelectorAll("input[name='modalExtraSides']:checked");
+  const extraCount = extraChecked.length;
+  const extraPrice = extraCount * currentSettings.extraSidePrice;
+  const total = currentCustomizingMeal.price + extraPrice;
+
+  const btn = document.getElementById("confirmAddCustomMealBtn");
+  if (btn) {
+    btn.innerHTML = `
+      <span>Add to Plan · $${total.toFixed(2)} CAD</span>
+    `;
+  }
+}
+
+function confirmAddCustomMeal() {
+  if (!currentCustomizingMeal) return;
+
+  let side1 = null;
+  let side2 = null;
+  let extraSides = [];
+
+  if (currentCustomizingMeal.hasSides) {
+    const s1 = document.querySelector("input[name='modalSide1']:checked");
+    const s2 = document.querySelector("input[name='modalSide2']:checked");
+    side1 = s1 ? s1.value : DEFAULT_SIDES[0];
+    side2 = s2 ? s2.value : DEFAULT_SIDES[1];
+
+    const extraCheckboxes = document.querySelectorAll("input[name='modalExtraSides']:checked");
+    extraCheckboxes.forEach(cb => extraSides.push(cb.value));
+  }
+
+  const notes = document.getElementById("modalMealNotes")?.value || "";
+
+  addItemToCart(currentCustomizingMeal, side1, side2, extraSides, notes);
+  closeSideModal();
+  showToast(`Added ${currentCustomizingMeal.name} to your plan.`);
+  openCartDrawer();
+}
+
+// Meal Detail Modal (Comprehensive nutritional overview)
+function openMealDetailModal(mealId) {
+  const meal = currentMenu.find(m => m.id === mealId);
+  if (!meal) return;
+
+  let modal = document.getElementById("mealDetailModal");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "mealDetailModal";
+    modal.className = "fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto";
+    document.body.appendChild(modal);
+  }
+
+  modal.innerHTML = `
+    <div class="bg-white dark:bg-[#101D3A] rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-white/10 my-8">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-white/10">
+        <div>
+          <span class="text-[10px] font-black uppercase text-greek-gold tracking-wider">Chef Prepared Meal Details</span>
+          <h3 class="text-2xl font-black text-greek-navy dark:text-white">${meal.name}</h3>
+        </div>
+        <button onclick="closeMealDetailModal()" class="text-slate-400 hover:text-white text-2xl font-bold p-1">
+          &times;
+        </button>
+      </div>
+
+      <div class="my-4 rounded-2xl overflow-hidden aspect-[16/9] bg-slate-100 dark:bg-slate-800">
+        <img src="${meal.image}" alt="${meal.name}" class="w-full h-full object-cover" />
+      </div>
+
+      <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+        ${meal.description || 'Authentic Greek recipes prepared with clean olive oil, garlic, and Mediterranean spices.'}
+      </p>
+
+      <div class="grid grid-cols-4 gap-2 text-center p-3 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 mb-4 text-xs">
+        <div>
+          <span class="block text-slate-400 text-[10px]">Calories</span>
+          <strong class="font-bold text-greek-navy dark:text-white">${meal.calories}</strong>
+        </div>
+        <div>
+          <span class="block text-slate-400 text-[10px]">Protein</span>
+          <strong class="font-bold text-greek-lime">${meal.protein}</strong>
+        </div>
+        <div>
+          <span class="block text-slate-400 text-[10px]">Carbs</span>
+          <strong class="font-bold text-greek-navy dark:text-white">${meal.carbs}</strong>
+        </div>
+        <div>
+          <span class="block text-slate-400 text-[10px]">Fat</span>
+          <strong class="font-bold text-greek-navy dark:text-white">${meal.fat}</strong>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-white/10">
+        <div>
+          <span class="text-[10px] text-slate-400 block">Single Serving Price</span>
+          <span class="text-xl font-black text-greek-gold font-mono">$${meal.price.toFixed(2)} CAD</span>
+        </div>
+        <button 
+          onclick="closeMealDetailModal(); openSideCustomizer('${meal.id}')"
+          class="px-6 py-3 btn-gold rounded-xl font-black text-xs shadow-lg flex items-center gap-2"
+        >
+          <span>Customize &amp; Add</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </button>
+      </div>
+    </div>
+  `;
+
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+}
+
+function closeMealDetailModal() {
+  const modal = document.getElementById("mealDetailModal");
+  if (modal) {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  }
+}
+
+// ==========================================
+// 10. CART ENGINE, 6-MEAL MINIMUM & 10% DISCOUNT
+// ==========================================
+function loadCart() {
+  try {
+    const raw = localStorage.getItem("gfk_cart");
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveCart() {
+  localStorage.setItem("gfk_cart", JSON.stringify(cart));
+  window.dispatchEvent(new Event("gfk_cart_updated"));
+}
+
+function addItemToCart(meal, side1, side2, extraSides = [], notes = "") {
+  const extraPrice = (extraSides.length || 0) * currentSettings.extraSidePrice;
+  const unitPrice = meal.price + extraPrice;
+
+  const cartItem = {
+    cartItemId: "item_" + Date.now() + "_" + Math.random().toString(36).substr(2, 5),
+    mealId: meal.id,
+    name: meal.name,
+    basePrice: meal.price,
+    extraSidesPrice: extraPrice,
+    unitPrice: unitPrice,
+    quantity: 1,
+    image: meal.image,
+    side1: side1,
+    side2: side2,
+    extraSides: extraSides,
+    notes: notes,
+    hasSides: meal.hasSides
+  };
+
+  cart.push(cartItem);
+  saveCart();
+  renderCartDrawer();
+  updateMealPlanBuilderUI();
+}
+
+function removeCartItem(cartItemId) {
+  cart = cart.filter(item => item.cartItemId !== cartItemId);
+  saveCart();
+  renderCartDrawer();
+  updateMealPlanBuilderUI();
+  showToast("Meal removed from plan.");
+}
+
+function updateCartItemQty(cartItemId, delta) {
+  const item = cart.find(it => it.cartItemId === cartItemId);
+  if (!item) return;
+
+  item.quantity += delta;
+  if (item.quantity <= 0) {
+    removeCartItem(cartItemId);
+    return;
+  }
+
+  saveCart();
+  renderCartDrawer();
+  updateMealPlanBuilderUI();
+}
+
+function clearCart() {
+  cart = [];
+  saveCart();
+  renderCartDrawer();
+  updateMealPlanBuilderUI();
+}
+
+function getCartCalculations() {
+  let totalMealsCount = 0;
+  let foodSubtotal = 0;
+  let extraSidesSubtotal = 0;
+
+  cart.forEach(item => {
+    totalMealsCount += item.quantity;
+    foodSubtotal += (item.basePrice * item.quantity);
+    extraSidesSubtotal += (item.extraSidesPrice * item.quantity);
+  });
+
+  const grossFood = foodSubtotal + extraSidesSubtotal;
+
+  // 10% Multi-Meal Volume Discount:
+  // APPLIES ONLY ON 7 OR MORE MEALS (6 meals: 0% discount, 7+ meals: 10% discount on foodSubtotal)
+  const isMinMealsMet = totalMealsCount >= currentSettings.minMeals;
+  const hasVolumeDiscount = totalMealsCount >= currentSettings.volumeDiscountThreshold;
+  const discountAmount = hasVolumeDiscount ? Number((foodSubtotal * currentSettings.volumeDiscountRate).toFixed(2)) : 0;
+  const netFood = grossFood - discountAmount;
+
+  // Delivery fee calculation
+  const deliveryFee = deliveryMethod === "pickup" ? 0 : calculatedDeliveryFee;
+
+  // Ontario HST (13%)
+  const taxableAmount = netFood + deliveryFee;
+  const taxAmount = Number((taxableAmount * currentSettings.taxRate).toFixed(2));
+  const grandTotal = Number((netFood + deliveryFee + taxAmount).toFixed(2));
+
+  return {
+    totalMealsCount,
+    foodSubtotal,
+    extraSidesSubtotal,
+    grossFood,
+    isMinMealsMet,
+    hasVolumeDiscount,
+    discountAmount,
+    netFood,
+    deliveryFee,
+    taxAmount,
+    grandTotal
+  };
+}
+
+function renderCartDrawer() {
+  const countBadge = document.getElementById("headerCartCount");
+  const countMobileBadge = document.getElementById("mobileCartCount");
+  const subtotalBadge = document.getElementById("headerCartSubtotal");
+  const cartItemsList = document.getElementById("cartItemsList");
+  const emptyState = document.getElementById("cartEmptyState");
+  const filledState = document.getElementById("cartFilledState");
+  const minProgress = document.getElementById("cartMinMealProgress");
+  const checkoutBtn = document.getElementById("cartCheckoutBtn");
+
+  const calc = getCartCalculations();
+
+  // Update header badges
+  if (countBadge) countBadge.innerText = calc.totalMealsCount;
+  if (countMobileBadge) countMobileBadge.innerText = calc.totalMealsCount;
+  if (subtotalBadge) subtotalBadge.innerText = `$${calc.grossFood.toFixed(2)}`;
+
+  if (calc.totalMealsCount === 0) {
+    if (emptyState) emptyState.classList.remove("hidden");
+    if (filledState) filledState.classList.add("hidden");
+    if (minProgress) minProgress.classList.add("hidden");
+    return;
+  }
+
+  if (emptyState) emptyState.classList.add("hidden");
+  if (filledState) filledState.classList.remove("hidden");
+  if (minProgress) minProgress.classList.remove("hidden");
+
+  // Render Minimum Order Progress Bar
+  if (minProgress) {
+    const min = currentSettings.minMeals;
+    const progressPercent = Math.min(100, Math.round((calc.totalMealsCount / min) * 100));
+    const mealsRemaining = Math.max(0, min - calc.totalMealsCount);
+
+    let progressMsg = "";
+    if (calc.totalMealsCount < min) {
+      progressMsg = `<strong>${calc.totalMealsCount} of ${min} meals selected</strong> · Add ${mealsRemaining} more to checkout`;
+    } else if (calc.totalMealsCount === min) {
+      progressMsg = `🎉 <strong>6-Meal Starter Met!</strong> Add 1 more meal to unlock <span class="text-greek-gold font-black">10% OFF</span>!`;
+    } else {
+      progressMsg = `🔥 <strong>10% Volume Savings Applied!</strong> (${calc.totalMealsCount} meals selected)`;
+    }
+
+    minProgress.innerHTML = `
+      <div class="flex items-center justify-between text-xs mb-1.5">
+        <span class="text-slate-600 dark:text-slate-300">${progressMsg}</span>
+        <span class="font-mono font-bold text-greek-gold">${calc.totalMealsCount}/${min}</span>
+      </div>
+      <div class="w-full bg-slate-200 dark:bg-white/10 rounded-full h-2 overflow-hidden">
+        <div 
+          class="h-full rounded-full transition-all duration-300 ${calc.isMinMealsMet ? 'bg-greek-lime' : 'bg-greek-gold'}" 
+          style="width: ${progressPercent}%"
+        ></div>
+      </div>
+    `;
+  }
+
+  // Render Cart Item Cards
+  if (cartItemsList) {
+    cartItemsList.innerHTML = cart.map(item => `
+      <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 space-y-2">
+        <div class="flex items-start justify-between gap-3">
+          <img src="${item.image}" alt="${item.name}" class="w-12 h-12 rounded-xl object-cover bg-slate-200 dark:bg-slate-700 flex-shrink-0" />
+          <div class="flex-1 min-w-0">
+            <h4 class="font-bold text-xs text-greek-navy dark:text-white truncate">${item.name}</h4>
+            <div class="text-[11px] font-mono text-greek-gold font-black">$${item.unitPrice.toFixed(2)} CAD</div>
+            
+            ${item.hasSides && item.side1 ? `
+              <div class="text-[10px] text-slate-500 dark:text-slate-400 mt-1">
+                <div>• Side 1: <strong class="text-slate-700 dark:text-slate-200">${item.side1}</strong></div>
+                <div>• Side 2: <strong class="text-slate-700 dark:text-slate-200">${item.side2}</strong></div>
+              </div>
+            ` : `
+              <div class="text-[10px] text-amber-600 dark:text-amber-400 mt-1">• Complete Plate (No Sides)</div>
+            `}
+
+            ${item.extraSides && item.extraSides.length ? `
+              <div class="text-[10px] text-greek-lime mt-0.5">
+                + Extras ($4.99 ea): ${item.extraSides.join(", ")}
+              </div>
+            ` : ''}
+
+            ${item.notes ? `
+              <div class="text-[10px] text-slate-400 italic mt-0.5">Note: "${item.notes}"</div>
+            ` : ''}
+          </div>
+
+          <button onclick="removeCartItem('${item.cartItemId}')" class="text-slate-400 hover:text-red-500 p-1 text-sm font-bold" title="Remove">
+            &times;
+          </button>
+        </div>
+
+        <div class="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-white/5">
+          <div class="flex items-center gap-2 border border-slate-300 dark:border-white/20 rounded-lg px-2 py-0.5 text-xs">
+            <button onclick="updateCartItemQty('${item.cartItemId}', -1)" class="text-slate-500 hover:text-greek-gold font-bold px-1">−</button>
+            <span class="font-bold font-mono text-greek-navy dark:text-white px-1.5">${item.quantity}</span>
+            <button onclick="updateCartItemQty('${item.cartItemId}', 1)" class="text-slate-500 hover:text-greek-gold font-bold px-1">+</button>
+          </div>
+          <div class="font-mono font-bold text-xs text-slate-900 dark:text-white">
+            $${(item.unitPrice * item.quantity).toFixed(2)} CAD
+          </div>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  // Update Summary Rows
+  const foodSubEl = document.getElementById("cartFoodSubtotal");
+  const discountRow = document.getElementById("cartDiscountRow");
+  const discountAmt = document.getElementById("cartDiscountAmount");
+  const delivEl = document.getElementById("cartEstDelivery");
+  const taxEl = document.getElementById("cartTaxAmount");
+  const grandEl = document.getElementById("cartGrandTotal");
+
+  if (foodSubEl) foodSubEl.innerText = `$${calc.grossFood.toFixed(2)} CAD`;
+
   if (discountRow) {
-    if (discountEligible) {
-      discountRow.classList.remove('hidden');
-      if (discountEl) discountEl.innerText = `-$${discountAmount.toFixed(2)} CAD`;
+    if (calc.hasVolumeDiscount) {
+      discountRow.classList.remove("hidden");
+      if (discountAmt) discountAmt.innerText = `-$${calc.discountAmount.toFixed(2)} CAD`;
     } else {
-      discountRow.classList.add('hidden');
+      discountRow.classList.add("hidden");
     }
   }
 
-  if (deliveryEl) {
-    deliveryEl.innerText = state.deliveryMethod === 'pickup' 
-      ? 'FREE (Pickup)' 
-      : (deliveryFee === 0 ? 'FREE (under 2km)' : `$${deliveryFee.toFixed(2)} CAD`);
-  }
+  if (delivEl) delivEl.innerText = deliveryMethod === "pickup" ? "FREE ($0.00)" : `$${calc.deliveryFee.toFixed(2)} CAD`;
+  if (taxEl) taxEl.innerText = `$${calc.taxAmount.toFixed(2)} CAD`;
+  if (grandEl) grandEl.innerText = `$${calc.grandTotal.toFixed(2)} CAD`;
 
-  if (taxEl) taxEl.innerText = `$${tax.toFixed(2)} CAD`;
-  if (totalEl) totalEl.innerText = `$${grandTotal.toFixed(2)} CAD`;
-
+  // Checkout button status
   if (checkoutBtn) {
-    if (!minMet) {
-      checkoutBtn.disabled = true;
-      checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
-      checkoutBtn.innerText = `Min. 6 Meals Required (${totalMeals}/6)`;
-    } else {
+    if (calc.isMinMealsMet) {
       checkoutBtn.disabled = false;
-      checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-      checkoutBtn.innerText = `Proceed to Checkout ($${grandTotal.toFixed(2)})`;
+      checkoutBtn.className = "w-full py-4 btn-gold rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-xl";
+      checkoutBtn.innerHTML = `
+        <span>Proceed to Scheduled Checkout</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+      `;
+    } else {
+      checkoutBtn.disabled = true;
+      checkoutBtn.className = "w-full py-4 bg-slate-300 dark:bg-white/10 text-slate-500 dark:text-slate-400 rounded-2xl font-bold text-xs cursor-not-allowed";
+      checkoutBtn.innerHTML = `
+        <span>Add ${Math.max(0, currentSettings.minMeals - calc.totalMealsCount)} More Meals to Meet Minimum (6 Meals)</span>
+      `;
     }
   }
-}
-
-function adjustCartItemQty(index, delta) {
-  if (!state.cart[index]) return;
-  state.cart[index].quantity += delta;
-  if (state.cart[index].quantity <= 0) {
-    state.cart.splice(index, 1);
-  }
-  saveCart();
-}
-
-function removeCartItem(index) {
-  state.cart.splice(index, 1);
-  saveCart();
 }
 
 function openCartDrawer() {
-  const drawer = document.getElementById('cartDrawer');
-  if (drawer) {
-    drawer.classList.remove('translate-x-full');
-    document.body.classList.add('overflow-hidden');
-    updateCartSummary();
+  const overlay = document.getElementById("cartOverlay");
+  const drawer = document.getElementById("cartDrawer");
+  if (overlay && drawer) {
+    overlay.classList.remove("hidden");
+    drawer.classList.remove("translate-x-full");
+    document.body.style.overflow = "hidden";
   }
 }
 
 function closeCartDrawer() {
-  const drawer = document.getElementById('cartDrawer');
-  if (drawer) {
-    drawer.classList.add('translate-x-full');
-    document.body.classList.remove('overflow-hidden');
+  const overlay = document.getElementById("cartOverlay");
+  const drawer = document.getElementById("cartDrawer");
+  if (overlay && drawer) {
+    drawer.classList.add("translate-x-full");
+    setTimeout(() => {
+      overlay.classList.add("hidden");
+      document.body.style.overflow = "";
+    }, 250);
   }
 }
 
-// 11. Checkout Modal & Order Processing
-function openCheckoutModal() {
-  const totalMeals = state.cart.reduce((sum, item) => sum + item.quantity, 0);
-  if (totalMeals < 6) {
-    alert("Please add at least 6 meals to fulfill the minimum order requirement.");
+// 1-Click 6-Meal Package Starter
+function addStarterSixMealPackage() {
+  const starterMeals = [
+    { id: "pork-souvlaki", side1: "Lemon Roasted Potatoes", side2: "Rice Pilaf with Veggies" },
+    { id: "chicken-leg", side1: "Garlic Butter Baked Potatoes", side2: "Green Beans in Tomato Sauce" },
+    { id: "pasta-al-greco", side1: null, side2: null },
+    { id: "chicken-souvlaki", side1: "Yellow Basmati Rice", side2: "Sautéed Veggies" },
+    { id: "grilled-chicken", side1: "Sweet Potatoes", side2: "Steamed Veggies" },
+    { id: "veggie-souvlaki", side1: "Orzo in Tomato Sauce", side2: "Spinach Mushroom Rice" }
+  ];
+
+  starterMeals.forEach(entry => {
+    const meal = currentMenu.find(m => m.id === entry.id);
+    if (meal) {
+      addItemToCart(meal, entry.side1, entry.side2, [], "Starter 6-Meal Value Plan");
+    }
+  });
+
+  showToast("Loaded 6-Meal Starter Plan! Minimum met ($59.94 tier).");
+  openCartDrawer();
+}
+
+// ==========================================
+// 11. INTERACTIVE MEAL PLAN BUILDER
+// ==========================================
+function updateMealPlanBuilderUI() {
+  const planContainer = document.getElementById("planBuilderSelectedList");
+  const planCountBadge = document.getElementById("planBuilderCount");
+  const planSubtotalEl = document.getElementById("planBuilderSubtotal");
+  const planDiscountEl = document.getElementById("planBuilderDiscount");
+  const planGrandTotalEl = document.getElementById("planBuilderGrandTotal");
+  const planStatusNotice = document.getElementById("planBuilderStatusNotice");
+  const planCtaBtn = document.getElementById("planBuilderCtaBtn");
+
+  if (!planContainer) return;
+
+  const calc = getCartCalculations();
+
+  if (planCountBadge) planCountBadge.innerText = `${calc.totalMealsCount} of ${currentSettings.minMeals} meals`;
+  if (planSubtotalEl) planSubtotalEl.innerText = `$${calc.grossFood.toFixed(2)} CAD`;
+  
+  if (planDiscountEl) {
+    if (calc.hasVolumeDiscount) {
+      planDiscountEl.innerText = `-$${calc.discountAmount.toFixed(2)} CAD (10% OFF)`;
+      planDiscountEl.parentElement.classList.remove("hidden");
+    } else {
+      planDiscountEl.parentElement.classList.add("hidden");
+    }
+  }
+
+  if (planGrandTotalEl) planGrandTotalEl.innerText = `$${calc.grandTotal.toFixed(2)} CAD`;
+
+  if (planStatusNotice) {
+    if (calc.totalMealsCount < currentSettings.minMeals) {
+      const remaining = currentSettings.minMeals - calc.totalMealsCount;
+      planStatusNotice.className = "p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-xs font-bold";
+      planStatusNotice.innerHTML = `⚠️ Select at least ${currentSettings.minMeals} meals. Add ${remaining} more meal${remaining > 1 ? 's' : ''} to unlock delivery.`;
+    } else if (calc.totalMealsCount === currentSettings.minMeals) {
+      planStatusNotice.className = "p-3 rounded-xl bg-blue-500/10 border border-blue-500/30 text-blue-600 dark:text-blue-300 text-xs font-bold";
+      planStatusNotice.innerHTML = `🎉 6-meal minimum satisfied! Add 1 more meal to save 10% on your entire order.`;
+    } else {
+      planStatusNotice.className = "p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs font-bold";
+      planStatusNotice.innerHTML = `🔥 10% Multi-Meal Volume Discount Applied! You're saving $${calc.discountAmount.toFixed(2)} CAD.`;
+    }
+  }
+
+  if (planCtaBtn) {
+    planCtaBtn.disabled = !calc.isMinMealsMet;
+    if (calc.isMinMealsMet) {
+      planCtaBtn.className = "w-full py-4 btn-gold rounded-2xl font-black text-sm shadow-xl flex items-center justify-center gap-2";
+    } else {
+      planCtaBtn.className = "w-full py-4 bg-slate-300 dark:bg-white/10 text-slate-500 rounded-2xl font-bold text-xs cursor-not-allowed";
+    }
+  }
+
+  if (cart.length === 0) {
+    planContainer.innerHTML = `
+      <div class="py-8 text-center text-slate-400 text-xs">
+        <p>No meals selected yet.</p>
+        <p class="mt-1">Browse the menu cards above and customize your sides!</p>
+      </div>
+    `;
     return;
   }
-  closeCartDrawer();
-  const modal = document.getElementById('checkoutModal');
-  if (modal) {
-    modal.classList.remove('hidden');
-    document.body.classList.add('overflow-hidden');
-    updateCheckoutSummaryDisplay();
+
+  planContainer.innerHTML = cart.map(item => `
+    <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <img src="${item.image}" alt="${item.name}" class="w-9 h-9 rounded-lg object-cover flex-shrink-0" />
+        <div class="truncate">
+          <span class="font-bold text-greek-navy dark:text-white block truncate">${item.name}</span>
+          <span class="text-[10px] text-slate-400">${item.hasSides && item.side1 ? `${item.side1}, ${item.side2}` : 'Complete Plate'}</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <span class="font-mono font-bold">$${(item.unitPrice * item.quantity).toFixed(2)}</span>
+        <button onclick="removeCartItem('${item.cartItemId}')" class="text-slate-400 hover:text-red-500 font-bold p-1">&times;</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+// ==========================================
+// 12. DISTANCE CALCULATOR LOGIC ($5.99 + $0.99/KM)
+// ==========================================
+function calculateDeliveryRate(km) {
+  const base = currentSettings.deliveryBaseFee;
+  const rate = currentSettings.deliveryPerKm;
+  return Number((base + (km * rate)).toFixed(2));
+}
+
+function handleDistanceCalculation(distanceVal) {
+  const km = parseFloat(distanceVal);
+  if (isNaN(km) || km < 0) return;
+
+  calculatedDistanceKm = km;
+  calculatedDeliveryFee = calculateDeliveryRate(km);
+
+  const feeDisplay = document.getElementById("calcResultFee");
+  const breakDisplay = document.getElementById("calcResultBreakdown");
+  
+  if (feeDisplay) feeDisplay.innerText = `$${calculatedDeliveryFee.toFixed(2)} CAD`;
+  if (breakDisplay) breakDisplay.innerText = `Base fee $${currentSettings.deliveryBaseFee.toFixed(2)} + (${km.toFixed(1)} km × $${currentSettings.deliveryPerKm.toFixed(2)}/km)`;
+
+  renderCartDrawer();
+  updateMealPlanBuilderUI();
+}
+
+function setPresetDeliveryZone(km, zoneName) {
+  const input = document.getElementById("deliveryKmInput");
+  if (input) input.value = km;
+  handleDistanceCalculation(km);
+  showToast(`Updated to ${zoneName} (${km} km)`);
+}
+
+// ==========================================
+// 13. CHECKOUT MODAL & STRIPE-STYLE CARD SIMULATOR
+// ==========================================
+function openCheckoutModal() {
+  const calc = getCartCalculations();
+  if (!calc.isMinMealsMet) {
+    showToast(`Minimum order requirement: 6 meals. Currently ${calc.totalMealsCount} selected.`);
+    return;
   }
+
+  closeCartDrawer();
+  const modal = document.getElementById("checkoutModal");
+  if (!modal) return;
+
+  // Auto-fill customer profile if logged in
+  if (currentUser) {
+    const emailField = document.getElementById("checkoutEmail");
+    const nameField = document.getElementById("ccName");
+    const phoneField = document.getElementById("checkoutPhone");
+    const addrField = document.getElementById("checkoutAddress");
+
+    if (emailField) emailField.value = currentUser.email || "";
+    if (nameField) nameField.value = currentUser.name || "";
+    if (phoneField) phoneField.value = currentUser.phone || "";
+    if (addrField) addrField.value = currentUser.address || "";
+  }
+
+  // Populate Summary Rows
+  document.getElementById("checkoutMealsCount").innerText = `${calc.totalMealsCount} meals`;
+  document.getElementById("checkoutSubtotal").innerText = `$${calc.grossFood.toFixed(2)} CAD`;
+  
+  const discountRow = document.getElementById("checkoutDiscountRow");
+  if (calc.hasVolumeDiscount) {
+    discountRow.classList.remove("hidden");
+    document.getElementById("checkoutDiscount").innerText = `-$${calc.discountAmount.toFixed(2)} CAD`;
+  } else {
+    discountRow.classList.add("hidden");
+  }
+
+  document.getElementById("checkoutDeliveryFee").innerText = deliveryMethod === "pickup" ? "FREE ($0.00)" : `$${calc.deliveryFee.toFixed(2)} CAD`;
+  document.getElementById("checkoutTax").innerText = `$${calc.taxAmount.toFixed(2)} CAD`;
+  document.getElementById("checkoutGrandTotal").innerText = `$${calc.grandTotal.toFixed(2)} CAD`;
+  document.getElementById("payButtonAmount").innerText = `$${calc.grandTotal.toFixed(2)} CAD`;
+
+  updateCutoffCountdown();
+
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
 }
 
 function closeCheckoutModal() {
-  const modal = document.getElementById('checkoutModal');
-  if (modal) modal.classList.add('hidden');
-  document.body.classList.remove('overflow-hidden');
-}
-
-function updateCheckoutSummaryDisplay() {
-  const totalMeals = state.cart.reduce((sum, item) => sum + item.quantity, 0);
-  const subtotal = state.cart.reduce((sum, item) => sum + ((item.price + item.extraSidesCost) * item.quantity), 0);
-  const discountAmount = totalMeals >= 7 ? subtotal * 0.10 : 0;
-  const discountedSubtotal = subtotal - discountAmount;
-  const deliveryFee = calculateDeliveryFee(state.deliveryDistanceKm, state.deliveryMethod);
-  const tax = discountedSubtotal * 0.13;
-  const grandTotal = discountedSubtotal + deliveryFee + tax;
-
-  const displayEl = document.getElementById('checkoutTotalDisplay');
-  if (displayEl) {
-    displayEl.innerText = `$${grandTotal.toFixed(2)} CAD`;
+  const modal = document.getElementById("checkoutModal");
+  if (modal) {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
   }
 }
 
-function handleCheckoutSubmit(e) {
-  e.preventDefault();
+function toggleCheckoutMethod(method) {
+  deliveryMethod = method;
+  const addressFields = document.getElementById("checkoutAddressFields");
+  const pickupNotice = document.getElementById("checkoutPickupNotice");
 
-  const totalMeals = state.cart.reduce((sum, item) => sum + item.quantity, 0);
-  const subtotal = state.cart.reduce((sum, item) => sum + ((item.price + item.extraSidesCost) * item.quantity), 0);
-  const discountAmount = totalMeals >= 7 ? subtotal * 0.10 : 0;
-  const discountedSubtotal = subtotal - discountAmount;
-  const deliveryFee = calculateDeliveryFee(state.deliveryDistanceKm, state.deliveryMethod);
-  const tax = discountedSubtotal * 0.13;
-  const grandTotal = discountedSubtotal + deliveryFee + tax;
+  if (method === "pickup") {
+    if (addressFields) addressFields.classList.add("hidden");
+    if (pickupNotice) pickupNotice.classList.remove("hidden");
+  } else {
+    if (addressFields) addressFields.classList.remove("hidden");
+    if (pickupNotice) pickupNotice.classList.add("hidden");
+  }
 
-  const orderData = {
-    orderId: "GFK-" + Math.floor(100000 + Math.random() * 900000),
-    timestamp: new Date().toISOString(),
-    customerName: document.getElementById('custName')?.value || 'Guest Member',
-    customerEmail: document.getElementById('custEmail')?.value || 'customer@example.com',
-    customerPhone: document.getElementById('custPhone')?.value || '416-555-0199',
-    deliveryMethod: state.deliveryMethod,
-    deliveryAddress: state.deliveryMethod === 'delivery' 
-      ? (document.getElementById('custAddress')?.value || 'Toronto, ON') 
-      : 'Pickup at George the Greek (3575 Lake Shore Blvd W, Etobicoke)',
-    scheduledDate: document.getElementById('scheduledDeliveryDay')?.value || 'Sunday (10:00 AM - 2:00 PM)',
-    items: [...state.cart],
-    itemCount: totalMeals,
-    subtotal: subtotal,
-    discount: discountAmount,
-    deliveryFee: deliveryFee,
-    tax: tax,
-    grandTotal: grandTotal,
-    status: 'Received', // Kitchen workflow: Received -> In Prep -> Ready for Delivery -> Completed
-    paymentMethod: 'Credit Card (Paid)'
-  };
-
-  // Save to persistent orders for customer order history and Kitchen Tablet
-  state.customerOrders.unshift(orderData);
-  localStorage.setItem('gfk_orders', JSON.stringify(state.customerOrders));
-
-  // Clear cart
-  state.cart = [];
-  saveCart();
-  closeCheckoutModal();
-
-  // Show Confirmation Modal
-  openConfirmationModal(orderData);
+  renderCartDrawer();
+  const calc = getCartCalculations();
+  document.getElementById("checkoutDeliveryFee").innerText = deliveryMethod === "pickup" ? "FREE ($0.00)" : `$${calc.deliveryFee.toFixed(2)} CAD`;
+  document.getElementById("checkoutGrandTotal").innerText = `$${calc.grandTotal.toFixed(2)} CAD`;
+  document.getElementById("payButtonAmount").innerText = `$${calc.grandTotal.toFixed(2)} CAD`;
 }
 
-function openConfirmationModal(order) {
-  const modal = document.getElementById('confirmationModal');
-  const details = document.getElementById('confirmationOrderDetails');
-  if (modal && details) {
-    details.innerHTML = `
-      <div class="text-left bg-slate-50 dark:bg-slate-800/60 p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-xs space-y-2">
-        <div class="flex justify-between border-b pb-2 border-slate-200 dark:border-slate-700">
-          <span class="text-slate-500">Order ID:</span>
-          <span class="font-mono font-bold text-sky-500">${order.orderId}</span>
+// 1-Click Demo Credit Card Filler for Easy Real-World Testing
+function fillDemoCreditCard() {
+  document.getElementById("ccNumber").value = "4500 1234 5678 9012";
+  document.getElementById("ccExpiry").value = "12/28";
+  document.getElementById("ccCvc").value = "888";
+  document.getElementById("ccName").value = "Dimitrios Papadopoulos";
+  document.getElementById("ccPostal").value = "M8W 1P5";
+  document.getElementById("checkoutEmail").value = "dimitrios@greekfitkitchen.ca";
+  document.getElementById("checkoutPhone").value = "416-555-0199";
+  document.getElementById("checkoutAddress").value = "3200 Lake Shore Blvd W, Etobicoke, ON";
+  
+  detectCardType("4500 1234 5678 9012");
+  showToast("Demo card & Etobicoke delivery address filled!");
+}
+
+function detectCardType(number) {
+  const clean = number.replace(/\s+/g, '');
+  const badge = document.getElementById("cardBrandBadge");
+  if (!badge) return;
+
+  if (/^4/.test(clean)) {
+    badge.innerText = "VISA";
+    badge.className = "px-2 py-0.5 rounded text-[10px] font-black bg-blue-600 text-white";
+  } else if (/^5[1-5]/.test(clean)) {
+    badge.innerText = "MC";
+    badge.className = "px-2 py-0.5 rounded text-[10px] font-black bg-red-600 text-white";
+  } else if (/^3[47]/.test(clean)) {
+    badge.innerText = "AMEX";
+    badge.className = "px-2 py-0.5 rounded text-[10px] font-black bg-sky-600 text-white";
+  } else {
+    badge.innerText = "CARD";
+    badge.className = "px-2 py-0.5 rounded text-[10px] font-black bg-slate-600 text-white";
+  }
+}
+
+// Process Credit Card Payment & Dispatch Order Record
+function handleProcessPayment(event) {
+  event.preventDefault();
+  const calc = getCartCalculations();
+
+  if (!calc.isMinMealsMet) {
+    alert("Please select at least 6 meals before checking out.");
+    return;
+  }
+
+  const ccNum = document.getElementById("ccNumber").value.replace(/\s+/g, '');
+  const ccExp = document.getElementById("ccExpiry").value;
+  const ccCvc = document.getElementById("ccCvc").value;
+  const custName = document.getElementById("ccName").value;
+  const custEmail = document.getElementById("checkoutEmail").value;
+  const custPhone = document.getElementById("checkoutPhone").value;
+  const deliveryAddress = deliveryMethod === "pickup" ? currentSettings.pickupAddress : document.getElementById("checkoutAddress").value;
+  const deliveryDay = document.querySelector("input[name='deliveryDay']:checked")?.value || "Upcoming Sunday Batch";
+
+  if (!custEmail || !custPhone || (deliveryMethod === "delivery" && !deliveryAddress)) {
+    alert("Please fill in your contact information and delivery address.");
+    return;
+  }
+
+  if (ccNum.length < 13 || ccExp.length < 4 || ccCvc.length < 3) {
+    alert("Please enter a valid card number, expiry, and security code.");
+    return;
+  }
+
+  // Processing Animation
+  const submitBtn = document.getElementById("paySubmitButton");
+  const originalText = submitBtn.innerHTML;
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = `
+    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-greek-navy" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+    </svg>
+    <span>Encrypting &amp; Authorizing CAD Payment...</span>
+  `;
+
+  setTimeout(() => {
+    const orderId = "GFK-" + Math.floor(100000 + Math.random() * 900000);
+    const orderRecord = {
+      orderId: orderId,
+      timestamp: new Date().toISOString(),
+      customerName: custName,
+      customerEmail: custEmail,
+      customerPhone: custPhone,
+      deliveryMethod: deliveryMethod,
+      deliveryAddress: deliveryAddress,
+      scheduledDate: deliveryDay,
+      items: JSON.parse(JSON.stringify(cart)),
+      itemCount: calc.totalMealsCount,
+      subtotal: calc.grossFood,
+      discount: calc.discountAmount,
+      deliveryFee: calc.deliveryFee,
+      tax: calc.taxAmount,
+      grandTotal: calc.grandTotal,
+      status: "Received",
+      paymentStatus: "Paid (Stripe Gateway Authorized)",
+      authCode: "AUTH-" + Math.random().toString(36).substring(2, 8).toUpperCase(),
+      staffNotes: ""
+    };
+
+    // Save to Orders Database
+    const existingOrders = getStoredOrders();
+    existingOrders.unshift(orderRecord);
+    saveStoredOrders(existingOrders);
+
+    // Save order to customer account if logged in
+    if (currentUser) {
+      currentUser.orderHistory = currentUser.orderHistory || [];
+      currentUser.orderHistory.unshift(orderRecord);
+      saveUser(currentUser);
+    }
+
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalText;
+    closeCheckoutModal();
+    clearCart();
+
+    showOrderConfirmationModal(orderRecord);
+  }, 1200);
+}
+
+function showOrderConfirmationModal(order) {
+  const modal = document.getElementById("confirmationModal");
+  if (!modal) return;
+
+  document.getElementById("confirmOrderId").innerText = `#${order.orderId}`;
+  document.getElementById("confirmCustomer").innerText = `${order.customerName} (${order.customerEmail})`;
+  document.getElementById("confirmSlot").innerText = order.scheduledDate;
+  document.getElementById("confirmAddress").innerText = order.deliveryAddress;
+  document.getElementById("confirmTotal").innerText = `$${order.grandTotal.toFixed(2)} CAD`;
+
+  const itemsContainer = document.getElementById("confirmItemsList");
+  if (itemsContainer) {
+    itemsContainer.innerHTML = order.items.map(it => `
+      <div class="flex justify-between items-start py-1.5 border-b border-slate-100 dark:border-white/5 text-xs">
+        <div>
+          <span class="font-bold">${it.quantity}x ${it.name}</span>
+          ${it.hasSides && it.side1 ? `<div class="text-[11px] text-slate-500">Sides: ${it.side1}, ${it.side2}</div>` : ''}
+          ${it.extraSides && it.extraSides.length ? `<div class="text-[11px] text-greek-lime">+ Extras: ${it.extraSides.join(", ")}</div>` : ''}
         </div>
-        <div class="flex justify-between">
-          <span class="text-slate-500">Scheduled Delivery:</span>
-          <span class="font-semibold text-slate-800 dark:text-slate-200">${order.scheduledDate}</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-slate-500">Method:</span>
-          <span class="font-semibold capitalize">${order.deliveryMethod}</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-slate-500">Total Meals:</span>
-          <span class="font-bold">${order.itemCount} meals</span>
-        </div>
-        <div class="flex justify-between text-base font-black text-sky-600 dark:text-sky-400 pt-2 border-t border-slate-200 dark:border-slate-700">
-          <span>Amount Paid:</span>
-          <span>$${order.grandTotal.toFixed(2)} CAD</span>
-        </div>
+        <span class="font-mono font-bold">$${(it.unitPrice * it.quantity).toFixed(2)} CAD</span>
       </div>
-    `;
-    modal.classList.remove('hidden');
-    document.body.classList.add('overflow-hidden');
+    `).join("");
   }
+
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
 }
 
 function closeConfirmationModal() {
-  const modal = document.getElementById('confirmationModal');
-  if (modal) modal.classList.add('hidden');
-  document.body.classList.remove('overflow-hidden');
+  const modal = document.getElementById("confirmationModal");
+  if (modal) {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  }
 }
 
-// 12. Kitchen Display Tablet System (Live Status Management)
-function initKitchenView() {
-  const kitchenContainer = document.getElementById('kitchenOrdersList');
-  if (!kitchenContainer) return;
+// ==========================================
+// 14. CUSTOMER AUTHENTICATION & ORDER HISTORY
+// ==========================================
+function loadUser() {
+  try {
+    const raw = localStorage.getItem("gfk_current_user");
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) {
+    return null;
+  }
+}
 
-  function renderKitchenTickets() {
-    const orders = JSON.parse(localStorage.getItem('gfk_orders') || '[]');
-    if (orders.length === 0) {
-      kitchenContainer.innerHTML = `
-        <div class="col-span-full text-center py-16 text-slate-400">
-          <p class="text-lg font-bold">No active orders in kitchen queue</p>
-          <p class="text-xs text-slate-500">Orders placed on the website appear here live in real-time.</p>
-        </div>
-      `;
-      return;
-    }
+function saveUser(user) {
+  if (user) {
+    localStorage.setItem("gfk_current_user", JSON.stringify(user));
+  } else {
+    localStorage.removeItem("gfk_current_user");
+  }
+  currentUser = user;
+  updateUserUI();
+}
 
-    kitchenContainer.innerHTML = orders.map((o, idx) => `
-      <div class="glass-card rounded-2xl p-5 border-2 ${
-        o.status === 'Completed' ? 'border-emerald-500/30 opacity-75' :
-        o.status === 'Ready for Delivery' ? 'border-sky-500/50 bg-sky-50/10' :
-        o.status === 'In Prep' ? 'border-amber-500/50 bg-amber-50/10' :
-        'border-rose-500/50 animate-pulse-glow'
-      }">
-        <div class="flex items-center justify-between border-b pb-3 border-slate-200 dark:border-slate-800">
-          <div>
-            <span class="font-mono font-bold text-sm text-sky-500">#${o.orderId}</span>
-            <h4 class="font-bold text-slate-900 dark:text-white">${o.customerName}</h4>
-          </div>
-          <span class="px-2.5 py-1 text-xs font-bold rounded-full ${
-            o.status === 'Completed' ? 'bg-emerald-500/20 text-emerald-400' :
-            o.status === 'Ready for Delivery' ? 'bg-sky-500/20 text-sky-400' :
-            o.status === 'In Prep' ? 'bg-amber-500/20 text-amber-400' :
-            'bg-rose-500/20 text-rose-400'
-          }">${o.status}</span>
-        </div>
+function updateUserUI() {
+  const authBtn = document.getElementById("headerAccountBtn");
+  if (!authBtn) return;
 
-        <div class="my-3 text-xs space-y-1 text-slate-600 dark:text-slate-400">
-          <p><strong>Batch:</strong> ${o.scheduledDate}</p>
-          <p><strong>Type:</strong> ${o.deliveryMethod === 'pickup' ? '📍 Pickup at George the Greek' : '🚚 Scheduled Delivery'}</p>
-          <p class="truncate"><strong>Destination:</strong> ${o.deliveryAddress}</p>
-        </div>
+  if (currentUser) {
+    authBtn.innerHTML = `
+      <span class="w-2 h-2 rounded-full bg-greek-lime"></span>
+      <span class="text-xs font-bold text-white">${currentUser.name.split(" ")[0]}</span>
+    `;
+    authBtn.setAttribute("title", `Account: ${currentUser.email}`);
+  } else {
+    authBtn.innerHTML = `
+      <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+    `;
+    authBtn.setAttribute("title", "Sign In / Account");
+  }
+}
 
-        <div class="border-t border-b py-2 my-2 border-slate-200 dark:border-slate-800 space-y-2 max-h-56 overflow-y-auto">
-          ${o.items.map(it => `
-            <div class="text-xs bg-slate-100 dark:bg-slate-800/50 p-2 rounded-lg">
-              <div class="font-bold text-slate-800 dark:text-slate-200 flex justify-between">
-                <span>${it.quantity}x ${it.name}</span>
-              </div>
-              ${it.sides.length ? `<div class="text-[11px] text-slate-500">Sides: ${it.sides.join(' + ')}</div>` : ''}
-              ${it.extraSides.length ? `<div class="text-[10px] text-amber-500">+ Extra: ${it.extraSides.join(', ')}</div>` : ''}
-              ${it.specialNotes ? `<div class="text-[10px] italic text-rose-500">Note: ${it.specialNotes}</div>` : ''}
-            </div>
-          `).join('')}
-        </div>
-
-        <div class="pt-3 flex items-center justify-between gap-2">
-          <button onclick="advanceOrderStatus('${o.orderId}')" class="flex-1 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-xs">
-            ${
-              o.status === 'Received' ? 'Start Prep 👨‍🍳' :
-              o.status === 'In Prep' ? 'Mark Ready 📦' :
-              o.status === 'Ready for Delivery' ? 'Complete Order ✅' :
-              'Archived'
-            }
-          </button>
-          <button onclick="window.print()" class="p-2 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-500 hover:text-slate-300" title="Print Kitchen Slip">
-            🖨️
-          </button>
-        </div>
-      </div>
-    `).join('');
+function openAccountModal() {
+  let modal = document.getElementById("accountModal");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "accountModal";
+    modal.className = "fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto";
+    document.body.appendChild(modal);
   }
 
-  window.advanceOrderStatus = function(orderId) {
-    const orders = JSON.parse(localStorage.getItem('gfk_orders') || '[]');
-    const target = orders.find(o => o.orderId === orderId);
-    if (!target) return;
+  if (currentUser) {
+    // Show logged in Dashboard
+    const orders = getStoredOrders().filter(o => o.customerEmail === currentUser.email);
 
-    if (target.status === 'Received') target.status = 'In Prep';
-    else if (target.status === 'In Prep') target.status = 'Ready for Delivery';
-    else if (target.status === 'Ready for Delivery') target.status = 'Completed';
+    modal.innerHTML = `
+      <div class="bg-white dark:bg-[#101D3A] rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-white/10 my-8">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-white/10">
+          <div>
+            <span class="text-[10px] font-black uppercase text-greek-gold tracking-wider">Customer Portal</span>
+            <h3 class="text-2xl font-black text-greek-navy dark:text-white">Hello, ${currentUser.name}!</h3>
+          </div>
+          <button onclick="closeAccountModal()" class="text-slate-400 hover:text-white text-2xl font-bold p-1">&times;</button>
+        </div>
 
-    localStorage.setItem('gfk_orders', JSON.stringify(orders));
-    renderKitchenTickets();
-  };
+        <div class="py-4 space-y-4">
+          <div class="p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs space-y-1">
+            <div><strong>Email:</strong> ${currentUser.email}</div>
+            <div><strong>Phone:</strong> ${currentUser.phone || 'None'}</div>
+            <div><strong>Saved Address:</strong> ${currentUser.address || '3200 Lake Shore Blvd W, Etobicoke'}</div>
+          </div>
 
-  renderKitchenTickets();
-  // Poll for kitchen tablet live updates every 5s
-  setInterval(renderKitchenTickets, 5000);
+          <div>
+            <h4 class="font-bold text-sm text-greek-navy dark:text-white mb-2">Previous Orders (${orders.length})</h4>
+            <div class="max-h-64 overflow-y-auto space-y-2">
+              ${orders.length === 0 ? '<p class="text-xs text-slate-400">No orders placed yet.</p>' : orders.map(ord => `
+                <div class="p-3 rounded-xl border border-slate-200 dark:border-white/10 text-xs flex items-center justify-between">
+                  <div>
+                    <strong class="text-greek-gold font-mono">#${ord.orderId}</strong> · ${ord.itemCount} meals
+                    <div class="text-[10px] text-slate-400">${ord.scheduledDate} · Status: <strong>${ord.status}</strong></div>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold font-mono">$${ord.grandTotal.toFixed(2)} CAD</span>
+                    <button onclick="reorderPreviousOrder('${ord.orderId}')" class="px-3 py-1 btn-gold rounded-lg text-[10px] font-black">
+                      Reorder
+                    </button>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-slate-200 dark:border-white/10 flex justify-between">
+            <button onclick="logoutCustomer()" class="text-xs text-red-500 font-bold hover:underline">
+              Sign Out
+            </button>
+            <button onclick="closeAccountModal()" class="px-5 py-2.5 rounded-xl bg-greek-navy text-white text-xs font-bold">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  } else {
+    // Show Login/Register Tabs
+    modal.innerHTML = `
+      <div class="bg-white dark:bg-[#101D3A] rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-white/10 my-8">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-white/10">
+          <div>
+            <span class="text-[10px] font-black uppercase text-greek-gold tracking-wider">Greek Fit Kitchen</span>
+            <h3 class="text-2xl font-black text-greek-navy dark:text-white">Customer Sign In</h3>
+          </div>
+          <button onclick="closeAccountModal()" class="text-slate-400 hover:text-white text-2xl font-bold p-1">&times;</button>
+        </div>
+
+        <form onsubmit="handleCustomerLogin(event)" class="space-y-4 py-4">
+          <div>
+            <label class="block text-xs font-bold mb-1">Your Full Name</label>
+            <input type="text" id="authName" required placeholder="Dimitrios Papadopoulos" class="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/5 outline-none focus:ring-2 focus:ring-greek-gold" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold mb-1">Email Address</label>
+            <input type="email" id="authEmail" required placeholder="your.name@example.com" class="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/5 outline-none focus:ring-2 focus:ring-greek-gold" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold mb-1">Phone Number</label>
+            <input type="tel" id="authPhone" required placeholder="416-555-0199" class="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/5 outline-none focus:ring-2 focus:ring-greek-gold" />
+          </div>
+
+          <button type="submit" class="w-full py-3 btn-gold rounded-xl font-black text-xs shadow-lg">
+            Sign In &amp; Save Profile
+          </button>
+        </form>
+      </div>
+    `;
+  }
+
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
 }
 
-// 13. DOM Initializer
-document.addEventListener('DOMContentLoaded', () => {
+function closeAccountModal() {
+  const modal = document.getElementById("accountModal");
+  if (modal) {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  }
+}
+
+function handleCustomerLogin(event) {
+  event.preventDefault();
+  const name = document.getElementById("authName")?.value || "Valued Customer";
+  const email = document.getElementById("authEmail")?.value || "customer@example.com";
+  const phone = document.getElementById("authPhone")?.value || "";
+
+  saveUser({
+    name,
+    email,
+    phone,
+    address: "3200 Lake Shore Blvd W, Etobicoke, ON",
+    orderHistory: []
+  });
+
+  closeAccountModal();
+  showToast(`Welcome back, ${name}!`);
+}
+
+function logoutCustomer() {
+  saveUser(null);
+  closeAccountModal();
+  showToast("You have been signed out.");
+}
+
+function reorderPreviousOrder(orderId) {
+  const order = getStoredOrders().find(o => o.orderId === orderId);
+  if (!order) return;
+
+  cart = JSON.parse(JSON.stringify(order.items));
+  saveCart();
+  renderCartDrawer();
+  updateMealPlanBuilderUI();
+  closeAccountModal();
+  openCartDrawer();
+  showToast(`Re-loaded ${order.itemCount} meals from Order #${orderId}`);
+}
+
+// ==========================================
+// 15. CATERING & SPECIAL REQUEST FORMS
+// ==========================================
+function openCateringModal() {
+  let modal = document.getElementById("cateringModal");
+  if (!modal) return;
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+}
+
+function closeCateringModal() {
+  const modal = document.getElementById("cateringModal");
+  if (modal) {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  }
+}
+
+function handleCateringSubmit(event) {
+  event.preventDefault();
+  const name = document.getElementById("catName")?.value;
+  const email = document.getElementById("catEmail")?.value;
+  const phone = document.getElementById("catPhone")?.value;
+  const guests = document.getElementById("catGuests")?.value;
+  const date = document.getElementById("catDate")?.value;
+  const notes = document.getElementById("catNotes")?.value;
+
+  const request = {
+    id: "CAT-" + Date.now().toString(36).toUpperCase(),
+    timestamp: new Date().toISOString(),
+    name,
+    email,
+    phone,
+    guests,
+    date,
+    notes,
+    status: "New Inquiry"
+  };
+
+  try {
+    const existing = JSON.parse(localStorage.getItem("gfk_catering_requests") || "[]");
+    existing.unshift(request);
+    localStorage.setItem("gfk_catering_requests", JSON.stringify(existing));
+  } catch (e) {}
+
+  closeCateringModal();
+  showToast("Catering enquiry sent! George the Greek's team will contact you within 24 hours.");
+}
+
+function openContactModal() {
+  let modal = document.getElementById("contactModal");
+  if (!modal) return;
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+}
+
+function closeContactModal() {
+  const modal = document.getElementById("contactModal");
+  if (modal) {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  }
+}
+
+function handleContactSubmit(event) {
+  event.preventDefault();
+  showToast("Your special dietary request was received. We will be in touch!");
+  closeContactModal();
+}
+
+// Legal Policies Modal
+function openPolicyModal(type) {
+  let title = "Privacy Policy";
+  let content = "";
+
+  if (type === "privacy") {
+    title = "Privacy Policy";
+    content = `
+      <p class="mb-3">At Greek Fit Kitchen, managed by George the Greek in Etobicoke, we respect your privacy and protect your personal ordering data.</p>
+      <p class="mb-3">We collect your name, phone number, delivery address, and order selections exclusively for preparing and delivering your scheduled meals. We do not sell or rent customer data.</p>
+      <p>All online payments are securely tokenized through encrypted card gateway services in accordance with PCI-DSS standards.</p>
+    `;
+  } else if (type === "terms") {
+    title = "Terms & Conditions";
+    content = `
+      <p class="mb-3"><strong>Minimum Order:</strong> All meal-prep orders require a minimum of 6 meals before delivery or pickup fulfillment can be scheduled.</p>
+      <p class="mb-3"><strong>Cutoff Rules:</strong> Sunday delivery orders must be completed before Friday at 12:00 p.m. noon (America/Toronto time). Wednesday orders must be completed before Monday at 12:00 p.m. noon.</p>
+      <p><strong>Pickup Location:</strong> Store pickup is free of charge at George the Greek, 3575 Lake Shore Blvd W, Etobicoke, ON M8W 1P5.</p>
+    `;
+  } else if (type === "refund") {
+    title = "Refund & Cancellation Policy";
+    content = `
+      <p class="mb-3">Because our meals are chef-prepared fresh to order, order cancellations or modifications must be submitted prior to the respective cutoff window (Friday 12 p.m. for Sunday batch, Monday 12 p.m. for Wednesday batch).</p>
+      <p class="mb-3">Orders cancelled before the cutoff will receive a 100% refund to the original payment method.</p>
+      <p>If you experience any quality issue with your meals, please notify our team within 24 hours of delivery with photographic documentation for an immediate replacement or store credit.</p>
+    `;
+  }
+
+  let modal = document.getElementById("policyModal");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "policyModal";
+    modal.className = "fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto";
+    document.body.appendChild(modal);
+  }
+
+  modal.innerHTML = `
+    <div class="bg-white dark:bg-[#101D3A] rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-white/10 my-8">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-white/10">
+        <h3 class="text-xl font-black text-greek-navy dark:text-white">${title}</h3>
+        <button onclick="closePolicyModal()" class="text-slate-400 hover:text-white text-2xl font-bold p-1">&times;</button>
+      </div>
+      <div class="py-4 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+        ${content}
+      </div>
+      <div class="pt-4 border-t border-slate-200 dark:border-white/10 text-right">
+        <button onclick="closePolicyModal()" class="px-5 py-2.5 btn-gold rounded-xl text-xs font-black">
+          I Understand
+        </button>
+      </div>
+    </div>
+  `;
+
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+}
+
+function closePolicyModal() {
+  const modal = document.getElementById("policyModal");
+  if (modal) {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  }
+}
+
+// ==========================================
+// 16. HERO SLIDER LOGIC
+// ==========================================
+let currentSlide = 0;
+let slideInterval = null;
+
+function initHeroSlider() {
+  const slides = document.querySelectorAll(".slide-item");
+  if (slides.length <= 1) return;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("active", i === index);
+    });
+    currentSlide = index;
+  }
+
+  window.prevHeroSlide = function() {
+    let next = currentSlide - 1;
+    if (next < 0) next = slides.length - 1;
+    showSlide(next);
+    restartSlideTimer();
+  };
+
+  window.nextHeroSlide = function() {
+    let next = (currentSlide + 1) % slides.length;
+    showSlide(next);
+    restartSlideTimer();
+  };
+
+  function restartSlideTimer() {
+    if (slideInterval) clearInterval(slideInterval);
+    slideInterval = setInterval(() => {
+      window.nextHeroSlide();
+    }, 6000);
+  }
+
+  restartSlideTimer();
+}
+
+// ==========================================
+// 17. TOAST NOTIFICATIONS
+// ==========================================
+function showToast(message) {
+  let toast = document.getElementById("siteToast");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "siteToast";
+    toast.className = "fixed bottom-5 right-5 z-50 bg-[#101D3A] text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-greek-gold/40 text-xs font-bold flex items-center gap-3 transition-all duration-300 transform translate-y-20 opacity-0";
+    document.body.appendChild(toast);
+  }
+
+  toast.innerHTML = `
+    <span class="w-2.5 h-2.5 rounded-full bg-greek-gold flex-shrink-0 animate-ping"></span>
+    <span class="leading-snug">${message}</span>
+  `;
+
+  toast.classList.remove("translate-y-20", "opacity-0");
+  toast.classList.add("translate-y-0", "opacity-100");
+
+  setTimeout(() => {
+    toast.classList.remove("translate-y-0", "opacity-100");
+    toast.classList.add("translate-y-20", "opacity-0");
+  }, 3400);
+}
+
+// ==========================================
+// 18. MULTI-WINDOW STORAGE SYNCHRONIZATION
+// ==========================================
+window.addEventListener("storage", (e) => {
+  if (e.key === "gfk_cart") {
+    cart = loadCart();
+    renderCartDrawer();
+    updateMealPlanBuilderUI();
+  }
+  if (e.key === "gfk_menu_items") {
+    currentMenu = getStoredMenu();
+    renderMenuGrid();
+  }
+  if (e.key === "gfk_settings") {
+    currentSettings = getStoredSettings();
+    renderCartDrawer();
+    updateMealPlanBuilderUI();
+  }
+  if (e.key === "gfk_theme") {
+    initTheme();
+  }
+});
+
+// ==========================================
+// 19. INITIALIZATION HOOK
+// ==========================================
+document.addEventListener("DOMContentLoaded", () => {
   initTheme();
-  initSlider();
-  renderMenu('all');
-  updateCartBadge();
-  updateCartSummary();
+  initHeroSlider();
+  updateUserUI();
+  renderMenuGrid();
+  renderCartDrawer();
+  updateMealPlanBuilderUI();
   updateCutoffCountdown();
   setInterval(updateCutoffCountdown, 1000);
 
-  // Category buttons
-  const catButtons = document.querySelectorAll('.cat-filter-btn');
-  catButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      catButtons.forEach(b => {
-        b.classList.remove('bg-sky-600', 'text-white', 'shadow-md');
-        b.classList.add('bg-slate-200/60', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
-      });
-      btn.classList.add('bg-sky-600', 'text-white', 'shadow-md');
-      btn.classList.remove('bg-slate-200/60', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
-      const cat = btn.getAttribute('data-cat');
-      renderMenu(cat);
-    });
-  });
-
-  // Mobile menu toggle
-  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-  const mobileMenuDrawer = document.getElementById('mobileMenuDrawer');
-  if (mobileMenuBtn && mobileMenuDrawer) {
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenuDrawer.classList.toggle('hidden');
+  // CC Number formatting
+  const ccInput = document.getElementById("ccNumber");
+  if (ccInput) {
+    ccInput.addEventListener("input", e => {
+      let v = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+      let matches = v.match(/\d{4,16}/g);
+      let match = (matches && matches[0]) || '';
+      let parts = [];
+      for (let i = 0, len = match.length; i < len; i += 4) {
+        parts.push(match.substring(i, i + 4));
+      }
+      e.target.value = parts.length ? parts.join(' ') : v;
+      detectCardType(e.target.value);
     });
   }
 
-  // Delivery method toggle (Delivery vs Pickup)
-  const deliveryRadios = document.querySelectorAll('input[name="deliveryMethodRadio"]');
-  deliveryRadios.forEach(r => {
-    r.addEventListener('change', (e) => {
-      state.deliveryMethod = e.target.value;
-      const addrBox = document.getElementById('deliveryAddressInputBox');
-      const pickupInfoBox = document.getElementById('pickupLocationInfoBox');
-      if (state.deliveryMethod === 'pickup') {
-        if (addrBox) addrBox.classList.add('hidden');
-        if (pickupInfoBox) pickupInfoBox.classList.remove('hidden');
+  // CC Expiry format (MM/YY)
+  const expInput = document.getElementById("ccExpiry");
+  if (expInput) {
+    expInput.addEventListener("input", e => {
+      let v = e.target.value.replace(/\D/g, '');
+      if (v.length > 2) {
+        e.target.value = v.substring(0, 2) + '/' + v.substring(2, 4);
       } else {
-        if (addrBox) addrBox.classList.remove('hidden');
-        if (pickupInfoBox) pickupInfoBox.classList.add('hidden');
+        e.target.value = v;
       }
-      updateCartSummary();
-      updateCheckoutSummaryDisplay();
     });
-  });
+  }
 
-  // Init kitchen if on kitchen tablet page
-  if (document.getElementById('kitchenOrdersList')) {
-    initKitchenView();
+  // Mobile menu button
+  const mobileBtn = document.getElementById("mobileMenuBtn");
+  const mobileDrawer = document.getElementById("mobileMenuDrawer");
+  if (mobileBtn && mobileDrawer) {
+    mobileBtn.addEventListener("click", () => {
+      mobileDrawer.classList.toggle("hidden");
+    });
   }
 });

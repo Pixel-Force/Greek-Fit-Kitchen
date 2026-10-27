@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer Account &amp; Order History | Greek Fit Kitchen</title>
+  <meta name="description" content="View your past Greek Fit Kitchen meal-prep orders, reorder favourite weekly plans in 1-click, and manage your delivery details." />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            greek: {
+              navy: '#101D3A',
+              card: '#172A4D',
+              gold: '#F5C542',
+              goldHover: '#E5B432',
+              cream: '#FAF9F5',
+              slate: '#292D35',
+              border: '#E7E8EC',
+              lime: '#23845B',
+              red: '#C83D45'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/png" href="public/images/brand/greek-fit-kitchen-logo.png" />
+</head>
+<body class="bg-[#FAF9F5] dark:bg-[#0C162C] text-[#292D35] dark:text-slate-100 antialiased min-h-screen flex flex-col selection:bg-greek-gold selection:text-[#101D3A] transition-colors duration-200">
+
+  <!-- ================= TOP ANNOUNCEMENT BAR ================= -->
+  <div class="bg-[#101D3A] text-white text-xs py-2.5 px-4 border-b border-white/10 relative z-50">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5">
+        <span class="inline-flex items-center gap-1 bg-greek-gold text-[#101D3A] font-black px-2 py-0.5 rounded text-[11px] uppercase tracking-wider shadow-sm">
+          🔥 SPECIAL
+        </span>
+        <span class="font-medium text-xs">
+          6-Meal Plan from <strong class="text-greek-gold font-mono">$59.94 CAD</strong> · <strong>10% OFF</strong> orders of 7+ meals!
+        </span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div id="cutoffCountdown" class="hidden md:inline-flex items-center gap-1.5 text-[11px] bg-black/40 text-greek-gold px-3 py-1 rounded-full border border-white/10 font-medium">
+          <span>Loading delivery cutoff...</span>
+        </div>
+        <span class="text-white/20 hidden sm:inline">|</span>
+        <div class="flex items-center gap-1.5 text-[11px] text-white/80">
+          <span>🏪 Free Pickup at <strong>George the Greek</strong> (Etobicoke)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MAIN HEADER ================= -->
+  <header class="sticky top-0 z-40 w-full glass-header transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-3 group focus:outline-none" aria-label="Greek Fit Kitchen Home">
+        <img 
+          src="public/images/brand/greek-fit-kitchen-logo.png" 
+          alt="Greek Fit Kitchen" 
+          class="h-12 w-auto max-w-[200px] object-contain drop-shadow transition-transform group-hover:scale-105" 
+        />
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="hidden xl:flex items-center gap-7 font-semibold text-sm text-white/90">
+        <a href="index.html" class="hover:text-greek-gold transition-colors">Home</a>
+        <a href="menu.html" class="hover:text-greek-gold transition-colors">Full Menu</a>
+        <a href="build-plan.html" class="hover:text-greek-gold transition-colors">Build Plan</a>
+        <a href="how-it-works.html" class="hover:text-greek-gold transition-colors">How It Works</a>
+        <a href="delivery.html" class="hover:text-greek-gold transition-colors">Delivery &amp; Pickup</a>
+        <a href="catering.html" class="hover:text-greek-gold transition-colors">Catering</a>
+        <a href="about.html" class="hover:text-greek-gold transition-colors">About Us</a>
+        <a href="contact.html" class="hover:text-greek-gold transition-colors">Contact</a>
+      </nav>
+
+      <!-- Header Utilities -->
+      <div class="flex items-center gap-2.5 sm:gap-3">
+
+        <!-- Account Button (Active) -->
+        <a 
+          href="account.html" 
+          id="headerAccountBtn"
+          class="p-2 sm:px-3 sm:py-1.5 rounded-full border border-greek-gold flex items-center gap-1.5 text-greek-gold bg-white/10 hover:bg-white/20 transition-all focus:outline-none shadow-sm"
+          title="Sign In / Account"
+        >
+          <svg class="w-5 h-5 text-greek-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+        </a>
+
+        <!-- Cart Button -->
+        <a 
+          href="cart.html" 
+          id="headerCartBtn"
+          class="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all focus:outline-none shadow-sm"
+        >
+          <div class="relative">
+            <svg class="w-5 h-5 text-greek-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+            <span id="headerCartCount" class="absolute -top-2 -right-2 bg-greek-gold text-[#101D3A] text-[10px] font-black rounded-full h-4 w-4 flex items-center justify-center font-mono">
+              0
+            </span>
+          </div>
+          <span id="headerCartSubtotal" class="font-bold font-mono text-xs hidden sm:inline">$0.00</span>
+        </a>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobileMenuBtn" type="button" aria-label="Open Mobile Menu" class="xl:hidden p-2 text-white rounded-lg hover:bg-white/10">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobileMenuDrawer" class="hidden xl:hidden border-t border-white/10 bg-[#101D3A] px-5 py-5 space-y-4 shadow-2xl">
+      <div class="flex flex-col space-y-3 font-semibold text-sm text-white">
+        <a href="index.html" class="hover:text-greek-gold py-1">Home</a>
+        <a href="menu.html" class="hover:text-greek-gold py-1">Full Menu</a>
+        <a href="build-plan.html" class="hover:text-greek-gold py-1">Build Your Meal Plan</a>
+        <a href="how-it-works.html" class="hover:text-greek-gold py-1">How It Works</a>
+        <a href="delivery.html" class="hover:text-greek-gold py-1">Delivery &amp; Pickup</a>
+        <a href="catering.html" class="hover:text-greek-gold py-1">Catering</a>
+        <a href="about.html" class="hover:text-greek-gold py-1">About Us</a>
+        <a href="contact.html" class="hover:text-greek-gold py-1">Contact</a>
+        <a href="account.html" class="text-greek-gold py-1 font-bold">My Account</a>
+        <a href="cart.html" class="hover:text-greek-gold py-1">Shopping Cart</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section class="bg-[#101D3A] text-white py-12 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl space-y-2">
+        <h1 class="text-3xl sm:text-4xl font-black uppercase text-white tracking-tight">
+          CUSTOMER PORTAL &amp; <span class="text-greek-gold font-greek">ORDER HISTORY</span>
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-300">
+          Manage your saved profile, view past deliveries, and reorder previous meal packages with a single click.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ACCOUNT MAIN CONTENT ================= -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+    
+    <div id="accountAppContainer" class="max-w-3xl mx-auto space-y-8">
+      <!-- Dynamic View: Sign in form OR Logged in Profile & Order History -->
+    </div>
+
+  </main>
+
+  <!-- ================= MANDATORY FOOTER ================= -->
+  <footer class="bg-[#0C162C] text-white border-t border-white/10 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        
+        <div class="space-y-3">
+          <a href="index.html" class="inline-block transition-transform hover:opacity-90 hover:scale-105 focus:outline-none" aria-label="Greek Fit Kitchen Home">
+            <img src="public/images/brand/greek-fit-kitchen-logo.png" alt="Greek Fit Kitchen" class="h-10 w-auto" />
+          </a>
+          <p class="text-xs text-slate-400">
+            “BIG GREEK FLAVOUR. ZERO MEAL PREP.”<br />
+            Authentic Greek nutritious meal prep delivered in Toronto &amp; Etobicoke.
+          </p>
+          <div class="text-[11px] text-slate-400">
+            Managed by George the Greek · Powered by Lean Meal
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-black uppercase text-greek-gold mb-3">Customer Pages</h4>
+          <ul class="space-y-2 text-xs text-slate-300">
+            <li><a href="index.html" class="hover:text-greek-gold">Home Page</a></li>
+            <li><a href="menu.html" class="hover:text-greek-gold">Full Menu (20 Dishes)</a></li>
+            <li><a href="build-plan.html" class="hover:text-greek-gold">Build Your Meal Plan</a></li>
+            <li><a href="how-it-works.html" class="hover:text-greek-gold">How It Works</a></li>
+            <li><a href="delivery.html" class="hover:text-greek-gold">Delivery &amp; Pickup</a></li>
+            <li><a href="catering.html" class="hover:text-greek-gold">Catering Enquiries</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-black uppercase text-greek-gold mb-3">Store Pickup</h4>
+          <div class="text-xs text-slate-300 space-y-1">
+            <strong>George the Greek</strong><br />
+            3575 Lake Shore Blvd W,<br />
+            Etobicoke, ON M8W 1P5<br />
+            <span class="text-greek-lime font-bold">Free Store Pickup</span>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-black uppercase text-greek-gold mb-3">Operations &amp; Policies</h4>
+          <ul class="space-y-2 text-xs text-slate-300">
+            <li><a href="account.html" class="text-greek-gold font-bold">Customer Account</a></li>
+            <li><a href="cart.html" class="hover:text-greek-gold">Shopping Cart</a></li>
+            <li><a href="privacy-policy.html" class="hover:text-greek-gold">Privacy Policy</a></li>
+            <li><a href="terms.html" class="hover:text-greek-gold">Terms &amp; Conditions</a></li>
+            <li><a href="refund-policy.html" class="hover:text-greek-gold">Refund Policy</a></li>
+            <li class="pt-2 border-t border-white/10"><a href="admin.html" class="text-slate-400 hover:text-white">Admin Operations</a></li>
+            <li><a href="kitchen.html" class="text-slate-400 hover:text-white">Kitchen Display Tablet</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="pt-8 mt-8 border-t border-white/10 flex flex-wrap items-center justify-between text-xs text-slate-500">
+        <div>&copy; 2026 Greek Fit Kitchen. All Rights Reserved. Prices in Canadian Dollars (CAD).</div>
+        <div>Ontario HST: 13% · Toronto Local Time</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    function renderAccountPage() {
+      const container = document.getElementById("accountAppContainer");
+      if (!container) return;
+
+      const user = loadUser();
+      const allOrders = getStoredOrders();
+
+      if (user) {
+        // Customer is logged in
+        const userOrders = allOrders.filter(o => o.customerEmail === user.email);
+
+        container.innerHTML = `
+          <!-- Customer Profile Card -->
+          <div class="p-8 rounded-3xl bg-white dark:bg-[#101D3A] border border-slate-200 dark:border-white/10 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div class="flex items-center gap-4">
+              <div class="w-16 h-16 rounded-2xl bg-greek-gold/20 text-[#101D3A] dark:text-greek-gold font-black text-2xl flex items-center justify-center font-mono">
+                ${user.name.charAt(0).toUpperCase()}
+              </div>
+              <div>
+                <span class="text-[10px] uppercase font-black text-greek-gold tracking-wider">Active Customer Profile</span>
+                <h2 class="text-2xl font-black text-[#101D3A] dark:text-white">${user.name}</h2>
+                <div class="text-xs text-slate-500">${user.email} · ${user.phone || '416-555-0199'}</div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button onclick="logoutCustomer(); renderAccountPage();" class="px-4 py-2 rounded-xl border border-red-300 dark:border-red-900/50 text-xs font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition">
+                Sign Out
+              </button>
+            </div>
+          </div>
+
+          <!-- Saved Delivery Address -->
+          <div class="p-6 rounded-3xl bg-white dark:bg-[#101D3A] border border-slate-200 dark:border-white/10 shadow-sm space-y-2 text-xs">
+            <span class="text-slate-400 font-bold uppercase text-[10px] block">Saved Primary Address:</span>
+            <div class="font-bold text-[#101D3A] dark:text-white text-sm">${user.address || '3200 Lake Shore Blvd W, Etobicoke, ON'}</div>
+            <p class="text-slate-500 text-[11px]">Used to prefill instant distance calculation and scheduled checkout.</p>
+          </div>
+
+          <!-- Order History Table -->
+          <div class="p-8 rounded-3xl bg-white dark:bg-[#101D3A] border border-slate-200 dark:border-white/10 shadow-sm space-y-6">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-white/10">
+              <div>
+                <h3 class="text-xl font-black text-[#101D3A] dark:text-white">Your Order History</h3>
+                <span class="text-xs text-slate-400">Total past orders: <strong>${userOrders.length}</strong></span>
+              </div>
+              <a href="menu.html" class="px-4 py-2 btn-gold rounded-xl text-xs font-black shadow">
+                Order More Meals
+              </a>
+            </div>
+
+            ${userOrders.length === 0 ? `
+              <div class="py-12 text-center text-slate-400 text-xs">
+                <p class="text-base font-bold text-slate-600 dark:text-slate-300">No previous orders on file for this email.</p>
+                <p class="mt-1">Build your first 6-meal plan to get started!</p>
+                <a href="build-plan.html" class="inline-block mt-4 px-6 py-2.5 btn-gold rounded-xl font-black text-xs">
+                  Build 6-Meal Plan ($59.94)
+                </a>
+              </div>
+            ` : `
+              <div class="space-y-4">
+                ${userOrders.map(order => `
+                  <div class="p-5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 space-y-3 text-xs">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-white/10 pb-2">
+                      <div class="flex items-center gap-2.5">
+                        <span class="font-mono font-black text-sm text-greek-gold">#${order.orderId}</span>
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
+                          ${order.status}
+                        </span>
+                        <span class="text-[11px] text-slate-400">${new Date(order.timestamp).toLocaleDateString()}</span>
+                      </div>
+                      <div class="font-mono font-black text-sm text-[#101D3A] dark:text-greek-gold">
+                        $${order.grandTotal.toFixed(2)} CAD
+                      </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-600 dark:text-slate-300 text-[11px]">
+                      <div>
+                        <strong>Batch:</strong> ${order.scheduledDate}
+                      </div>
+                      <div>
+                        <strong>Fulfillment:</strong> ${order.deliveryMethod === 'pickup' ? 'Free Store Pickup @ George the Greek' : order.deliveryAddress}
+                      </div>
+                    </div>
+
+                    <div class="pt-2 border-t border-slate-200 dark:border-white/10 flex items-center justify-between">
+                      <span class="text-slate-400 font-bold">${order.itemCount} Meals Included</span>
+                      <button onclick="reorderPreviousOrder('${order.orderId}'); window.location.href='cart.html';" class="px-4 py-1.5 btn-gold rounded-xl text-xs font-black shadow flex items-center gap-1">
+                        <span>Reorder Previous Plan ↺</span>
+                      </button>
+                    </div>
+                  </div>
+                `).join("")}
+              </div>
+            `}
+          </div>
+        `;
+      } else {
+        // Customer is not logged in: Show Registration / Sign In Form
+        container.innerHTML = `
+          <div class="p-8 sm:p-10 rounded-3xl bg-white dark:bg-[#101D3A] border border-slate-200 dark:border-white/10 shadow-2xl space-y-6">
+            <div class="text-center max-w-sm mx-auto">
+              <span class="text-[10px] uppercase font-black text-greek-gold tracking-wider">Fast Access</span>
+              <h2 class="text-2xl font-black text-[#101D3A] dark:text-white mt-1">Customer Sign In / Register</h2>
+              <p class="text-xs text-slate-500 mt-1">
+                Enter your details to view past orders or save your profile for quick reordering.
+              </p>
+            </div>
+
+            <form onsubmit="handleCustomerLogin(event); renderAccountPage();" class="space-y-4 text-xs max-w-md mx-auto">
+              <div>
+                <label class="block font-bold mb-1">Your Full Name</label>
+                <input type="text" id="authName" required placeholder="Dimitrios Papadopoulos" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/5 outline-none focus:ring-2 focus:ring-greek-gold" />
+              </div>
+
+              <div>
+                <label class="block font-bold mb-1">Email Address</label>
+                <input type="email" id="authEmail" required placeholder="your.name@example.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/5 outline-none focus:ring-2 focus:ring-greek-gold" />
+              </div>
+
+              <div>
+                <label class="block font-bold mb-1">Mobile Phone (Delivery SMS)</label>
+                <input type="tel" id="authPhone" required placeholder="416-555-0199" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/5 outline-none focus:ring-2 focus:ring-greek-gold" />
+              </div>
+
+              <button type="submit" class="w-full py-3.5 btn-gold rounded-xl font-black text-sm shadow-xl mt-2">
+                Sign In &amp; Access Dashboard
+              </button>
+            </form>
+          </div>
+        `;
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderAccountPage();
+    });
+  </script>
+</body>
+</html>

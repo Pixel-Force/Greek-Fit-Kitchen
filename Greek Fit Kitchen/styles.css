@@ -1,105 +1,155 @@
-/* Greek Fit Kitchen - Modern & High Performance Stylesheet */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+/* ==========================================================================
+   Greek Fit Kitchen - Master Production Stylesheet
+   "BIG GREEK FLAVOUR. ZERO MEAL PREP."
+   Managed by George the Greek · Powered by Lean Meal
+   Designed & Developed by Penta Services
+
+   Color Tokens:
+   - Deep Navy: #101D3A (Primary brand, navigation, headings, footer, dark backgrounds)
+   - Rich Navy: #172A4D (Secondary dark surfaces, cards, containers)
+   - Vibrant Golden Yellow: #F5C542 (Primary CTAs, promos, badges, selected states)
+   - Golden Yellow Hover: #E5B432
+   - Warm Off-White: #FAF9F5 (Primary page background in light mode)
+   - Pure White: #FFFFFF (Cards, modals, content surfaces)
+   - Charcoal Body Text: #292D35
+   - Muted Gray: #737987 (Secondary info, supporting text)
+   - Soft Border: #E7E8EC (Dividers, input outlines)
+   - Success Green: #23845B (Confirmed orders, positive savings)
+   - Error Red: #C83D45 (Validation errors, warnings)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=Cinzel:wght@700;800&display=swap');
 
 :root {
-  --primary: #0284c7;
-  --primary-hover: #0369a1;
-  --accent-gold: #d97706;
-  --greek-blue: #034694;
-  --bg-light: #f8fafc;
-  --bg-card-light: #ffffff;
-  --text-main-light: #0f172a;
-  --text-muted-light: #475569;
-  --border-light: #e2e8f0;
+  --color-deep-navy: #101D3A;
+  --color-rich-navy: #172A4D;
+  --color-gold: #F5C542;
+  --color-gold-hover: #E5B432;
+  --color-bg-page: #FAF9F5;
+  --color-bg-surface: #FFFFFF;
+  --color-text-body: #292D35;
+  --color-text-muted: #737987;
+  --color-border: #E7E8EC;
+  --color-success: #23845B;
+  --color-error: #C83D45;
+
+  /* Font Families */
+  --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-greek: 'Cinzel', serif;
 }
 
 html.dark {
-  --primary: #38bdf8;
-  --primary-hover: #0ea5e9;
-  --accent-gold: #fbbf24;
-  --greek-blue: #1e3a8a;
-  --bg-light: #090d16;
-  --bg-card-light: #131b2e;
-  --text-main-light: #f8fafc;
-  --text-muted-light: #94a3b8;
-  --border-light: #1e293b;
+  --color-bg-page: #0C162C;
+  --color-bg-surface: #101D3A;
+  --color-rich-navy: #172A4D;
+  --color-text-body: #F3F4F6;
+  --color-text-muted: #9CA3AF;
+  --color-border: rgba(255, 255, 255, 0.1);
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: var(--bg-light);
-  color: var(--text-main-light);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: var(--font-body);
+  background-color: var(--color-bg-page);
+  color: var(--color-text-body);
+  transition: background-color 0.25s ease, color 0.25s ease;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, .font-heading {
-  font-family: 'Outfit', sans-serif;
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: var(--font-heading);
 }
 
 .font-greek {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-greek);
 }
 
-/* Custom Scrollbar */
+.font-numeric {
+  font-family: var(--font-body);
+  font-feature-settings: "tnum" 1, "cv05" 1;
+}
+
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(16, 29, 58, 0.05);
 }
 .dark ::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.05);
 }
 ::-webkit-scrollbar-thumb {
-  background: #38bdf8;
+  background: #172A4D;
   border-radius: 4px;
 }
+.dark ::-webkit-scrollbar-thumb {
+  background: #F5C542;
+}
 
-/* Glassmorphism & Depth */
+/* Glass Header */
 .glass-header {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-}
-.dark .glass-header {
-  background: rgba(9, 13, 22, 0.88);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(16, 29, 58, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.glass-card {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(226, 232, 240, 0.8);
+/* Primary CTA Buttons */
+.btn-gold {
+  background-color: #F5C542;
+  color: #101D3A;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 14px rgba(245, 197, 66, 0.35);
 }
-.dark .glass-card {
-  background: rgba(19, 27, 46, 0.85);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.btn-gold:hover {
+  background-color: #E5B432;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(245, 197, 66, 0.45);
 }
-
-/* Badges & Highlights */
-.badge-gold {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-  color: #ffffff;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-}
-
-.badge-greek {
-  background: linear-gradient(135deg, #0284c7 0%, #1e40af 100%);
-  color: #ffffff;
+.btn-gold:active {
+  transform: translateY(0);
 }
 
-/* Slider CSS */
+.btn-navy {
+  background-color: #101D3A;
+  color: #FFFFFF;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-navy:hover {
+  background-color: #172A4D;
+  transform: translateY(-1px);
+}
+
+.btn-outline-gold {
+  border: 2px solid #F5C542;
+  color: #F5C542;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+.btn-outline-gold:hover {
+  background-color: #F5C542;
+  color: #101D3A;
+}
+
+/* Hero Slider */
 .hero-slider-container {
   position: relative;
   overflow: hidden;
-  height: 640px;
+  min-height: 600px;
+  max-height: 720px;
 }
 @media (max-width: 768px) {
   .hero-slider-container {
-    height: 560px;
+    min-height: 520px;
+    max-height: none;
   }
 }
 
@@ -108,43 +158,52 @@ h1, h2, h3, .font-heading {
   inset: 0;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: scale(1.04);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1.02);
+  z-index: 1;
 }
 
 .slide-item.active {
   opacity: 1;
   visibility: visible;
   transform: scale(1);
+  z-index: 10;
 }
 
-/* Subtle Greek pattern overlay */
-.greek-pattern-bg {
-  background-image: radial-gradient(rgba(2, 132, 199, 0.12) 1px, transparent 1px);
-  background-size: 24px 24px;
+/* Product & Meal Cards */
+.meal-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
-.dark .greek-pattern-bg {
-  background-image: radial-gradient(rgba(56, 189, 248, 0.1) 1px, transparent 1px);
-  background-size: 24px 24px;
+.meal-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px -8px rgba(16, 29, 58, 0.12);
+}
+.dark .meal-card:hover {
+  box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.6);
+  border-color: rgba(245, 197, 66, 0.4);
 }
 
-/* Animations */
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+/* Kanban Columns in Kitchen KDS */
+.kanban-col {
+  min-height: calc(100vh - 210px);
+}
+
+/* Print Ticket Styles */
+@media print {
+  body * {
+    visibility: hidden;
   }
-  50% {
-    box-shadow: 0 0 30px rgba(56, 189, 248, 0.6);
+  #printableTicket, #printableTicket * {
+    visibility: visible;
   }
-}
-
-.pulse-glow {
-  animation: pulseGlow 2.5s infinite;
-}
-
-/* Custom Checkbox */
-.custom-checkbox:checked {
-  background-color: #0284c7;
-  border-color: #0284c7;
-  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+  #printableTicket {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    font-size: 14pt;
+    color: #000;
+  }
 }
