@@ -207,3 +207,22 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     color: #000;
   }
 }
+
+/* Modal Custom Sleek Scrollbar */
+#sideModal .overflow-y-auto::-webkit-scrollbar,
+#cateringModal .overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+#sideModal .overflow-y-auto::-webkit-scrollbar-track,
+#cateringModal .overflow-y-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+#sideModal .overflow-y-auto::-webkit-scrollbar-thumb,
+#cateringModal .overflow-y-auto::-webkit-scrollbar-thumb {
+  background: rgba(245, 197, 66, 0.4);
+  border-radius: 9999px;
+}
+#sideModal .overflow-y-auto::-webkit-scrollbar-thumb:hover,
+#cateringModal .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 197, 66, 0.8);
+}
