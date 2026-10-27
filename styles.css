@@ -48,12 +48,16 @@ html.dark {
   --color-border: rgba(255, 255, 255, 0.1);
 }
 
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
 body {
   font-family: var(--font-body);
   background-color: var(--color-bg-page);
   color: var(--color-text-body);
   transition: background-color 0.25s ease, color 0.25s ease;
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -144,11 +148,29 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   position: relative;
   overflow: hidden;
   min-height: 600px;
-  max-height: 720px;
+  max-height: 740px;
+}
+@media (max-width: 1024px) {
+  .hero-slider-container {
+    min-height: 640px;
+    max-height: none;
+  }
 }
 @media (max-width: 768px) {
   .hero-slider-container {
-    min-height: 520px;
+    min-height: 680px;
+    max-height: none;
+  }
+}
+@media (max-width: 480px) {
+  .hero-slider-container {
+    min-height: 720px;
+    max-height: none;
+  }
+}
+@media (max-width: 380px) {
+  .hero-slider-container {
+    min-height: 760px;
     max-height: none;
   }
 }
