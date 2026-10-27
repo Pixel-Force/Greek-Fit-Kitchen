@@ -61,6 +61,16 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Mobile Typography & Media Safeguards */
+h1, h2, h3, h4, h5, h6, p, span, a, button {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+img {
+  max-width: 100%;
+}
+
 h1, h2, h3, h4, h5, h6, .font-heading {
   font-family: var(--font-heading);
 }
@@ -148,31 +158,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   position: relative;
   overflow: hidden;
   min-height: 600px;
-  max-height: 740px;
-}
-@media (max-width: 1024px) {
-  .hero-slider-container {
-    min-height: 640px;
-    max-height: none;
-  }
-}
-@media (max-width: 768px) {
-  .hero-slider-container {
-    min-height: 680px;
-    max-height: none;
-  }
-}
-@media (max-width: 480px) {
-  .hero-slider-container {
-    min-height: 720px;
-    max-height: none;
-  }
-}
-@media (max-width: 380px) {
-  .hero-slider-container {
-    min-height: 760px;
-    max-height: none;
-  }
+  max-height: 720px;
 }
 
 .slide-item {
@@ -180,7 +166,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   inset: 0;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   transform: scale(1.02);
   z-index: 1;
 }
@@ -190,6 +176,36 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   visibility: visible;
   transform: scale(1);
   z-index: 10;
+}
+
+/* Mobile & Tablet Slider: Natural Flow to Prevent ANY Cutting */
+@media (max-width: 768px) {
+  .hero-slider-container {
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  
+  .slide-item {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: none;
+    transition: opacity 0.4s ease;
+  }
+  
+  .slide-item.active {
+    position: relative !important;
+    inset: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    display: block !important;
+    transform: none !important;
+    z-index: 10;
+  }
 }
 
 /* Product & Meal Cards */
