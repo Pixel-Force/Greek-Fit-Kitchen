@@ -264,3 +264,10 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 #cateringModal .overflow-y-auto::-webkit-scrollbar-thumb:hover {
   background: rgba(245, 197, 66, 0.8);
 }
+
+
+/* Category Buttons Horizontal Scroll Protection */
+.menu-cat-btn {
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
