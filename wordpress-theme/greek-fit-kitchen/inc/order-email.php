@@ -386,3 +386,184 @@ function gfk_send_order_emails( $order ) {
 
     return $cust_sent;
 }
+
+/**
+ * Handle Catering Submission via AJAX
+ */
+function gfk_handle_ajax_submit_catering() {
+    check_ajax_referer( 'gfk_order_nonce', 'nonce' );
+
+    $raw_input = file_get_contents( 'php://input' );
+    $data = json_decode( $raw_input, true );
+    if ( ! $data && ! empty( $_POST['catering_data'] ) ) {
+        $data = json_decode( wp_unslash( $_POST['catering_data'] ), true );
+    }
+
+    if ( empty( $data ) ) {
+        wp_send_json_error( array( 'message' => __( 'No catering payload received.', 'greek-fit-kitchen' ) ) );
+    }
+
+    $name   = ! empty( $data['name'] ) ? sanitize_text_field( $data['name'] ) : 'Catering Client';
+    $email  = ! empty( $data['email'] ) ? sanitize_email( $data['email'] ) : '';
+    $phone  = ! empty( $data['phone'] ) ? sanitize_text_field( $data['phone'] ) : '';
+    $guests = ! empty( $data['guests'] ) ? sanitize_text_field( $data['guests'] ) : '';
+    $date   = ! empty( $data['date'] ) ? sanitize_text_field( $data['date'] ) : '';
+    $notes  = ! empty( $data['notes'] ) ? sanitize_textarea_field( $data['notes'] ) : '';
+
+    if ( empty( $email ) || ! is_email( $email ) ) {
+        wp_send_json_error( array( 'message' => __( 'Please provide a valid email address.', 'greek-fit-kitchen' ) ) );
+    }
+
+    // Save record in gfk_order as catering lead
+    $post_id = wp_insert_post( array(
+        'post_title'   => sprintf( 'Catering Request - %s (%s guests)', $name, $guests ),
+        'post_type'    => 'gfk_order',
+        'post_status'  => 'publish',
+        'post_content' => sprintf( "Catering Request from %s (%s, %s)\nGuests: %s\nTarget Date: %s\nNotes:\n%s", $name, $email, $phone, $guests, $date, $notes ),
+    ) );
+
+    if ( ! is_wp_error( $post_id ) ) {
+        update_post_meta( $post_id, '_gfk_order_id', 'CAT-' . wp_rand( 10000, 99999 ) );
+        update_post_meta( $post_id, '_gfk_customer_name', $name );
+        update_post_meta( $post_id, '_gfk_customer_email', $email );
+        update_post_meta( $post_id, '_gfk_customer_phone', $phone );
+        update_post_meta( $post_id, '_gfk_delivery_method', 'Catering Event (' . $guests . ' guests)' );
+        update_post_meta( $post_id, '_gfk_scheduled_date', $date );
+    }
+
+    $admin_email = get_option( 'admin_email' );
+    $from_email  = 'orders@fit.georgethegreeks.com';
+    $headers = array(
+        'Content-Type: text/html; charset=UTF-8',
+        'From: Greek Fit Kitchen Catering <' . $from_email . '>',
+        'Reply-To: ' . ( $admin_email ? $admin_email : $from_email ),
+    );
+
+    $body_client = '
+    <!DOCTYPE html>
+    <html>
+    <head><meta charset="utf-8"></head>
+    <body style="font-family:-apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,sans-serif; background:#f8fafc; margin:0; padding:20px; color:#334155;">
+      <div style="max-width:600px; margin:0 auto; background:#ffffff; border-radius:16px; overflow:hidden; border:1px solid #e2e8f0; box-shadow:0 4px 6px rgba(0,0,0,0.05);">
+        <div style="background:#101D3A; padding:24px 30px; text-align:center;">
+          <h1 style="color:#ffffff; margin:0; font-size:20px; font-weight:900; text-transform:uppercase;">GREEK <span style="color:#F5C542;">FIT KITCHEN</span></h1>
+          <p style="color:#94a3b8; margin:4px 0 0; font-size:11px; text-transform:uppercase; letter-spacing:1px;">Catering &amp; Large Event Inquiries</p>
+        </div>
+        <div style="padding:28px 30px;">
+          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:12px; padding:16px; margin-bottom:20px;">
+            <strong style="font-size:16px; color:#166534; display:block;">Thank you, ' . esc_html( $name ) . '!</strong>
+            <p style="margin:4px 0 0; font-size:13px; color:#15803d; line-height:1.5;">We have received your catering request. Our culinary team at <strong>George the Greek</strong> (Etobicoke) is reviewing your event details and will contact you directly within 24 hours.</p>
+          </div>
+          <table width="100%" cellpadding="6" cellspacing="0" style="font-size:13px; line-height:1.6; background:#f8fafc; border-radius:10px; margin-bottom:20px;">
+            <tr><td style="color:#64748b; width:38%;">Estimated Guests:</td><td style="font-weight:bold; color:#101D3A;">' . esc_html( $guests ) . ' people</td></tr>
+            <tr><td style="color:#64748b;">Target Event Date:</td><td style="font-weight:bold; color:#101D3A;">' . esc_html( $date ) . '</td></tr>
+            <tr><td style="color:#64748b;">Phone Number:</td><td style="font-weight:bold; color:#101D3A;">' . esc_html( $phone ) . '</td></tr>
+            <tr><td style="color:#64748b; vertical-align:top;">Event Details:</td><td style="font-weight:bold; color:#101D3A; vertical-align:top;">' . nl2br( esc_html( $notes ) ) . '</td></tr>
+          </table>
+        </div>
+        <div style="background:#f8fafc; padding:16px 30px; border-top:1px solid #e2e8f0; text-align:center; font-size:11px; color:#64748b;">
+          George the Greek Tavern &bull; 3575 Lake Shore Blvd W, Etobicoke, ON
+        </div>
+      </div>
+    </body>
+    </html>';
+
+    $body_admin = '
+    <!DOCTYPE html>
+    <html>
+    <head><meta charset="utf-8"></head>
+    <body style="font-family:sans-serif; padding:20px; color:#333;">
+      <h2 style="color:#101D3A;">[New Catering Inquiry] ' . esc_html( $guests ) . ' Guests - ' . esc_html( $name ) . '</h2>
+      <p><strong>Name:</strong> ' . esc_html( $name ) . '</p>
+      <p><strong>Email:</strong> ' . esc_html( $email ) . '</p>
+      <p><strong>Phone:</strong> ' . esc_html( $phone ) . '</p>
+      <p><strong>Guests:</strong> ' . esc_html( $guests ) . '</p>
+      <p><strong>Date:</strong> ' . esc_html( $date ) . '</p>
+      <p><strong>Notes:</strong><br>' . nl2br( esc_html( $notes ) ) . '</p>
+    </body>
+    </html>';
+
+    $sent = wp_mail( $email, 'We Received Your Catering Enquiry - Greek Fit Kitchen', $body_client, $headers );
+    if ( $admin_email && $admin_email !== $email ) {
+        wp_mail( $admin_email, '[Catering Inquiry] ' . $name . ' (' . $guests . ' guests)', $body_admin, $headers );
+    }
+
+    wp_send_json_success( array(
+        'message' => __( 'Catering enquiry received! Confirmation email sent.', 'greek-fit-kitchen' ),
+        'sent'    => $sent,
+    ) );
+}
+add_action( 'wp_ajax_gfk_submit_catering', 'gfk_handle_ajax_submit_catering' );
+add_action( 'wp_ajax_nopriv_gfk_submit_catering', 'gfk_handle_ajax_submit_catering' );
+
+/**
+ * Handle Dietary Request Submission via AJAX
+ */
+function gfk_handle_ajax_submit_dietary() {
+    check_ajax_referer( 'gfk_order_nonce', 'nonce' );
+
+    $raw_input = file_get_contents( 'php://input' );
+    $data = json_decode( $raw_input, true );
+    if ( ! $data && ! empty( $_POST['dietary_data'] ) ) {
+        $data = json_decode( wp_unslash( $_POST['dietary_data'] ), true );
+    }
+
+    if ( empty( $data ) ) {
+        wp_send_json_error( array( 'message' => __( 'No request payload received.', 'greek-fit-kitchen' ) ) );
+    }
+
+    $name  = ! empty( $data['name'] ) ? sanitize_text_field( $data['name'] ) : 'Customer';
+    $email = ! empty( $data['email'] ) ? sanitize_email( $data['email'] ) : '';
+    $notes = ! empty( $data['notes'] ) ? sanitize_textarea_field( $data['notes'] ) : '';
+
+    if ( empty( $email ) || ! is_email( $email ) ) {
+        wp_send_json_error( array( 'message' => __( 'Please provide a valid email address.', 'greek-fit-kitchen' ) ) );
+    }
+
+    $admin_email = get_option( 'admin_email' );
+    $from_email  = 'orders@fit.georgethegreeks.com';
+    $headers = array(
+        'Content-Type: text/html; charset=UTF-8',
+        'From: Greek Fit Kitchen <' . $from_email . '>',
+        'Reply-To: ' . ( $admin_email ? $admin_email : $from_email ),
+    );
+
+    $body_client = '
+    <!DOCTYPE html>
+    <html>
+    <head><meta charset="utf-8"></head>
+    <body style="font-family:-apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,sans-serif; background:#f8fafc; margin:0; padding:20px; color:#334155;">
+      <div style="max-width:600px; margin:0 auto; background:#ffffff; border-radius:16px; overflow:hidden; border:1px solid #e2e8f0;">
+        <div style="background:#101D3A; padding:24px 30px; text-align:center;">
+          <h1 style="color:#ffffff; margin:0; font-size:20px; font-weight:900; text-transform:uppercase;">GREEK <span style="color:#F5C542;">FIT KITCHEN</span></h1>
+          <p style="color:#94a3b8; margin:4px 0 0; font-size:11px; text-transform:uppercase; letter-spacing:1px;">Special Dietary &amp; Custom Plan Request</p>
+        </div>
+        <div style="padding:28px 30px;">
+          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:12px; padding:16px; margin-bottom:20px;">
+            <strong style="font-size:16px; color:#166534; display:block;">Thank you, ' . esc_html( $name ) . '!</strong>
+            <p style="margin:4px 0 0; font-size:13px; color:#15803d; line-height:1.5;">We have received your dietary inquiry. Our head chef at <strong>George the Greek</strong> will review your request and get back to you with custom meal-prep options.</p>
+          </div>
+          <div style="background:#f8fafc; border-radius:10px; padding:16px; font-size:13px; line-height:1.6;">
+            <strong style="color:#64748b; display:block; margin-bottom:6px;">Your Dietary Notes:</strong>
+            <div style="color:#101D3A; font-weight:bold;">' . nl2br( esc_html( $notes ) ) . '</div>
+          </div>
+        </div>
+        <div style="background:#f8fafc; padding:16px 30px; border-top:1px solid #e2e8f0; text-align:center; font-size:11px; color:#64748b;">
+          George the Greek Tavern &bull; 3575 Lake Shore Blvd W, Etobicoke, ON
+        </div>
+      </div>
+    </body>
+    </html>';
+
+    $sent = wp_mail( $email, 'Special Dietary Request Received - Greek Fit Kitchen', $body_client, $headers );
+    if ( $admin_email && $admin_email !== $email ) {
+        wp_mail( $admin_email, '[Dietary Request] ' . $name, nl2br( esc_html( $notes ) ), $headers );
+    }
+
+    wp_send_json_success( array(
+        'message' => __( 'Dietary request received! Confirmation email sent.', 'greek-fit-kitchen' ),
+        'sent'    => $sent,
+    ) );
+}
+add_action( 'wp_ajax_gfk_submit_dietary', 'gfk_handle_ajax_submit_dietary' );
+add_action( 'wp_ajax_nopriv_gfk_submit_dietary', 'gfk_handle_ajax_submit_dietary' );

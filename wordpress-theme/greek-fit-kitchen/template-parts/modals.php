@@ -426,7 +426,7 @@
         <textarea id="catNotes" rows="3" placeholder="Tell us about your event, preferred souvlaki/chicken plates, dietary needs..." class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:ring-2 focus:ring-greek-gold"></textarea>
       </div>
       <div class="pt-2 text-right">
-        <button type="submit" class="px-6 py-3 btn-gold rounded-xl font-black text-xs shadow-lg">
+        <button type="submit" id="catSubmitBtn" class="px-6 py-3 btn-gold rounded-xl font-black text-xs shadow-lg">
           Submit Catering Request
         </button>
       </div>
@@ -445,18 +445,18 @@
     <form onsubmit="handleContactSubmit(event)" class="space-y-3 py-3 text-xs">
       <div>
         <label class="block font-bold mb-1">Your Name</label>
-        <input type="text" required class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:ring-2 focus:ring-greek-gold" />
+        <input type="text" id="dietaryName" required class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:ring-2 focus:ring-greek-gold" />
       </div>
       <div>
         <label class="block font-bold mb-1">Email</label>
-        <input type="email" required class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:ring-2 focus:ring-greek-gold" />
+        <input type="email" id="dietaryEmail" required class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:ring-2 focus:ring-greek-gold" />
       </div>
       <div>
         <label class="block font-bold mb-1">Your Dietary Question / Custom Plan Request</label>
-        <textarea rows="4" required placeholder="Let us know about allergies, sodium preferences, custom meal combinations..." class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:ring-2 focus:ring-greek-gold"></textarea>
+        <textarea rows="4" id="dietaryNotes" required placeholder="Let us know about allergies, sodium preferences, custom meal combinations..." class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:ring-2 focus:ring-greek-gold"></textarea>
       </div>
       <div class="pt-2 text-right">
-        <button type="submit" class="px-6 py-3 btn-gold rounded-xl font-black text-xs shadow-lg">
+        <button type="submit" id="dietarySubmitBtn" class="px-6 py-3 btn-gold rounded-xl font-black text-xs shadow-lg">
           Send to Chef Team
         </button>
       </div>

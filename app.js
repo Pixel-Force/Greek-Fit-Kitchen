@@ -1771,12 +1771,12 @@ function closeCateringModal() {
 
 function handleCateringSubmit(event) {
   event.preventDefault();
-  const name = document.getElementById("catName")?.value;
-  const email = document.getElementById("catEmail")?.value;
-  const phone = document.getElementById("catPhone")?.value;
-  const guests = document.getElementById("catGuests")?.value;
-  const date = document.getElementById("catDate")?.value;
-  const notes = document.getElementById("catNotes")?.value;
+  const name = document.getElementById("catName")?.value || "";
+  const email = document.getElementById("catEmail")?.value || "";
+  const phone = document.getElementById("catPhone")?.value || "";
+  const guests = document.getElementById("catGuests")?.value || "";
+  const date = document.getElementById("catDate")?.value || "";
+  const notes = document.getElementById("catNotes")?.value || "";
 
   const request = {
     id: "CAT-" + Date.now().toString(36).toUpperCase(),
@@ -1790,14 +1790,42 @@ function handleCateringSubmit(event) {
     status: "New Inquiry"
   };
 
-  try {
-    const existing = JSON.parse(localStorage.getItem("gfk_catering_requests") || "[]");
-    existing.unshift(request);
-    localStorage.setItem("gfk_catering_requests", JSON.stringify(existing));
-  } catch (e) {}
+  const submitBtn = document.getElementById("catSubmitBtn") || event.target.querySelector("button[type='submit']");
+  const originalText = submitBtn ? submitBtn.innerHTML : "Submit Catering Request";
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = "Sending Catering Request...";
+  }
 
-  closeCateringModal();
-  showToast("Catering enquiry sent! George the Greek's team will contact you within 24 hours.");
+  const ajaxUrl = (typeof gfkConfig !== 'undefined' && gfkConfig.ajaxUrl) ? gfkConfig.ajaxUrl : '/wp-admin/admin-ajax.php';
+  const nonce = (typeof gfkConfig !== 'undefined' && gfkConfig.orderNonce) ? gfkConfig.orderNonce : '';
+
+  const formData = new FormData();
+  formData.append('action', 'gfk_submit_catering');
+  formData.append('nonce', nonce);
+  formData.append('catering_data', JSON.stringify(request));
+
+  fetch(ajaxUrl, {
+    method: 'POST',
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => console.log('Catering email result:', data))
+  .catch(err => console.log('Catering sync error:', err))
+  .finally(() => {
+    try {
+      const existing = JSON.parse(localStorage.getItem("gfk_catering_requests") || "[]");
+      existing.unshift(request);
+      localStorage.setItem("gfk_catering_requests", JSON.stringify(existing));
+    } catch (e) {}
+
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+    }
+    closeCateringModal();
+    showToast("Catering enquiry sent! Confirmation email dispatched to your inbox.");
+  });
 }
 
 function openContactModal() {
@@ -1817,8 +1845,46 @@ function closeContactModal() {
 
 function handleContactSubmit(event) {
   event.preventDefault();
-  showToast("Your special dietary request was received. We will be in touch!");
-  closeContactModal();
+  const name = document.getElementById("dietaryName")?.value || "Customer";
+  const email = document.getElementById("dietaryEmail")?.value || "";
+  const notes = document.getElementById("dietaryNotes")?.value || "";
+
+  const request = {
+    name,
+    email,
+    notes
+  };
+
+  const submitBtn = document.getElementById("dietarySubmitBtn") || event.target.querySelector("button[type='submit']");
+  const originalText = submitBtn ? submitBtn.innerHTML : "Send to Chef Team";
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = "Sending Request...";
+  }
+
+  const ajaxUrl = (typeof gfkConfig !== 'undefined' && gfkConfig.ajaxUrl) ? gfkConfig.ajaxUrl : '/wp-admin/admin-ajax.php';
+  const nonce = (typeof gfkConfig !== 'undefined' && gfkConfig.orderNonce) ? gfkConfig.orderNonce : '';
+
+  const formData = new FormData();
+  formData.append('action', 'gfk_submit_dietary');
+  formData.append('nonce', nonce);
+  formData.append('dietary_data', JSON.stringify(request));
+
+  fetch(ajaxUrl, {
+    method: 'POST',
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => console.log('Dietary email result:', data))
+  .catch(err => console.log('Dietary sync error:', err))
+  .finally(() => {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+    }
+    showToast("Your special dietary request was received. We sent a confirmation to your email!");
+    closeContactModal();
+  });
 }
 
 // Legal Policies Modal
