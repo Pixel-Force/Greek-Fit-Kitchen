@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       </div>
       <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
         <span class="text-xs font-bold text-slate-500">Includes 2 sides per plate</span>
-        <a href="#featuredMeals" class="text-xs font-black text-greek-gold hover:underline">Choose Meals →</a>
+        <a href="<?php echo esc_url( home_url( '/meal-plans/' ) ); ?>" class="text-xs font-black text-greek-gold hover:underline">Choose Meals →</a>
       </div>
     </div>
 
@@ -45,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       </div>
       <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
         <span class="text-xs font-bold text-slate-300">Active 10% Discount</span>
-        <a href="#featuredMeals" class="text-xs font-black text-greek-gold hover:underline">Build Plan →</a>
+        <a href="<?php echo esc_url( home_url( '/meal-plans/' ) ); ?>" class="text-xs font-black text-greek-gold hover:underline">Build Plan →</a>
       </div>
     </div>
 
@@ -57,7 +57,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       </div>
       <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
         <span class="text-xs font-bold text-slate-500">Maximum Savings</span>
-        <a href="#featuredMeals" class="text-xs font-black text-greek-gold hover:underline">Customize →</a>
+        <a href="<?php echo esc_url( home_url( '/meal-plans/' ) ); ?>" class="text-xs font-black text-greek-gold hover:underline">Customize →</a>
       </div>
     </div>
   </div>
