@@ -41,6 +41,26 @@
     };
   </script>
 
+  <script>
+    (function() {
+      try {
+        const storedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      } catch (e) {}
+    })();
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      try {
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      } catch(e) {}
+    }
+  </script>
+
   <?php wp_head(); ?>
 </head>
 
@@ -105,6 +125,23 @@
       <!-- Right Header Utilities: Cart Drawer Trigger & Order CTA -->
       <div class="flex items-center gap-3 shrink-0">
 
+        <!-- Light / Dark Theme Switcher -->
+        <button 
+          type="button" 
+          onclick="toggleTheme()" 
+          aria-label="Toggle light and dark mode" 
+          class="theme-toggle-btn p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all border border-white/20 flex items-center justify-center focus:outline-none active:scale-95"
+        >
+          <!-- Moon icon (light mode) -->
+          <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+          </svg>
+          <!-- Sun icon (dark mode) -->
+          <svg class="w-5 h-5 hidden dark:block text-greek-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+          </svg>
+        </button>
+
         <!-- Shopping Cart Icon Button with Live Counter Badge -->
         <button 
           onclick="openCartDrawer()"
@@ -153,10 +190,19 @@
         }
         ?>
       </nav>
-      <div class="pt-4 border-t border-white/10">
-        <a href="<?php echo esc_url( home_url( '/#mealPlans' ) ); ?>" class="w-full inline-flex items-center justify-center gap-1.5 py-3 px-4 rounded-xl font-black text-xs bg-greek-gold text-[#101D3A] hover:bg-greek-goldHover transition shadow">
-          <span>Build Your Weekly Plan (6+ Meals)</span>
+      <div class="pt-4 border-t border-white/10 flex items-center justify-between gap-3">
+        <a href="<?php echo esc_url( home_url( '/#mealPlans' ) ); ?>" class="flex-1 inline-flex items-center justify-center gap-1.5 py-3 px-4 rounded-xl font-black text-xs bg-greek-gold text-[#101D3A] hover:bg-greek-goldHover transition shadow">
+          <span>Build Weekly Plan (6+ Meals)</span>
         </a>
+        <button 
+          type="button" 
+          onclick="toggleTheme()" 
+          aria-label="Toggle light and dark mode" 
+          class="p-3 rounded-full bg-white/10 text-white hover:bg-white/20 transition border border-white/20 flex items-center justify-center"
+        >
+          <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+          <svg class="w-5 h-5 hidden dark:block text-greek-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        </button>
       </div>
     </div>
   </header>

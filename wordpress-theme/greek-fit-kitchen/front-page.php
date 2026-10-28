@@ -15,8 +15,12 @@ get_header(); ?>
   <?php
   // Check if page is customized using Elementor
   $is_elementor = false;
-  if ( did_action( 'elementor/loaded' ) && \Elementor\Plugin::$instance->documents->get( get_the_ID() ) ) {
-      $is_elementor = \Elementor\Plugin::$instance->documents->get( get_the_ID() )->is_built_with_elementor();
+  $page_id = get_the_ID();
+  if ( $page_id && did_action( 'elementor/loaded' ) && class_exists( '\Elementor\Plugin' ) && isset( \Elementor\Plugin::$instance->documents ) ) {
+      $document = \Elementor\Plugin::$instance->documents->get( $page_id );
+      if ( $document && method_exists( $document, 'is_built_with_elementor' ) ) {
+          $is_elementor = $document->is_built_with_elementor();
+      }
   }
 
   if ( $is_elementor ) :
