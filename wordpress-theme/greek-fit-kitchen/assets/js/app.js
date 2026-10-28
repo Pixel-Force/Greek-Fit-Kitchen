@@ -16,6 +16,21 @@
  */
 
 // ==========================================
+// 0. ASSET URL RESOLVER (CDN FALLBACK ENGINE)
+// ==========================================
+function resolveAssetUrl(path) {
+  if (!path) return "https://pixel-force.github.io/Greek-Fit-Kitchen/public/images/meals/grilled-chicken.jpg";
+  if (path.startsWith("http://") || path.startsWith("https://") || path.startsWith("data:")) {
+    return path;
+  }
+  const clean = path.replace(/^(?:\.\/|\/)?(?:public\/|assets\/)?/, "");
+  if (typeof gfkConfig !== "undefined" && gfkConfig.themeUri) {
+    return gfkConfig.themeUri + "/assets/" + clean;
+  }
+  return "https://pixel-force.github.io/Greek-Fit-Kitchen/public/" + clean;
+}
+
+// ==========================================
 // 1. DEFAULT DATA: 20 MAIN DISHES FROM FLYER
 // ==========================================
 const DEFAULT_MENU_ITEMS = [
@@ -372,9 +387,16 @@ const DEFAULT_SETTINGS = {
 function getStoredMenu() {
   try {
     const raw = localStorage.getItem("gfk_menu_items");
-    return raw ? JSON.parse(raw) : DEFAULT_MENU_ITEMS;
+    const items = raw ? JSON.parse(raw) : DEFAULT_MENU_ITEMS;
+    return items.map(item => ({
+      ...item,
+      image: resolveAssetUrl(item.image)
+    }));
   } catch (e) {
-    return DEFAULT_MENU_ITEMS;
+    return DEFAULT_MENU_ITEMS.map(item => ({
+      ...item,
+      image: resolveAssetUrl(item.image)
+    }));
   }
 }
 
@@ -600,14 +622,17 @@ function renderMenuGrid() {
       ? `<span class="bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 text-[10px] font-black px-2 py-0.5 rounded-full border border-amber-300 dark:border-amber-700/50">Complete Plate (No Sides)</span>`
       : `<span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>`;
 
+    const mealImg = resolveAssetUrl(meal.image);
+    const fallbackImg = "https://pixel-force.github.io/Greek-Fit-Kitchen/public/images/meals/grilled-chicken.jpg";
+
     return `
       <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300">
         <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
           <img 
-            src="${meal.image}" 
+            src="${mealImg}" 
             alt="${meal.name}" 
             loading="lazy"
-            onerror="this.src='public/images/meals/grilled-chicken.jpg'"
+            onerror="this.onerror=null; this.src='${fallbackImg}';"
             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
@@ -699,7 +724,14 @@ function openSideCustomizer(mealId) {
   const modal = document.getElementById("sideModal");
   if (!modal) return;
 
-  document.getElementById("modalMealImg").src = meal.image;
+  const modalImg = document.getElementById("modalMealImg");
+  if (modalImg) {
+    modalImg.src = resolveAssetUrl(meal.image);
+    modalImg.onerror = function() {
+      this.onerror = null;
+      this.src = "https://pixel-force.github.io/Greek-Fit-Kitchen/public/images/meals/grilled-chicken.jpg";
+    };
+  }
   document.getElementById("modalMealName").innerText = meal.name;
   document.getElementById("modalMealPrice").innerText = `$${meal.price.toFixed(2)} CAD`;
   document.getElementById("modalMealDesc").innerText = meal.description || "";
@@ -835,7 +867,7 @@ function openMealDetailModal(mealId) {
       </div>
 
       <div class="my-4 rounded-2xl overflow-hidden aspect-[16/9] bg-slate-100 dark:bg-slate-800">
-        <img src="${meal.image}" alt="${meal.name}" class="w-full h-full object-cover" />
+        <img src="${resolveAssetUrl(meal.image)}" alt="${meal.name}" onerror="this.onerror=null; this.src='https://pixel-force.github.io/Greek-Fit-Kitchen/public/images/meals/grilled-chicken.jpg';" class="w-full h-full object-cover" />
       </div>
 
       <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
@@ -1067,7 +1099,7 @@ function renderCartDrawer() {
     cartItemsList.innerHTML = cart.map(item => `
       <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 space-y-2">
         <div class="flex items-start justify-between gap-3">
-          <img src="${item.image}" alt="${item.name}" class="w-12 h-12 rounded-xl object-cover bg-slate-200 dark:bg-slate-700 flex-shrink-0" />
+          <img src="${resolveAssetUrl(item.image)}" alt="${item.name}" onerror="this.onerror=null; this.src='https://pixel-force.github.io/Greek-Fit-Kitchen/public/images/meals/grilled-chicken.jpg';" class="w-12 h-12 rounded-xl object-cover bg-slate-200 dark:bg-slate-700 flex-shrink-0" />
           <div class="flex-1 min-w-0">
             <h4 class="font-bold text-xs text-greek-navy dark:text-white truncate">${item.name}</h4>
             <div class="text-[11px] font-mono text-greek-gold font-black">$${item.unitPrice.toFixed(2)} CAD</div>
@@ -1263,7 +1295,7 @@ function updateMealPlanBuilderUI() {
   planContainer.innerHTML = cart.map(item => `
     <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs">
       <div class="flex items-center gap-2.5 min-w-0">
-        <img src="${item.image}" alt="${item.name}" class="w-9 h-9 rounded-lg object-cover flex-shrink-0" />
+        <img src="${resolveAssetUrl(item.image)}" alt="${item.name}" onerror="this.onerror=null; this.src='https://pixel-force.github.io/Greek-Fit-Kitchen/public/images/meals/grilled-chicken.jpg';" class="w-9 h-9 rounded-lg object-cover flex-shrink-0" />
         <div class="truncate">
           <span class="font-bold text-greek-navy dark:text-white block truncate">${item.name}</span>
           <span class="text-[10px] text-slate-400">${item.hasSides && item.side1 ? `${item.side1}, ${item.side2}` : 'Complete Plate'}</span>

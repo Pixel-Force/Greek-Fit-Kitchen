@@ -344,12 +344,11 @@ function gfk_get_meal_by_id( $id ) {
 
 
 function gfk_get_asset_url( $path ) {
-    $clean_path = ltrim( str_replace( 'public/', 'assets/', $path ), '/' );
-    $local_file = get_template_directory() . '/' . $clean_path;
+    $clean_path = ltrim( str_replace( 'assets/', '', str_replace( 'public/', '', $path ) ), '/' );
+    $local_file = get_template_directory() . '/assets/' . $clean_path;
     if ( file_exists( $local_file ) ) {
-        return get_template_directory_uri() . '/' . $clean_path;
+        return get_template_directory_uri() . '/assets/' . $clean_path;
     }
     // High-speed CDN fallback
-    $cdn_path = ltrim( str_replace( 'assets/', 'public/', $path ), '/' );
-    return 'https://pixel-force.github.io/Greek-Fit-Kitchen/' . $cdn_path;
+    return 'https://pixel-force.github.io/Greek-Fit-Kitchen/public/' . $clean_path;
 }

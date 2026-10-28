@@ -73,8 +73,8 @@ $theme_uri = get_template_directory_uri();
   <div id="menuGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
     <?php foreach ( $meals as $meal ) : 
       $is_pasta     = empty( $meal['hasSides'] );
-      $img_url = gfk_get_asset_url( $meal['image'] );
-      $fallback_img = $theme_uri . '/assets/images/meals/grilled-chicken.jpg';
+      $img_url      = gfk_get_asset_url( $meal['image'] );
+      $fallback_img = 'https://pixel-force.github.io/Greek-Fit-Kitchen/public/images/meals/grilled-chicken.jpg';
     ?>
       <div class="meal-card group bg-white rounded-2xl border border-slate-200 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="<?php echo esc_attr( $meal['id'] ); ?>" data-category="<?php echo esc_attr( $meal['category'] ); ?>">
         
@@ -84,7 +84,7 @@ $theme_uri = get_template_directory_uri();
             src="<?php echo esc_url( $img_url ); ?>" 
             alt="<?php echo esc_attr( $meal['name'] ); ?>" 
             loading="lazy"
-            onerror="this.src='<?php echo esc_url( $fallback_img ); ?>'"
+            onerror="this.onerror=null; this.src='<?php echo esc_url( $fallback_img ); ?>';"
             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
