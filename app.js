@@ -1005,6 +1005,22 @@ function getCartCalculations() {
   };
 }
 
+function updateAllCartBadges() {
+  const calc = (typeof getCartCalculations === "function") ? getCartCalculations() : { totalMealsCount: 0, grossFood: 0 };
+  const count = calc.totalMealsCount;
+
+  // Update all badges across header, mobile menu, meal plan tracker, and any other cart badge
+  document.querySelectorAll(".cart-count-badge, #headerCartCount, #mobileCartCount, [data-cart-count]").forEach(el => {
+    el.textContent = count;
+    el.innerText = count;
+  });
+
+  const subtotalBadge = document.getElementById("headerCartSubtotal");
+  if (subtotalBadge) {
+    subtotalBadge.innerText = `$${calc.grossFood.toFixed(2)}`;
+  }
+}
+
 function renderCartDrawer() {
   const countBadge = document.getElementById("headerCartCount");
   const countMobileBadge = document.getElementById("mobileCartCount");
@@ -1016,6 +1032,12 @@ function renderCartDrawer() {
   const checkoutBtn = document.getElementById("cartCheckoutBtn");
 
   const calc = getCartCalculations();
+
+  // Synchronize all header and page cart badges
+  updateAllCartBadges();
+
+  // Synchronize all header and page cart badges
+  updateAllCartBadges();
 
   // Update header badges
   if (countBadge) countBadge.innerText = calc.totalMealsCount;
@@ -1194,6 +1216,9 @@ function addStarterSixMealPackage() {
   });
 
   showToast("Loaded 6-Meal Starter Plan! Minimum met ($59.94 tier).");
+  updateAllCartBadges();
+  renderCartDrawer();
+  updateMealPlanBuilderUI();
   openCartDrawer();
 }
 
@@ -1201,6 +1226,7 @@ function addStarterSixMealPackage() {
 // 11. INTERACTIVE MEAL PLAN BUILDER
 // ==========================================
 function updateMealPlanBuilderUI() {
+  updateAllCartBadges();
   const planContainer = document.getElementById("planBuilderSelectedList");
   const planCountBadge = document.getElementById("planBuilderCount");
   const planSubtotalEl = document.getElementById("planBuilderSubtotal");
@@ -2050,6 +2076,8 @@ function initApp() {
   updateUserUI();
   renderMenuGrid();
   renderCartDrawer();
+  updateAllCartBadges();
+  updateAllCartBadges();
   updateMealPlanBuilderUI();
   updateCutoffCountdown();
   setInterval(updateCutoffCountdown, 1000);
@@ -2098,3 +2126,5 @@ if (document.readyState === "loading") {
 } else {
   initApp();
 }
+
+window.addEventListener("gfk_cart_updated", updateAllCartBadges);

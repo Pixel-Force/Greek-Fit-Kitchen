@@ -1048,6 +1048,22 @@ function getCartCalculations() {
   };
 }
 
+function updateAllCartBadges() {
+  const calc = (typeof getCartCalculations === "function") ? getCartCalculations() : { totalMealsCount: 0, grossFood: 0 };
+  const count = calc.totalMealsCount;
+
+  // Update all badges across header, mobile menu, meal plan tracker, and any other cart badge
+  document.querySelectorAll(".cart-count-badge, #headerCartCount, #mobileCartCount, [data-cart-count]").forEach(el => {
+    el.textContent = count;
+    el.innerText = count;
+  });
+
+  const subtotalBadge = document.getElementById("headerCartSubtotal");
+  if (subtotalBadge) {
+    subtotalBadge.innerText = `$${calc.grossFood.toFixed(2)}`;
+  }
+}
+
 function renderCartDrawer() {
   const countBadge = document.getElementById("headerCartCount");
   const countMobileBadge = document.getElementById("mobileCartCount");
@@ -1060,6 +1076,9 @@ function renderCartDrawer() {
 
   const calc = getCartCalculations();
 
+  // Update all header and page cart badges
+  updateAllCartBadges();
+
   // Update header badges
   if (countBadge) countBadge.innerText = calc.totalMealsCount;
   if (countMobileBadge) countMobileBadge.innerText = calc.totalMealsCount;
@@ -1243,7 +1262,9 @@ function addStarterSixMealPackage() {
 // ==========================================
 // 11. INTERACTIVE MEAL PLAN BUILDER
 // ==========================================
-function updateMealPlanBuilderUI() {
+function updateMealPlanBuilderUI() {
+  // Synchronize cart count badges
+  updateAllCartBadges();
   const planContainer = document.getElementById("planBuilderSelectedList");
   const planCountBadge = document.getElementById("planBuilderCount");
   const planSubtotalEl = document.getElementById("planBuilderSubtotal");
@@ -2106,7 +2127,8 @@ function initApp() {
   initHeroSlider();
   updateUserUI();
   renderMenuGrid();
-  renderCartDrawer();
+  renderCartDrawer();
+  updateAllCartBadges();
   updateMealPlanBuilderUI();
   updateCutoffCountdown();
   setInterval(updateCutoffCountdown, 1000);
@@ -2162,3 +2184,5 @@ window.openMealSidesModal = function(mealId) {
     openSideCustomizer(mealId);
   }
 };
+
+window.addEventListener("gfk_cart_updated", updateAllCartBadges);

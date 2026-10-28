@@ -80,7 +80,7 @@ function gfk_woocommerce_cart_fragments( $fragments ) {
 
     ob_start();
     ?>
-    <span class="cart-count-badge absolute -top-1 -right-1 w-5 h-5 bg-greek-gold text-[#101D3A] text-[10px] font-black rounded-full flex items-center justify-center border-2 border-[#101D3A] shadow">
+    <span id="headerCartCount" class="cart-count-badge absolute -top-1 -right-1 w-5 h-5 bg-greek-gold text-[#101D3A] text-[10px] font-black rounded-full flex items-center justify-center border-2 border-[#101D3A] shadow">
         <?php echo esc_html( $count ); ?>
     </span>
     <?php
