@@ -77,7 +77,7 @@ class GFK_Widget_About_Story extends \Elementor\Widget_Base {
                 'label'   => __( 'Story Photo', 'greek-fit-kitchen' ),
                 'type'    => \Elementor\Controls_Manager::MEDIA,
                 'default' => array(
-                    'url' => get_template_directory_uri() . '/assets/images/slider/slide-1-greek-feast.jpg',
+                    'url' => get_template_directory_uri() . '/assets/images/brand/about-greek-fit.jpg',
                 ),
             )
         );
@@ -87,10 +87,11 @@ class GFK_Widget_About_Story extends \Elementor\Widget_Base {
 
     protected function render() {
         $settings = $this->get_settings_for_display();
-        $img_url  = ! empty( $settings['image']['url'] ) ? $settings['image']['url'] : ( get_template_directory_uri() . '/assets/images/slider/slide-1-greek-feast.jpg' );
+        $fallback = get_template_directory_uri() . '/assets/images/brand/about-greek-fit.jpg';
+        $img_url  = ! empty( $settings['image']['url'] ) ? $settings['image']['url'] : $fallback;
         ?>
         <section class="py-16 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="aboutSection">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
             
             <div class="space-y-4">
               <?php if ( ! empty( $settings['badge'] ) ) : ?>
@@ -112,21 +113,22 @@ class GFK_Widget_About_Story extends \Elementor\Widget_Base {
                 </p>
               <?php endif; ?>
 
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 pt-2 text-xs">
-                <div class="p-4 rounded-2xl bg-white border border-slate-200">
-                  <strong class="text-sm text-[#101D3A] block mb-1">George the Greek</strong>
-                  <span class="text-slate-500">Authentic tavern recipes &amp; culinary kitchen operations in Etobicoke.</span>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-xs">
+                <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
+                  <strong class="text-sm text-[#101D3A] font-black block mb-1">George the Greek</strong>
+                  <span class="text-slate-500 leading-relaxed">Authentic tavern recipes &amp; culinary kitchen operations in Etobicoke.</span>
                 </div>
-                <div class="p-4 rounded-2xl bg-white border border-slate-200">
-                  <strong class="text-sm text-[#101D3A] block mb-1">Powered by Lean Meal</strong>
-                  <span class="text-slate-500">Professional meal-prep standards, nutritional discipline &amp; fresh batches.</span>
+                <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
+                  <strong class="text-sm text-[#101D3A] font-black block mb-1">Powered by Lean Meal</strong>
+                  <span class="text-slate-500 leading-relaxed">Professional meal-prep standards, nutritional discipline &amp; fresh batches.</span>
                 </div>
               </div>
             </div>
 
-            <!-- Responsive Story Image: Restrained on mobile, aspect-[4/3] on desktop -->
-            <div class="rounded-3xl overflow-hidden shadow-2xl border border-slate-200 h-52 sm:h-64 lg:h-auto lg:aspect-[4/3] bg-slate-100">
-              <img src="<?php echo esc_url( $img_url ); ?>" alt="About Greek Fit Kitchen" class="w-full h-full object-cover" />
+            <!-- Responsive Story Image: Restrained on mobile, rounded card with shadow -->
+            <div class="rounded-3xl overflow-hidden shadow-2xl border border-slate-200 bg-[#101D3A]">
+              <img src="<?php echo esc_url( $img_url ); ?>" alt="Big Greek Flavour Meets Modern Meal Prep" class="w-full h-auto object-cover" />
+              <div class="h-6 sm:h-8 bg-slate-100 w-full border-t border-slate-200/50"></div>
             </div>
 
           </div>

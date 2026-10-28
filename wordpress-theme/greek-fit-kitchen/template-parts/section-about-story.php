@@ -10,6 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $theme_uri = get_template_directory_uri();
+$about_img = gfk_get_asset_url( 'assets/images/brand/about-greek-fit.jpg' );
 ?>
 <section class="py-16 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="aboutSection">
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
@@ -40,9 +41,10 @@ $theme_uri = get_template_directory_uri();
       </div>
     </div>
 
-    <!-- Responsive Story Image: Restrained on mobile, aspect-[4/3] on desktop -->
-    <div class="rounded-3xl overflow-hidden shadow-2xl border border-slate-200 h-64 sm:h-80 lg:h-auto lg:aspect-[4/3] bg-slate-100">
-      <img src="<?php echo esc_url( gfk_get_asset_url( 'assets/images/slider/slide-1-greek-feast.jpg' ) ); ?>" alt="Big Greek Flavour Meets Modern Meal Prep" class="w-full h-full object-cover" />
+    <!-- Responsive Story Image: Restrained on mobile, rounded card with shadow -->
+    <div class="rounded-3xl overflow-hidden shadow-2xl border border-slate-200 bg-[#101D3A]">
+      <img src="<?php echo esc_url( $about_img ); ?>" alt="Big Greek Flavour Meets Modern Meal Prep" class="w-full h-auto object-cover" />
+      <div class="h-6 sm:h-8 bg-slate-100 w-full border-t border-slate-200/50"></div>
     </div>
 
   </div>
