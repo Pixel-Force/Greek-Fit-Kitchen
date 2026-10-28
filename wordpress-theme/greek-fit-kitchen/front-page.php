@@ -13,13 +13,16 @@ get_header(); ?>
 
 <main id="primary" class="site-main flex-1 bg-white">
   <?php
-  // Check if page is customized using Elementor
+  // Check if page is customized using Elementor and has actual element data
   $is_elementor = false;
   $page_id = get_the_ID();
   if ( $page_id && did_action( 'elementor/loaded' ) && class_exists( '\Elementor\Plugin' ) && isset( \Elementor\Plugin::$instance->documents ) ) {
       $document = \Elementor\Plugin::$instance->documents->get( $page_id );
-      if ( $document && method_exists( $document, 'is_built_with_elementor' ) ) {
-          $is_elementor = $document->is_built_with_elementor();
+      if ( $document && method_exists( $document, 'is_built_with_elementor' ) && $document->is_built_with_elementor() ) {
+          $elements = method_exists( $document, 'get_elements_data' ) ? $document->get_elements_data() : null;
+          if ( ! empty( $elements ) ) {
+              $is_elementor = true;
+          }
       }
   }
 
