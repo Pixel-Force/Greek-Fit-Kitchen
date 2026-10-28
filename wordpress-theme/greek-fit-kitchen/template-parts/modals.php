@@ -264,9 +264,6 @@
             <span>3. Credit Card Payment</span>
             <span id="cardBrandBadge" class="px-2 py-0.5 rounded text-[10px] font-black bg-blue-600 text-white">VISA</span>
           </label>
-          <button type="button" onclick="fillDemoCreditCard()" class="text-[11px] font-bold text-greek-gold hover:underline">
-            ⚡ Fill Demo Card
-          </button>
         </div>
 
         <div>
