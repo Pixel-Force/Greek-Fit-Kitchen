@@ -386,3 +386,80 @@
 
   </div>
 </div>
+
+
+<!-- ================= CATERING MODAL ================= -->
+<div id="cateringModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
+  <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 my-8">
+    <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+      <h3 class="text-xl font-black text-[#101D3A]">Catering &amp; Event Enquiry</h3>
+      <button onclick="closeCateringModal()" class="text-slate-400 hover:text-[#101D3A] text-2xl font-bold p-1">&times;</button>
+    </div>
+
+    <form onsubmit="handleCateringSubmit(event)" class="space-y-3 py-3 text-xs">
+      <div>
+        <label class="block font-bold mb-1">Your Full Name</label>
+        <input type="text" id="catName" required class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:ring-2 focus:ring-greek-gold" />
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <div>
+          <label class="block font-bold mb-1">Email Address</label>
+          <input type="email" id="catEmail" required class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:ring-2 focus:ring-greek-gold" />
+        </div>
+        <div>
+          <label class="block font-bold mb-1">Phone Number</label>
+          <input type="tel" id="catPhone" required class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:ring-2 focus:ring-greek-gold" />
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <div>
+          <label class="block font-bold mb-1">Estimated Guests</label>
+          <input type="number" id="catGuests" min="10" placeholder="e.g. 25" required class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:ring-2 focus:ring-greek-gold" />
+        </div>
+        <div>
+          <label class="block font-bold mb-1">Target Date</label>
+          <input type="date" id="catDate" required class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:ring-2 focus:ring-greek-gold" />
+        </div>
+      </div>
+      <div>
+        <label class="block font-bold mb-1">Catering Details &amp; Preferred Dishes</label>
+        <textarea id="catNotes" rows="3" placeholder="Tell us about your event, preferred souvlaki/chicken plates, dietary needs..." class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:ring-2 focus:ring-greek-gold"></textarea>
+      </div>
+      <div class="pt-2 text-right">
+        <button type="submit" class="px-6 py-3 btn-gold rounded-xl font-black text-xs shadow-lg">
+          Submit Catering Request
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ================= CONTACT & SPECIAL REQUESTS MODAL ================= -->
+<div id="contactModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
+  <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200 my-8">
+    <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+      <h3 class="text-xl font-black text-[#101D3A]">Special Dietary Request</h3>
+      <button onclick="closeContactModal()" class="text-slate-400 hover:text-[#101D3A] text-2xl font-bold p-1">&times;</button>
+    </div>
+
+    <form onsubmit="handleContactSubmit(event)" class="space-y-3 py-3 text-xs">
+      <div>
+        <label class="block font-bold mb-1">Your Name</label>
+        <input type="text" required class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:ring-2 focus:ring-greek-gold" />
+      </div>
+      <div>
+        <label class="block font-bold mb-1">Email</label>
+        <input type="email" required class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:ring-2 focus:ring-greek-gold" />
+      </div>
+      <div>
+        <label class="block font-bold mb-1">Your Dietary Question / Custom Plan Request</label>
+        <textarea rows="4" required placeholder="Let us know about allergies, sodium preferences, custom meal combinations..." class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 outline-none focus:ring-2 focus:ring-greek-gold"></textarea>
+      </div>
+      <div class="pt-2 text-right">
+        <button type="submit" class="px-6 py-3 btn-gold rounded-xl font-black text-xs shadow-lg">
+          Send to Chef Team
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

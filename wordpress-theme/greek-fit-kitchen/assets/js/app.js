@@ -602,7 +602,7 @@ function renderMenuGrid() {
 
     return `
       <div class="meal-card group bg-white dark:bg-[#101D3A] rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300">
-        <div class="relative overflow-hidden aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+        <div class="relative overflow-hidden h-44 sm:h-48 md:aspect-[4/3] bg-slate-100 dark:bg-slate-800">
           <img 
             src="${meal.image}" 
             alt="${meal.name}" 
@@ -619,42 +619,42 @@ function renderMenuGrid() {
           </div>
         </div>
 
-        <div class="p-5 flex-1 flex flex-col justify-between">
-          <div>
-            <div class="flex items-start justify-between gap-2">
-              <h3 class="text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight">
-                ${meal.name}
-              </h3>
+        <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-2">
+                <h3 class="text-sm sm:text-base font-black text-greek-navy dark:text-white group-hover:text-greek-gold transition-colors leading-tight break-words">
+                  ${meal.name}
+                </h3>
+              </div>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+                ${meal.description || 'Authentic Mediterranean meal prep prepared fresh for scheduled delivery.'}
+              </p>
             </div>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
-              ${meal.description || 'Authentic Mediterranean meal prep prepared fresh for scheduled delivery.'}
-            </p>
-          </div>
 
-          <!-- Nutrition Pill Strip -->
-          <div class="flex items-center gap-2 text-[10px] font-semibold text-slate-500 dark:text-slate-400 pt-3 border-t border-slate-100 dark:border-white/5 mt-4">
-            <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">${meal.calories} kcal</span>
-            <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-navy dark:text-greek-gold font-bold">${meal.protein} protein</span>
-            <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">${meal.carbs} carbs</span>
-          </div>
+            <!-- Nutrition Pill Strip -->
+            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 text-[10px] font-semibold text-slate-500 dark:text-slate-400 pt-3 border-t border-slate-100 dark:border-white/5 mt-4">
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">${meal.calories} kcal</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded text-greek-navy dark:text-greek-gold font-bold">${meal.protein} protein</span>
+              <span class="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">${meal.carbs} carbs</span>
+            </div>
 
-          <div class="grid grid-cols-2 gap-2 mt-4">
-            <button 
-              type="button"
-              onclick="openMealDetailModal('${meal.id}')"
-              class="w-full py-2.5 rounded-xl border border-slate-200 dark:border-white/20 text-xs font-bold text-greek-navy dark:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition"
-            >
-              Details
-            </button>
-            <button 
-              type="button"
-              onclick="openSideCustomizer('${meal.id}')"
-              class="w-full py-2.5 btn-gold rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 shadow"
-            >
-              <span>${meal.hasSides ? 'Choose Sides' : 'Add to Plan'}</span>
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
-            </button>
-          </div>
+            <div class="grid grid-cols-2 gap-2 mt-4">
+              <button 
+                type="button"
+                onclick="openMealDetailModal('${meal.id}')"
+                class="w-full py-2.5 rounded-xl border border-slate-200 dark:border-white/20 text-xs font-bold text-greek-navy dark:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition text-center"
+              >
+                Details
+              </button>
+              <button 
+                type="button"
+                onclick="openSideCustomizer('${meal.id}')"
+                class="w-full py-2.5 px-1 btn-gold rounded-xl text-xs font-black transition flex items-center justify-center gap-1 shadow text-center"
+              >
+                <span class="truncate">${meal.hasSides ? 'Choose Sides' : 'Add to Plan'}</span>
+                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+              </button>
+            </div>
         </div>
       </div>
     `;
@@ -1958,7 +1958,7 @@ window.addEventListener("storage", (e) => {
 // ==========================================
 // 19. INITIALIZATION HOOK
 // ==========================================
-document.addEventListener("DOMContentLoaded", () => {
+function initApp() {
   initTheme();
   initHeroSlider();
   updateUserUI();
@@ -2005,4 +2005,17 @@ document.addEventListener("DOMContentLoaded", () => {
       mobileDrawer.classList.toggle("hidden");
     });
   }
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initApp);
+} else {
+  initApp();
+}
+
+// Compatibility alias for meal sides selection modal
+window.openMealSidesModal = function(mealId) {
+  if (typeof openSideCustomizer === 'function') {
+    openSideCustomizer(mealId);
+  }
+};

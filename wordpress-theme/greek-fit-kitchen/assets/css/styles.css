@@ -48,13 +48,27 @@ html.dark {
   --color-border: rgba(255, 255, 255, 0.1);
 }
 
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
 body {
   font-family: var(--font-body);
   background-color: var(--color-bg-page);
   color: var(--color-text-body);
   transition: background-color 0.25s ease, color 0.25s ease;
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Mobile Typography & Media Safeguards */
+h1, h2, h3, h4, h5, h6, p, span, a, button {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+img {
+  max-width: 100%;
 }
 
 h1, h2, h3, h4, h5, h6, .font-heading {
@@ -146,19 +160,13 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   min-height: 600px;
   max-height: 720px;
 }
-@media (max-width: 768px) {
-  .hero-slider-container {
-    min-height: 520px;
-    max-height: none;
-  }
-}
 
 .slide-item {
   position: absolute;
   inset: 0;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   transform: scale(1.02);
   z-index: 1;
 }
@@ -168,6 +176,36 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   visibility: visible;
   transform: scale(1);
   z-index: 10;
+}
+
+/* Mobile & Tablet Slider: Natural Flow to Prevent ANY Cutting */
+@media (max-width: 768px) {
+  .hero-slider-container {
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  
+  .slide-item {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: none;
+    transition: opacity 0.4s ease;
+  }
+  
+  .slide-item.active {
+    position: relative !important;
+    inset: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    display: block !important;
+    transform: none !important;
+    z-index: 10;
+  }
 }
 
 /* Product & Meal Cards */
@@ -205,5 +243,43 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     padding: 20px;
     font-size: 14pt;
     color: #000;
+  }
+}
+
+/* Modal Custom Sleek Scrollbar */
+#sideModal .overflow-y-auto::-webkit-scrollbar,
+#cateringModal .overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+#sideModal .overflow-y-auto::-webkit-scrollbar-track,
+#cateringModal .overflow-y-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+#sideModal .overflow-y-auto::-webkit-scrollbar-thumb,
+#cateringModal .overflow-y-auto::-webkit-scrollbar-thumb {
+  background: rgba(245, 197, 66, 0.4);
+  border-radius: 9999px;
+}
+#sideModal .overflow-y-auto::-webkit-scrollbar-thumb:hover,
+#cateringModal .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 197, 66, 0.8);
+}
+
+
+/* Category Buttons Horizontal Scroll Protection */
+.menu-cat-btn {
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+/* Mobile Responsive Image Height Protections */
+@media (max-width: 639px) {
+  .meal-card .relative {
+    height: 180px !important;
+  }
+  .meal-card img {
+    height: 100% !important;
+    width: 100% !important;
+    object-fit: cover !important;
   }
 }
