@@ -100,13 +100,13 @@ function gfk_footer_menu_fallback() {
 // 4. Enqueue Styles & High-Performance Scripts
 function gfk_enqueue_scripts() {
     // Theme Master Stylesheet
-    wp_enqueue_style( 'gfk-style', get_stylesheet_uri(), array(), '2.1.0' );
+    wp_enqueue_style( 'gfk-style', get_stylesheet_uri(), array(), '2.2.0' );
 
     // Custom CSS with mobile image height protections
-    wp_enqueue_style( 'gfk-custom-styles', get_template_directory_uri() . '/assets/css/styles.css', array(), '2.1.0' );
+    wp_enqueue_style( 'gfk-custom-styles', get_template_directory_uri() . '/assets/css/styles.css', array(), '2.2.0' );
 
     // Master App Engine Script (deferred)
-    wp_enqueue_script( 'gfk-app', get_template_directory_uri() . '/assets/js/app.js', array(), '2.1.0', array(
+    wp_enqueue_script( 'gfk-app', get_template_directory_uri() . '/assets/js/app.js', array(), '2.2.0', array(
         'in_footer' => true,
         'strategy'  => 'defer',
     ) );

@@ -172,10 +172,10 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 
 .slide-item.active {
-  opacity: 1;
-  visibility: visible;
-  transform: scale(1);
-  z-index: 10;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: scale(1) !important;
+  z-index: 10 !important;
 }
 
 /* Mobile & Tablet Slider: Natural Flow to Prevent ANY Cutting */

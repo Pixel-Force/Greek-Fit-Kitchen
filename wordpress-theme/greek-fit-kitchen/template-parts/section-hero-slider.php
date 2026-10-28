@@ -16,8 +16,10 @@ $theme_uri = get_template_directory_uri();
     
     <!-- SLIDE 1: Signature Meals -->
     <div class="slide-item active" style="opacity: 1; position: relative; transition: opacity 0.8s ease-in-out;">
-      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('<?php echo esc_url( gfk_get_asset_url( 'assets/images/slider/slide-1-greek-feast.jpg' ) ); ?>');"></div>
-      <div class="absolute inset-0 bg-gradient-to-r from-[#101D3A]/95 via-[#101D3A]/90 to-transparent"></div>
+      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('<?php echo esc_url( gfk_get_asset_url( 'assets/images/slider/slide-1-greek-feast.jpg' ) ); ?>');">
+        <img src="<?php echo esc_url( gfk_get_asset_url( 'assets/images/slider/slide-1-greek-feast.jpg' ) ); ?>" alt="Chef-Prepared Greek Meals" class="w-full h-full object-cover object-center" />
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-r from-[#101D3A]/90 via-[#101D3A]/60 to-transparent"></div>
 
       <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 min-h-[380px] xs:min-h-[420px] sm:min-h-[520px] md:min-h-[600px] flex flex-col justify-center">
         <div class="max-w-2xl space-y-4">
@@ -47,8 +49,10 @@ $theme_uri = get_template_directory_uri();
 
     <!-- SLIDE 2: Scheduled Batch Delivery -->
     <div class="slide-item" style="opacity: 0; position: absolute; inset: 0; transition: opacity 0.8s ease-in-out;">
-      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('<?php echo esc_url( gfk_get_asset_url( 'assets/images/slider/slide-2-meal-prep.jpg' ) ); ?>');"></div>
-      <div class="absolute inset-0 bg-gradient-to-r from-[#101D3A]/95 via-[#101D3A]/90 to-transparent"></div>
+      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('<?php echo esc_url( gfk_get_asset_url( 'assets/images/slider/slide-2-meal-prep.jpg' ) ); ?>');">
+        <img src="<?php echo esc_url( gfk_get_asset_url( 'assets/images/slider/slide-2-meal-prep.jpg' ) ); ?>" alt="Scheduled Batch Delivery" class="w-full h-full object-cover object-center" />
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-r from-[#101D3A]/90 via-[#101D3A]/60 to-transparent"></div>
 
       <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 min-h-[380px] xs:min-h-[420px] sm:min-h-[520px] md:min-h-[600px] flex flex-col justify-center">
         <div class="max-w-2xl space-y-4">
@@ -78,8 +82,10 @@ $theme_uri = get_template_directory_uri();
 
     <!-- SLIDE 3: 10% Volume Savings -->
     <div class="slide-item" style="opacity: 0; position: absolute; inset: 0; transition: opacity 0.8s ease-in-out;">
-      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('<?php echo esc_url( gfk_get_asset_url( 'assets/images/slider/slide-3-mediterranean.jpg' ) ); ?>');"></div>
-      <div class="absolute inset-0 bg-gradient-to-r from-[#101D3A]/95 via-[#101D3A]/90 to-transparent"></div>
+      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('<?php echo esc_url( gfk_get_asset_url( 'assets/images/slider/slide-3-mediterranean.jpg' ) ); ?>');">
+        <img src="<?php echo esc_url( gfk_get_asset_url( 'assets/images/slider/slide-3-mediterranean.jpg' ) ); ?>" alt="Volume Savings" class="w-full h-full object-cover object-center" />
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-r from-[#101D3A]/90 via-[#101D3A]/60 to-transparent"></div>
 
       <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 min-h-[380px] xs:min-h-[420px] sm:min-h-[520px] md:min-h-[600px] flex flex-col justify-center">
         <div class="max-w-2xl space-y-4">

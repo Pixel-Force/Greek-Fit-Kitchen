@@ -1910,7 +1910,12 @@ function initHeroSlider() {
 
   function showSlide(index) {
     slides.forEach((slide, i) => {
-      slide.classList.toggle("active", i === index);
+      const isActive = (i === index);
+      slide.classList.toggle("active", isActive);
+      slide.style.opacity = isActive ? "1" : "0";
+      slide.style.position = isActive ? "relative" : "absolute";
+      slide.style.zIndex = isActive ? "10" : "1";
+      slide.style.pointerEvents = isActive ? "auto" : "none";
     });
     currentSlide = index;
   }
@@ -1991,6 +1996,15 @@ window.addEventListener("storage", (e) => {
 // 19. INITIALIZATION HOOK
 // ==========================================
 function initApp() {
+  // Clear any stale cached menu items in localStorage from older versions
+  try {
+    const cachedVersion = localStorage.getItem("gfk_version");
+    if (cachedVersion !== "2.2.0") {
+      localStorage.removeItem("gfk_menu_items");
+      localStorage.setItem("gfk_version", "2.2.0");
+    }
+  } catch (e) {}
+
   initTheme();
   initHeroSlider();
   updateUserUI();
