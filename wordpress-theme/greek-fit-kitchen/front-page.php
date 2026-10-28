@@ -30,15 +30,15 @@ get_header(); ?>
           the_content();
       endwhile;
   else :
-      // Default production modular sections
+      // Default production modular sections: About Story right after Hero Slider
       get_template_part( 'template-parts/section-hero-slider' );
+      get_template_part( 'template-parts/section-about-story' );
       get_template_part( 'template-parts/section-menu-grid' );
       get_template_part( 'template-parts/section-how-it-works' );
       get_template_part( 'template-parts/section-meal-plans' );
       get_template_part( 'template-parts/section-sides-showcase' );
       get_template_part( 'template-parts/section-delivery-calculator' );
       get_template_part( 'template-parts/section-catering-banner' );
-      get_template_part( 'template-parts/section-about-story' );
   endif;
   ?>
 </main>
