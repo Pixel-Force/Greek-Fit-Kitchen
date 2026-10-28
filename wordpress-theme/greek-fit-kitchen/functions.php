@@ -131,6 +131,10 @@ function gfk_enqueue_scripts() {
         'baseDelivery'   => 5.99,
         'perKmDelivery'  => 0.99,
         'storeAddress'   => '3575 Lake Shore Blvd W, Etobicoke, ON M8W 1P5',
+        'wcActive'       => class_exists( 'WooCommerce' ),
+        'wcCartUrl'      => function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url() : home_url( '/cart/' ),
+        'wcCheckoutUrl'  => function_exists( 'wc_get_checkout_url' ) ? wc_get_checkout_url() : home_url( '/checkout/' ),
+        'wcNonce'        => wp_create_nonce( 'gfk_wc_nonce' ),
     ) );
 }
 add_action( 'wp_enqueue_scripts', 'gfk_enqueue_scripts' );
@@ -140,6 +144,7 @@ require_once get_template_directory() . '/inc/meals-data.php';
 require_once get_template_directory() . '/inc/meals-cpt.php';
 require_once get_template_directory() . '/inc/shortcodes.php';
 require_once get_template_directory() . '/inc/elementor/class-gfk-elementor.php';
+require_once get_template_directory() . '/inc/woocommerce.php';
 
 
 

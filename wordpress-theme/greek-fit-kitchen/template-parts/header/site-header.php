@@ -112,7 +112,15 @@ $cta_url     = get_theme_mod( 'gfk_header_cta_url', home_url( '/meal-plans/' ) )
       }
       ?>
     </nav>
-    <div class="pt-4 border-t border-white/10">
+    <div class="pt-4 border-t border-white/10 space-y-2.5">
+      <?php if ( function_exists( 'wc_get_cart_url' ) ) : ?>
+        <a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="flex items-center justify-between py-2 px-1 text-white hover:text-greek-gold text-xs font-bold">
+          <span>Shopping Cart</span>
+          <span class="cart-count-badge bg-greek-gold text-[#101D3A] text-[10px] font-black rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center font-mono">
+            <?php echo function_exists( 'WC' ) && WC()->cart ? esc_html( WC()->cart->get_cart_contents_count() ) : '0'; ?>
+          </span>
+        </a>
+      <?php endif; ?>
       <a href="<?php echo esc_url( $cta_url ); ?>" class="w-full inline-flex items-center justify-center gap-1.5 py-3 px-4 rounded-xl font-black text-xs bg-greek-gold text-[#101D3A] hover:bg-greek-goldHover transition shadow">
         <span>Build Weekly Plan (6+ Meals)</span>
       </a>
