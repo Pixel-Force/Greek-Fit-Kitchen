@@ -174,9 +174,9 @@ class GFK_Widget_Menu_Grid extends \Elementor\Widget_Base {
                   />
                   <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
                     <?php if ( $is_pasta ) : ?>
-                      <span class="bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-0.5 rounded-full border border-amber-300">Complete Plate (No Sides)</span>
+                      <span class="bg-white text-amber-800 text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-md border border-amber-300">Complete Plate (No Sides)</span>
                     <?php else : ?>
-                      <span class="bg-[#101D3A]/10 text-[#101D3A] text-[10px] font-black px-2 py-0.5 rounded-full border border-[#101D3A]/20">2 Sides Included</span>
+                      <span class="bg-white text-[#101D3A] text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-md border border-slate-200">2 Sides Included</span>
                     <?php endif; ?>
 
                     <?php if ( ! empty( $meal['popular'] ) ) : ?>

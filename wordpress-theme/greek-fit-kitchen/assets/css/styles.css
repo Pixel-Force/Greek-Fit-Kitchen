@@ -25,7 +25,7 @@
   --color-rich-navy: #172A4D;
   --color-gold: #F5C542;
   --color-gold-hover: #E5B432;
-  --color-bg-page: #FAF9F5;
+  --color-bg-page: #FFFFFF;
   --color-bg-surface: #FFFFFF;
   --color-text-body: #292D35;
   --color-text-muted: #737987;
@@ -282,4 +282,23 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     width: 100% !important;
     object-fit: cover !important;
   }
+}
+
+
+/* Global White Background Override */
+body, main, .site-main, #primary {
+  background-color: #FFFFFF !important;
+}
+
+/* 2 Sides Included & Meal Badges White Background Override */
+.meal-card .absolute.top-3.left-3 span:not(.bg-greek-gold) {
+  background-color: #FFFFFF !important;
+  color: #101D3A !important;
+  border: 1px solid #E2E8F0 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08) !important;
+}
+.meal-card .absolute.top-3.left-3 span.border-amber-300 {
+  background-color: #FFFFFF !important;
+  color: #92400E !important;
+  border: 1px solid #FCD34D !important;
 }

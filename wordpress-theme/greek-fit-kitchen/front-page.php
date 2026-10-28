@@ -11,7 +11,7 @@
 
 get_header(); ?>
 
-<main id="primary" class="site-main flex-1">
+<main id="primary" class="site-main flex-1 bg-white">
   <?php
   // Check if page is customized using Elementor
   $is_elementor = false;

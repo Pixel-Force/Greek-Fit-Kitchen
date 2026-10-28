@@ -108,13 +108,13 @@ function gfk_footer_menu_fallback() {
 // 4. Enqueue Styles & High-Performance Scripts
 function gfk_enqueue_scripts() {
     // Theme Master Stylesheet
-    wp_enqueue_style( 'gfk-style', get_stylesheet_uri(), array(), '2.2.0' );
+    wp_enqueue_style( 'gfk-style', get_stylesheet_uri(), array(), '2.3.0' );
 
     // Custom CSS with mobile image height protections
-    wp_enqueue_style( 'gfk-custom-styles', get_template_directory_uri() . '/assets/css/styles.css', array(), '2.2.0' );
+    wp_enqueue_style( 'gfk-custom-styles', get_template_directory_uri() . '/assets/css/styles.css', array(), '2.3.0' );
 
     // Master App Engine Script (deferred)
-    wp_enqueue_script( 'gfk-app', get_template_directory_uri() . '/assets/js/app.js', array(), '2.2.0', array(
+    wp_enqueue_script( 'gfk-app', get_template_directory_uri() . '/assets/js/app.js', array(), '2.3.0', array(
         'in_footer' => true,
         'strategy'  => 'defer',
     ) );
@@ -213,7 +213,7 @@ function gfk_get_kitchen_orders_endpoint() {
 
 // 8. Auto-populate Elementor Builder Data for Subpages
 function gfk_auto_setup_elementor_pages() {
-    if ( get_option( 'gfk_elementor_pages_initialized_v3' ) ) {
+    if ( get_option( 'gfk_elementor_pages_initialized_v4' ) ) {
         return;
     }
 
@@ -332,9 +332,29 @@ function gfk_auto_setup_elementor_pages() {
         update_post_meta( $page->ID, '_elementor_template_type', 'wp-page' );
         update_post_meta( $page->ID, '_elementor_version', '3.25.0' );
         update_post_meta( $page->ID, '_wp_page_template', 'template-elementor.php' );
+
+        // If page has stored post_content with old badge background, replace with white badge
+        if ( 'menu' === $slug && ! empty( $page->post_content ) ) {
+            $updated_content = str_replace(
+                'bg-[#101D3A]/10 text-[#101D3A] text-[10px] font-black px-2 py-0.5 rounded-full border border-[#101D3A]/20',
+                'bg-white text-[#101D3A] text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-md border border-slate-200',
+                $page->post_content
+            );
+            $updated_content = str_replace(
+                'bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-0.5 rounded-full border border-amber-300',
+                'bg-white text-amber-800 text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-md border border-amber-300',
+                $updated_content
+            );
+            if ( $updated_content !== $page->post_content ) {
+                wp_update_post( array(
+                    'ID'           => $page->ID,
+                    'post_content' => $updated_content,
+                ) );
+            }
+        }
     }
 
-    update_option( 'gfk_elementor_pages_initialized_v3', 1 );
+    update_option( 'gfk_elementor_pages_initialized_v4', 1 );
 }
 add_action( 'init', 'gfk_auto_setup_elementor_pages' );
 

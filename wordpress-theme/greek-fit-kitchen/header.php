@@ -64,7 +64,7 @@
   <?php wp_head(); ?>
 </head>
 
-<body <?php body_class( 'bg-[#FAF9F5] text-slate-800 antialiased flex flex-col min-h-screen selection:bg-greek-gold selection:text-greek-navy' ); ?>>
+<body <?php body_class( 'bg-white text-slate-800 antialiased flex flex-col min-h-screen selection:bg-greek-gold selection:text-greek-navy' ); ?>>
 <?php wp_body_open(); ?>
 
   <!-- Top Announcement Bar: Batch Delivery Cutoff & Location -->

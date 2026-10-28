@@ -8,7 +8,7 @@
 
 get_header(); ?>
 
-<main id="primary" class="site-main flex-1 w-full overflow-hidden">
+<main id="primary" class="site-main flex-1 w-full overflow-hidden bg-white">
   <?php
   while ( have_posts() ) :
       the_post();

@@ -619,8 +619,8 @@ function renderMenuGrid() {
   container.innerHTML = filtered.map(meal => {
     const isPasta = !meal.hasSides;
     const sideBadge = isPasta
-      ? `<span class="bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 text-[10px] font-black px-2 py-0.5 rounded-full border border-amber-300 dark:border-amber-700/50">Complete Plate (No Sides)</span>`
-      : `<span class="bg-greek-navy/10 dark:bg-white/10 text-greek-navy dark:text-greek-gold text-[10px] font-black px-2 py-0.5 rounded-full border border-greek-navy/20 dark:border-white/10">2 Sides Included</span>`;
+      ? `<span class="bg-white text-amber-800 text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-md border border-amber-300">Complete Plate (No Sides)</span>`
+      : `<span class="bg-white text-[#101D3A] text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-md border border-slate-200">2 Sides Included</span>`;
 
     const mealImg = resolveAssetUrl(meal.image);
     const fallbackImg = "https://pixel-force.github.io/Greek-Fit-Kitchen/public/images/meals/grilled-chicken.jpg";

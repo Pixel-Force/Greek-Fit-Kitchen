@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <?php wp_head(); ?>
 </head>
-<body <?php body_class( 'bg-[#FAF9F5] text-slate-800 antialiased min-h-screen' ); ?>>
+<body <?php body_class( 'bg-white text-slate-800 antialiased min-h-screen' ); ?>>
 <?php wp_body_open(); ?>
 
 <main id="primary" class="site-main w-full min-h-screen">
