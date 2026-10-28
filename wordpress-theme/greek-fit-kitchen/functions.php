@@ -66,23 +66,31 @@ add_action( 'after_setup_theme', 'gfk_setup_theme' );
 
 // 3. Fallback Navigation Menus (When no menu is assigned in WP Admin)
 function gfk_primary_menu_fallback() {
-    $home = home_url( '/' );
-    echo '<a href="' . esc_url( $home . '#featuredMeals' ) . '" class="hover:text-greek-gold transition-colors">Menu (20 Dishes)</a>';
-    echo '<a href="' . esc_url( $home . '#mealPlans' ) . '" class="hover:text-greek-gold transition-colors">Meal Plans &amp; Savings</a>';
-    echo '<a href="' . esc_url( $home . '#howItWorks' ) . '" class="hover:text-greek-gold transition-colors">How It Works</a>';
-    echo '<a href="' . esc_url( $home . '#deliverySection' ) . '" class="hover:text-greek-gold transition-colors">Delivery Rates</a>';
-    echo '<a href="' . esc_url( $home . '#cateringSection' ) . '" class="hover:text-greek-gold transition-colors">Catering</a>';
-    echo '<a href="' . esc_url( $home . '#aboutSection' ) . '" class="hover:text-greek-gold transition-colors">About Us</a>';
+    $menu_url     = home_url( '/menu/' );
+    $plans_url    = home_url( '/meal-plans/' );
+    $how_url      = home_url( '/how-it-works/' );
+    $delivery_url = home_url( '/delivery-rates/' );
+    $about_url    = home_url( '/about-us/' );
+
+    echo '<a href="' . esc_url( $menu_url ) . '" class="hover:text-greek-gold transition-colors">Menu</a>';
+    echo '<a href="' . esc_url( $plans_url ) . '" class="hover:text-greek-gold transition-colors">Meal Plans</a>';
+    echo '<a href="' . esc_url( $how_url ) . '" class="hover:text-greek-gold transition-colors">How it Works</a>';
+    echo '<a href="' . esc_url( $delivery_url ) . '" class="hover:text-greek-gold transition-colors">Delivery Rates</a>';
+    echo '<a href="' . esc_url( $about_url ) . '" class="hover:text-greek-gold transition-colors">About Us</a>';
 }
 
 function gfk_mobile_menu_fallback() {
-    $home = home_url( '/' );
-    echo '<a href="' . esc_url( $home . '#featuredMeals' ) . '" class="hover:text-greek-gold py-1">Menu (20 Dishes)</a>';
-    echo '<a href="' . esc_url( $home . '#mealPlans' ) . '" class="hover:text-greek-gold py-1">Meal Plans &amp; Savings</a>';
-    echo '<a href="' . esc_url( $home . '#howItWorks' ) . '" class="hover:text-greek-gold py-1">How It Works</a>';
-    echo '<a href="' . esc_url( $home . '#deliverySection' ) . '" class="hover:text-greek-gold py-1">Delivery Rates</a>';
-    echo '<a href="' . esc_url( $home . '#cateringSection' ) . '" class="hover:text-greek-gold py-1">Catering</a>';
-    echo '<a href="' . esc_url( $home . '#aboutSection' ) . '" class="hover:text-greek-gold py-1">About Us</a>';
+    $menu_url     = home_url( '/menu/' );
+    $plans_url    = home_url( '/meal-plans/' );
+    $how_url      = home_url( '/how-it-works/' );
+    $delivery_url = home_url( '/delivery-rates/' );
+    $about_url    = home_url( '/about-us/' );
+
+    echo '<a href="' . esc_url( $menu_url ) . '" class="hover:text-greek-gold py-1">Menu</a>';
+    echo '<a href="' . esc_url( $plans_url ) . '" class="hover:text-greek-gold py-1">Meal Plans</a>';
+    echo '<a href="' . esc_url( $how_url ) . '" class="hover:text-greek-gold py-1">How it Works</a>';
+    echo '<a href="' . esc_url( $delivery_url ) . '" class="hover:text-greek-gold py-1">Delivery Rates</a>';
+    echo '<a href="' . esc_url( $about_url ) . '" class="hover:text-greek-gold py-1">About Us</a>';
 }
 
 function gfk_footer_menu_fallback() {
@@ -202,3 +210,131 @@ function gfk_get_kitchen_orders_endpoint() {
         ),
     ) );
 }
+
+// 8. Auto-populate Elementor Builder Data for Subpages
+function gfk_auto_setup_elementor_pages() {
+    if ( get_option( 'gfk_elementor_pages_initialized_v3' ) ) {
+        return;
+    }
+
+    $pages_config = array(
+        'menu' => array(
+            'widget'   => 'gfk_menu_grid',
+            'settings' => array(
+                'badge'           => 'APPROVED FLYER SELECTION',
+                'title'           => 'Our Main Dishes (20 Options)',
+                'subtitle'        => 'All prices in Canadian Dollars (CAD). Tax and delivery calculated at checkout.',
+                'show_search'     => 'yes',
+                'show_categories' => 'yes',
+            ),
+        ),
+        'meal-plans' => array(
+            'widget'   => 'gfk_meal_plans',
+            'settings' => array(
+                'badge'    => 'TIERED VALUE',
+                'title'    => 'Weekly Meal Prep Subscription & Bundle Plans',
+                'subtitle' => 'Choose your volume tier. Discounts apply automatically at checkout.',
+            ),
+        ),
+        'how-it-works' => array(
+            'widget'   => 'gfk_how_it_works',
+            'settings' => array(
+                'badge'    => 'EFFORTLESS MEAL PREP',
+                'title'    => 'How Greek Fit Kitchen Works',
+                'subtitle' => 'Fresh, healthy, high-protein meals cooked in small batches and delivered across Toronto and the GTA.',
+            ),
+        ),
+        'delivery-rates' => array(
+            'widget'   => 'gfk_delivery_calculator',
+            'settings' => array(
+                'badge'    => 'SCHEDULED BATCH DISPATCH',
+                'title'    => 'Delivery Schedule & Rates',
+                'subtitle' => 'Calculate your delivery fee from our Etobicoke commercial kitchen.',
+            ),
+        ),
+        'about-us' => array(
+            'widget'   => 'gfk_about_story',
+            'settings' => array(
+                'badge' => 'ABOUT GREEK FIT KITCHEN',
+                'title' => 'Big Greek Flavour Meets Modern Meal Prep',
+            ),
+        ),
+    );
+
+    foreach ( $pages_config as $slug => $cfg ) {
+        $page = get_page_by_path( $slug );
+        if ( ! $page ) {
+            continue;
+        }
+
+        $elementor_data = array(
+            array(
+                'id'       => substr( md5( $slug . '_sec' ), 0, 7 ),
+                'elType'   => 'section',
+                'isInner'  => false,
+                'settings' => (object) array(),
+                'elements' => array(
+                    array(
+                        'id'       => substr( md5( $slug . '_col' ), 0, 7 ),
+                        'elType'   => 'column',
+                        'isInner'  => false,
+                        'settings' => array(
+                            '_column_size' => 100,
+                        ),
+                        'elements' => array(
+                            array(
+                                'id'         => substr( md5( $slug . '_wid' ), 0, 7 ),
+                                'elType'     => 'widget',
+                                'isInner'    => false,
+                                'widgetType' => $cfg['widget'],
+                                'settings'   => $cfg['settings'],
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        );
+
+        if ( 'menu' === $slug ) {
+            $elementor_data[] = array(
+                'id'       => substr( md5( $slug . '_sides_sec' ), 0, 7 ),
+                'elType'   => 'section',
+                'isInner'  => false,
+                'settings' => (object) array(),
+                'elements' => array(
+                    array(
+                        'id'       => substr( md5( $slug . '_sides_col' ), 0, 7 ),
+                        'elType'   => 'column',
+                        'isInner'  => false,
+                        'settings' => array(
+                            '_column_size' => 100,
+                        ),
+                        'elements' => array(
+                            array(
+                                'id'         => substr( md5( $slug . '_sides_wid' ), 0, 7 ),
+                                'elType'     => 'widget',
+                                'isInner'    => false,
+                                'widgetType' => 'gfk_sides_showcase',
+                                'settings'   => array(
+                                    'badge' => 'COMPLEMENTARY SIDES',
+                                    'title' => 'Greek Sides, Rice & Roasted Potatoes',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            );
+        }
+
+        $json_data = wp_json_encode( $elementor_data );
+        update_post_meta( $page->ID, '_elementor_data', wp_slash( $json_data ) );
+        update_post_meta( $page->ID, '_elementor_edit_mode', 'builder' );
+        update_post_meta( $page->ID, '_elementor_template_type', 'wp-page' );
+        update_post_meta( $page->ID, '_elementor_version', '3.25.0' );
+        update_post_meta( $page->ID, '_wp_page_template', 'template-elementor.php' );
+    }
+
+    update_option( 'gfk_elementor_pages_initialized_v3', 1 );
+}
+add_action( 'init', 'gfk_auto_setup_elementor_pages' );
+
