@@ -1464,30 +1464,50 @@ function handleProcessPayment(event) {
     <span>Encrypting &amp; Authorizing CAD Payment...</span>
   `;
 
-  setTimeout(() => {
-    const orderId = "GFK-" + Math.floor(100000 + Math.random() * 900000);
-    const orderRecord = {
-      orderId: orderId,
-      timestamp: new Date().toISOString(),
-      customerName: custName,
-      customerEmail: custEmail,
-      customerPhone: custPhone,
-      deliveryMethod: deliveryMethod,
-      deliveryAddress: deliveryAddress,
-      scheduledDate: deliveryDay,
-      items: JSON.parse(JSON.stringify(cart)),
-      itemCount: calc.totalMealsCount,
-      subtotal: calc.grossFood,
-      discount: calc.discountAmount,
-      deliveryFee: calc.deliveryFee,
-      tax: calc.taxAmount,
-      grandTotal: calc.grandTotal,
-      status: "Received",
-      paymentStatus: "Paid (Stripe Gateway Authorized)",
-      authCode: "AUTH-" + Math.random().toString(36).substring(2, 8).toUpperCase(),
-      staffNotes: ""
-    };
+  const orderId = "GFK-" + Math.floor(100000 + Math.random() * 900000);
+  const orderRecord = {
+    orderId: orderId,
+    timestamp: new Date().toISOString(),
+    customerName: custName,
+    customerEmail: custEmail,
+    customerPhone: custPhone,
+    deliveryMethod: deliveryMethod,
+    deliveryAddress: deliveryAddress,
+    scheduledDate: deliveryDay,
+    items: JSON.parse(JSON.stringify(cart)),
+    itemCount: calc.totalMealsCount,
+    subtotal: calc.grossFood,
+    discount: calc.discountAmount,
+    deliveryFee: calc.deliveryFee,
+    tax: calc.taxAmount,
+    grandTotal: calc.grandTotal,
+    status: "Received",
+    paymentStatus: "Paid (Stripe Gateway Authorized)",
+    authCode: "AUTH-" + Math.random().toString(36).substring(2, 8).toUpperCase(),
+    staffNotes: ""
+  };
 
+  // Dispatch Order to WordPress Backend (Saves in DB & Sends Confirmation Emails)
+  const ajaxUrl = (typeof gfkConfig !== 'undefined' && gfkConfig.ajaxUrl) ? gfkConfig.ajaxUrl : '/wp-admin/admin-ajax.php';
+  const nonce = (typeof gfkConfig !== 'undefined' && gfkConfig.orderNonce) ? gfkConfig.orderNonce : '';
+
+  const formData = new FormData();
+  formData.append('action', 'gfk_submit_order');
+  formData.append('nonce', nonce);
+  formData.append('order_data', JSON.stringify(orderRecord));
+
+  fetch(ajaxUrl, {
+    method: 'POST',
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log('Order submission response:', data);
+  })
+  .catch(err => {
+    console.log('Order sync note:', err);
+  })
+  .finally(() => {
     // Save to Orders Database
     const existingOrders = getStoredOrders();
     existingOrders.unshift(orderRecord);
@@ -1506,7 +1526,7 @@ function handleProcessPayment(event) {
     clearCart();
 
     showOrderConfirmationModal(orderRecord);
-  }, 1200);
+  });
 }
 
 function showOrderConfirmationModal(order) {

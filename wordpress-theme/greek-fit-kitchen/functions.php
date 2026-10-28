@@ -135,6 +135,7 @@ function gfk_enqueue_scripts() {
         'wcCartUrl'      => function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url() : home_url( '/cart/' ),
         'wcCheckoutUrl'  => function_exists( 'wc_get_checkout_url' ) ? wc_get_checkout_url() : home_url( '/checkout/' ),
         'wcNonce'        => wp_create_nonce( 'gfk_wc_nonce' ),
+        'orderNonce'     => wp_create_nonce( 'gfk_order_nonce' ),
     ) );
 }
 add_action( 'wp_enqueue_scripts', 'gfk_enqueue_scripts' );
@@ -145,6 +146,7 @@ require_once get_template_directory() . '/inc/meals-cpt.php';
 require_once get_template_directory() . '/inc/shortcodes.php';
 require_once get_template_directory() . '/inc/elementor/class-gfk-elementor.php';
 require_once get_template_directory() . '/inc/woocommerce.php';
+require_once get_template_directory() . '/inc/order-email.php';
 
 
 
