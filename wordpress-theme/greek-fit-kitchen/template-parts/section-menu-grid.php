@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once dirname( __DIR__ ) . '/inc/meals-data.php';
-$meals = gfk_get_default_meals();
+$meals = gfk_get_meals();
 $theme_uri = get_template_directory_uri();
 ?>
 <section class="py-16 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="featuredMeals">

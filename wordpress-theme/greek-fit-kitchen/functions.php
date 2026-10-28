@@ -135,59 +135,13 @@ function gfk_enqueue_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'gfk_enqueue_scripts' );
 
-// 5. Load Theme Includes: Data, Shortcodes, & Elementor Widgets
+// 5. Load Theme Includes: Data, Shortcodes, CPT, & Elementor Widgets
 require_once get_template_directory() . '/inc/meals-data.php';
+require_once get_template_directory() . '/inc/meals-cpt.php';
 require_once get_template_directory() . '/inc/shortcodes.php';
 require_once get_template_directory() . '/inc/elementor/class-gfk-elementor.php';
 
-// 6. Register Custom Post Type for Meals (GFK Meals)
-function gfk_register_meal_cpt() {
-    $labels = array(
-        'name'               => _x( 'Meals', 'post type general name', 'greek-fit-kitchen' ),
-        'singular_name'      => _x( 'Meal', 'post type singular name', 'greek-fit-kitchen' ),
-        'menu_name'          => _x( 'GFK Meals', 'admin menu', 'greek-fit-kitchen' ),
-        'add_new'            => _x( 'Add New Meal', 'meal', 'greek-fit-kitchen' ),
-        'add_new_item'       => __( 'Add New Meal', 'greek-fit-kitchen' ),
-        'edit_item'          => __( 'Edit Meal', 'greek-fit-kitchen' ),
-        'new_item'           => __( 'New Meal', 'greek-fit-kitchen' ),
-        'view_item'          => __( 'View Meal', 'greek-fit-kitchen' ),
-        'search_items'       => __( 'Search Meals', 'greek-fit-kitchen' ),
-        'not_found'          => __( 'No meals found', 'greek-fit-kitchen' ),
-        'not_found_in_trash' => __( 'No meals found in Trash', 'greek-fit-kitchen' ),
-    );
 
-    $args = array(
-        'labels'             => $labels,
-        'public'             => true,
-        'publicly_queryable' => true,
-        'show_ui'            => true,
-        'show_in_menu'       => true,
-        'show_in_rest'       => true,
-        'query_var'          => true,
-        'rewrite'            => array( 'slug' => 'meals' ),
-        'capability_type'    => 'post',
-        'has_archive'        => true,
-        'hierarchical'       => false,
-        'menu_position'      => 6,
-        'menu_icon'          => 'dashicons-food',
-        'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt', 'custom-fields' ),
-    );
-
-    register_post_type( 'gfk_meal', $args );
-
-    // Category Taxonomy for Meals
-    register_taxonomy( 'meal_category', 'gfk_meal', array(
-        'hierarchical' => true,
-        'labels'       => array(
-            'name'          => __( 'Meal Categories', 'greek-fit-kitchen' ),
-            'singular_name' => __( 'Meal Category', 'greek-fit-kitchen' ),
-        ),
-        'show_ui'      => true,
-        'show_in_rest' => true,
-        'rewrite'      => array( 'slug' => 'meal-category' ),
-    ) );
-}
-add_action( 'init', 'gfk_register_meal_cpt' );
 
 // 7. REST API Endpoint for Orders & Batch Cutoffs
 function gfk_register_rest_routes() {
@@ -213,7 +167,7 @@ function gfk_get_kitchen_orders_endpoint() {
 
 // 8. Auto-populate Elementor Builder Data for Subpages & Global Header/Footer
 function gfk_auto_setup_elementor_pages() {
-    if ( get_option( 'gfk_elementor_pages_initialized_v5' ) ) {
+    if ( get_option( 'gfk_elementor_pages_initialized_v7' ) ) {
         return;
     }
 
@@ -374,7 +328,108 @@ function gfk_auto_setup_elementor_pages() {
         update_post_meta( $page->ID, '_wp_page_template', 'template-elementor.php' );
     }
 
-    update_option( 'gfk_elementor_pages_initialized_v5', 1 );
+    // 8b. Setup Primary and Footer Menus in WordPress Database
+    if ( ! function_exists( 'wp_update_nav_menu_item' ) ) {
+        require_once ABSPATH . 'wp-admin/includes/nav-menu.php';
+    }
+    $primary_menu_name = 'Main Menu';
+    $primary_menu = wp_get_nav_menu_object( $primary_menu_name );
+    if ( ! $primary_menu ) {
+        $primary_menu_id = wp_create_nav_menu( $primary_menu_name );
+    } else {
+        $primary_menu_id = $primary_menu->term_id;
+    }
+
+    if ( ! is_wp_error( $primary_menu_id ) ) {
+        $existing_items = wp_get_nav_menu_items( $primary_menu_id );
+        if ( empty( $existing_items ) ) {
+            $pages_to_add = array(
+                'menu'           => 'Menu',
+                'meal-plans'     => 'Meal Plans',
+                'how-it-works'   => 'How it Works',
+                'delivery-rates' => 'Delivery Rates',
+                'about-us'       => 'About Us',
+            );
+            $order = 1;
+            foreach ( $pages_to_add as $pslug => $ptitle ) {
+                $pobj = get_page_by_path( $pslug );
+                if ( $pobj ) {
+                    wp_update_nav_menu_item( $primary_menu_id, 0, array(
+                        'menu-item-title'     => $ptitle,
+                        'menu-item-object-id' => $pobj->ID,
+                        'menu-item-object'    => 'page',
+                        'menu-item-type'      => 'post_type',
+                        'menu-item-status'    => 'publish',
+                        'menu-item-position'  => $order++,
+                    ) );
+                } else {
+                    wp_update_nav_menu_item( $primary_menu_id, 0, array(
+                        'menu-item-title'     => $ptitle,
+                        'menu-item-url'       => home_url( '/' . $pslug . '/' ),
+                        'menu-item-type'      => 'custom',
+                        'menu-item-status'    => 'publish',
+                        'menu-item-position'  => $order++,
+                    ) );
+                }
+            }
+        }
+    }
+
+    // Setup Footer Navigation Menu
+    $footer_menu_name = 'Footer Menu';
+    $footer_menu = wp_get_nav_menu_object( $footer_menu_name );
+    if ( ! $footer_menu ) {
+        $footer_menu_id = wp_create_nav_menu( $footer_menu_name );
+    } else {
+        $footer_menu_id = $footer_menu->term_id;
+    }
+
+    if ( ! is_wp_error( $footer_menu_id ) ) {
+        $existing_footer_items = wp_get_nav_menu_items( $footer_menu_id );
+        if ( empty( $existing_footer_items ) ) {
+            $footer_pages_to_add = array(
+                'menu'           => 'Menu & Dishes',
+                'meal-plans'     => 'Weekly Meal Plans',
+                'how-it-works'   => 'How Ordering Works',
+                'delivery-rates' => 'Distance Delivery Rates',
+                'about-us'       => 'About George the Greek',
+            );
+            $order = 1;
+            foreach ( $footer_pages_to_add as $pslug => $ptitle ) {
+                $pobj = get_page_by_path( $pslug );
+                if ( $pobj ) {
+                    wp_update_nav_menu_item( $footer_menu_id, 0, array(
+                        'menu-item-title'     => $ptitle,
+                        'menu-item-object-id' => $pobj->ID,
+                        'menu-item-object'    => 'page',
+                        'menu-item-type'      => 'post_type',
+                        'menu-item-status'    => 'publish',
+                        'menu-item-position'  => $order++,
+                    ) );
+                } else {
+                    wp_update_nav_menu_item( $footer_menu_id, 0, array(
+                        'menu-item-title'     => $ptitle,
+                        'menu-item-url'       => home_url( '/' . $pslug . '/' ),
+                        'menu-item-type'      => 'custom',
+                        'menu-item-status'    => 'publish',
+                        'menu-item-position'  => $order++,
+                    ) );
+                }
+            }
+        }
+    }
+
+    // Assign Locations to Theme Mod
+    $locations = get_theme_mod( 'nav_menu_locations', array() );
+    if ( ! is_wp_error( $primary_menu_id ) ) {
+        $locations['primary'] = (int) $primary_menu_id;
+    }
+    if ( ! is_wp_error( $footer_menu_id ) ) {
+        $locations['footer'] = (int) $footer_menu_id;
+    }
+    set_theme_mod( 'nav_menu_locations', $locations );
+
+    update_option( 'gfk_elementor_pages_initialized_v7', 1 );
 }
 add_action( 'init', 'gfk_auto_setup_elementor_pages' );
 
@@ -540,3 +595,38 @@ function gfk_customize_register( $wp_customize ) {
     ) );
 }
 add_action( 'customize_register', 'gfk_customize_register' );
+
+// 11. Nav Menu Link and Item Class Styling Filters
+function gfk_nav_menu_link_attributes( $atts, $item, $args ) {
+    $loc = '';
+    if ( is_object( $args ) && isset( $args->theme_location ) ) {
+        $loc = $args->theme_location;
+    } elseif ( is_array( $args ) && isset( $args['theme_location'] ) ) {
+        $loc = $args['theme_location'];
+    }
+
+    if ( 'primary' === $loc ) {
+        $atts['class'] = ( isset( $atts['class'] ) ? $atts['class'] . ' ' : '' ) . 'hover:text-greek-gold transition-colors';
+    } elseif ( 'footer' === $loc ) {
+        $atts['class'] = ( isset( $atts['class'] ) ? $atts['class'] . ' ' : '' ) . 'hover:text-white transition';
+    }
+    return $atts;
+}
+add_filter( 'nav_menu_link_attributes', 'gfk_nav_menu_link_attributes', 10, 3 );
+
+function gfk_nav_menu_css_class( $classes, $item, $args ) {
+    $loc = '';
+    if ( is_object( $args ) && isset( $args->theme_location ) ) {
+        $loc = $args->theme_location;
+    } elseif ( is_array( $args ) && isset( $args['theme_location'] ) ) {
+        $loc = $args['theme_location'];
+    }
+
+    if ( 'primary' === $loc ) {
+        $classes[] = 'list-none inline-flex items-center';
+    } elseif ( 'footer' === $loc ) {
+        $classes[] = 'list-none';
+    }
+    return $classes;
+}
+add_filter( 'nav_menu_css_class', 'gfk_nav_menu_css_class', 10, 3 );

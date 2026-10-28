@@ -333,13 +333,55 @@ function gfk_get_default_meals() {
 }
 
 function gfk_get_meal_by_id( $id ) {
-    $meals = gfk_get_default_meals();
+    $meals = gfk_get_meals();
     foreach ( $meals as $meal ) {
         if ( $meal['id'] === $id ) {
             return $meal;
         }
     }
     return null;
+}
+
+function gfk_get_meals() {
+    $posts = get_posts( array(
+        'post_type'      => 'gfk_meal',
+        'post_status'    => 'publish',
+        'posts_per_page' => -1,
+        'orderby'        => 'menu_order title',
+        'order'          => 'ASC',
+    ) );
+
+    if ( ! empty( $posts ) ) {
+        $meals = array();
+        foreach ( $posts as $p ) {
+            $cats = wp_get_post_terms( $p->ID, 'meal_category', array( 'fields' => 'slugs' ) );
+            $cat  = ! empty( $cats ) ? $cats[0] : 'chicken';
+            $thumb_id = get_post_thumbnail_id( $p->ID );
+            $img_url  = $thumb_id ? wp_get_attachment_image_url( $thumb_id, 'gfk-meal-thumb' ) : get_post_meta( $p->ID, '_gfk_image_url', true );
+            if ( ! $img_url ) {
+                $img_url = get_template_directory_uri() . '/assets/images/meals/grilled-chicken.jpg';
+            }
+
+            $meals[] = array(
+                'id'          => $p->post_name,
+                'name'        => $p->post_title,
+                'price'       => (float) get_post_meta( $p->ID, '_gfk_price', true ) ?: 12.99,
+                'category'    => $cat,
+                'image'       => $img_url,
+                'description' => $p->post_content,
+                'calories'    => (int) get_post_meta( $p->ID, '_gfk_calories', true ) ?: 400,
+                'protein'     => get_post_meta( $p->ID, '_gfk_protein', true ) ?: '40g',
+                'carbs'       => get_post_meta( $p->ID, '_gfk_carbs', true ) ?: '20g',
+                'fat'         => get_post_meta( $p->ID, '_gfk_fat', true ) ?: '10g',
+                'popular'     => (bool) get_post_meta( $p->ID, '_gfk_popular', true ),
+                'hasSides'    => get_post_meta( $p->ID, '_gfk_has_sides', true ) !== '0',
+                'inStock'     => true,
+            );
+        }
+        return $meals;
+    }
+
+    return gfk_get_default_meals();
 }
 
 

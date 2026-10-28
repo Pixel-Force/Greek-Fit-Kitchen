@@ -89,7 +89,7 @@ class GFK_Widget_Menu_Grid extends \Elementor\Widget_Base {
 
     protected function render() {
         $settings = $this->get_settings_for_display();
-        $meals    = gfk_get_default_meals();
+        $meals    = gfk_get_meals();
         ?>
         <section class="py-16 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="featuredMeals">
           
