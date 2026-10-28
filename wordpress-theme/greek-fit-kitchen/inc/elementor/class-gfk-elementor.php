@@ -47,6 +47,8 @@ class GFK_Elementor_Extension {
      */
     public function register_widgets( $widgets_manager ) {
         // Include widget files
+        require_once __DIR__ . '/widget-site-header.php';
+        require_once __DIR__ . '/widget-site-footer.php';
         require_once __DIR__ . '/widget-hero-slider.php';
         require_once __DIR__ . '/widget-menu-grid.php';
         require_once __DIR__ . '/widget-meal-plans.php';
@@ -57,6 +59,8 @@ class GFK_Elementor_Extension {
         require_once __DIR__ . '/widget-about-story.php';
 
         // Register each widget class
+        $widgets_manager->register( new \GFK_Widget_Site_Header() );
+        $widgets_manager->register( new \GFK_Widget_Site_Footer() );
         $widgets_manager->register( new \GFK_Widget_Hero_Slider() );
         $widgets_manager->register( new \GFK_Widget_Menu_Grid() );
         $widgets_manager->register( new \GFK_Widget_Meal_Plans() );

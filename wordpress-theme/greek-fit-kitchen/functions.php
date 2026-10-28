@@ -211,14 +211,37 @@ function gfk_get_kitchen_orders_endpoint() {
     ) );
 }
 
-// 8. Auto-populate Elementor Builder Data for Subpages
+// 8. Auto-populate Elementor Builder Data for Subpages & Global Header/Footer
 function gfk_auto_setup_elementor_pages() {
-    if ( get_option( 'gfk_elementor_pages_initialized_v4' ) ) {
+    if ( get_option( 'gfk_elementor_pages_initialized_v5' ) ) {
         return;
     }
 
     $pages_config = array(
+        'global-header' => array(
+            'title'    => 'Global Header',
+            'widget'   => 'gfk_site_header',
+            'settings' => array(
+                'show_announcement' => 'yes',
+                'batch_cutoff_text' => 'Sundays & Wednesdays',
+                'pickup_info_text'  => 'Free Kitchen Pickup: George the Greek (3575 Lake Shore Blvd W, Etobicoke, ON)',
+                'cta_button_text'   => 'Build Your Plan',
+                'cta_button_url'    => home_url( '/meal-plans/' ),
+                'show_cart_icon'    => 'yes',
+            ),
+        ),
+        'global-footer' => array(
+            'title'    => 'Global Footer',
+            'widget'   => 'gfk_site_footer',
+            'settings' => array(
+                'tagline_title'       => 'BIG GREEK FLAVOUR. ZERO MEAL PREP.',
+                'tagline_description' => 'Chef-crafted authentic Greek meal preparation delivered directly to your home or office in Toronto & the GTA.',
+                'kitchen_title'       => 'George the Greek',
+                'kitchen_address'     => "3575 Lake Shore Blvd W\nEtobicoke, ON M8W 1P5\nGreater Toronto Area",
+            ),
+        ),
         'menu' => array(
+            'title'    => 'Menu',
             'widget'   => 'gfk_menu_grid',
             'settings' => array(
                 'badge'           => 'APPROVED FLYER SELECTION',
@@ -229,6 +252,7 @@ function gfk_auto_setup_elementor_pages() {
             ),
         ),
         'meal-plans' => array(
+            'title'    => 'Meal Plans',
             'widget'   => 'gfk_meal_plans',
             'settings' => array(
                 'badge'    => 'TIERED VALUE',
@@ -237,6 +261,7 @@ function gfk_auto_setup_elementor_pages() {
             ),
         ),
         'how-it-works' => array(
+            'title'    => 'How it Works',
             'widget'   => 'gfk_how_it_works',
             'settings' => array(
                 'badge'    => 'EFFORTLESS MEAL PREP',
@@ -245,6 +270,7 @@ function gfk_auto_setup_elementor_pages() {
             ),
         ),
         'delivery-rates' => array(
+            'title'    => 'Delivery Rates',
             'widget'   => 'gfk_delivery_calculator',
             'settings' => array(
                 'badge'    => 'SCHEDULED BATCH DISPATCH',
@@ -253,6 +279,7 @@ function gfk_auto_setup_elementor_pages() {
             ),
         ),
         'about-us' => array(
+            'title'    => 'About Us',
             'widget'   => 'gfk_about_story',
             'settings' => array(
                 'badge' => 'ABOUT GREEK FIT KITCHEN',
@@ -263,6 +290,19 @@ function gfk_auto_setup_elementor_pages() {
 
     foreach ( $pages_config as $slug => $cfg ) {
         $page = get_page_by_path( $slug );
+        if ( ! $page ) {
+            $page_id = wp_insert_post( array(
+                'post_title'    => $cfg['title'],
+                'post_name'     => $slug,
+                'post_status'   => 'publish',
+                'post_type'     => 'page',
+                'page_template' => 'template-elementor.php',
+            ) );
+            if ( ! is_wp_error( $page_id ) ) {
+                $page = get_post( $page_id );
+            }
+        }
+
         if ( ! $page ) {
             continue;
         }
@@ -332,29 +372,171 @@ function gfk_auto_setup_elementor_pages() {
         update_post_meta( $page->ID, '_elementor_template_type', 'wp-page' );
         update_post_meta( $page->ID, '_elementor_version', '3.25.0' );
         update_post_meta( $page->ID, '_wp_page_template', 'template-elementor.php' );
-
-        // If page has stored post_content with old badge background, replace with white badge
-        if ( 'menu' === $slug && ! empty( $page->post_content ) ) {
-            $updated_content = str_replace(
-                'bg-[#101D3A]/10 text-[#101D3A] text-[10px] font-black px-2 py-0.5 rounded-full border border-[#101D3A]/20',
-                'bg-white text-[#101D3A] text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-md border border-slate-200',
-                $page->post_content
-            );
-            $updated_content = str_replace(
-                'bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-0.5 rounded-full border border-amber-300',
-                'bg-white text-amber-800 text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-md border border-amber-300',
-                $updated_content
-            );
-            if ( $updated_content !== $page->post_content ) {
-                wp_update_post( array(
-                    'ID'           => $page->ID,
-                    'post_content' => $updated_content,
-                ) );
-            }
-        }
     }
 
-    update_option( 'gfk_elementor_pages_initialized_v4', 1 );
+    update_option( 'gfk_elementor_pages_initialized_v5', 1 );
 }
 add_action( 'init', 'gfk_auto_setup_elementor_pages' );
 
+// 9. Global Header & Footer Engine (Modular & Elementor Editable)
+
+/**
+ * Get the global header post (page or template)
+ */
+function gfk_get_global_header_post() {
+    $header_id = get_theme_mod( 'gfk_global_header_id' );
+    if ( $header_id && 'publish' === get_post_status( $header_id ) ) {
+        return get_post( $header_id );
+    }
+
+    $header_page = get_page_by_path( 'global-header' );
+    if ( ! $header_page ) {
+        $header_page = get_page_by_path( 'header' );
+    }
+    return $header_page;
+}
+
+/**
+ * Render Global Header
+ */
+function gfk_render_header() {
+    $header_post = gfk_get_global_header_post();
+
+    if ( $header_post && 'publish' === get_post_status( $header_post->ID ) ) {
+        if ( did_action( 'elementor/loaded' ) && class_exists( '\Elementor\Plugin' ) ) {
+            $document = \Elementor\Plugin::$instance->documents->get( $header_post->ID );
+            if ( $document && $document->is_built_with_elementor() ) {
+                echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display( $header_post->ID );
+                return;
+            }
+        }
+
+        if ( ! empty( $header_post->post_content ) ) {
+            echo apply_filters( 'the_content', $header_post->post_content );
+            return;
+        }
+    }
+
+    // Default Fallback Header Template Part
+    get_template_part( 'template-parts/header/site-header' );
+}
+
+/**
+ * Get the global footer post (page or template)
+ */
+function gfk_get_global_footer_post() {
+    $footer_id = get_theme_mod( 'gfk_global_footer_id' );
+    if ( $footer_id && 'publish' === get_post_status( $footer_id ) ) {
+        return get_post( $footer_id );
+    }
+
+    $footer_page = get_page_by_path( 'global-footer' );
+    if ( ! $footer_page ) {
+        $footer_page = get_page_by_path( 'footer' );
+    }
+    return $footer_page;
+}
+
+/**
+ * Render Global Footer
+ */
+function gfk_render_footer() {
+    $footer_post = gfk_get_global_footer_post();
+
+    if ( $footer_post && 'publish' === get_post_status( $footer_post->ID ) ) {
+        if ( did_action( 'elementor/loaded' ) && class_exists( '\Elementor\Plugin' ) ) {
+            $document = \Elementor\Plugin::$instance->documents->get( $footer_post->ID );
+            if ( $document && $document->is_built_with_elementor() ) {
+                echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display( $footer_post->ID );
+                return;
+            }
+        }
+
+        if ( ! empty( $footer_post->post_content ) ) {
+            echo apply_filters( 'the_content', $footer_post->post_content );
+            return;
+        }
+    }
+
+    // Default Fallback Footer Template Part
+    get_template_part( 'template-parts/footer/site-footer' );
+}
+
+/**
+ * Add Admin Bar Quick-Edit Links for Header & Footer
+ */
+function gfk_admin_bar_header_footer_links( $wp_admin_bar ) {
+    if ( ! current_user_can( 'edit_theme_options' ) ) {
+        return;
+    }
+
+    $header_post = gfk_get_global_header_post();
+    if ( $header_post ) {
+        $wp_admin_bar->add_node( array(
+            'id'    => 'gfk-edit-header',
+            'title' => '<span class="ab-icon dashicons dashicons-admin-appearance"></span> Edit Global Header',
+            'href'  => admin_url( 'post.php?post=' . $header_post->ID . '&action=elementor' ),
+            'meta'  => array( 'target' => '_blank' ),
+        ) );
+    }
+
+    $footer_post = gfk_get_global_footer_post();
+    if ( $footer_post ) {
+        $wp_admin_bar->add_node( array(
+            'id'    => 'gfk-edit-footer',
+            'title' => '<span class="ab-icon dashicons dashicons-admin-appearance"></span> Edit Global Footer',
+            'href'  => admin_url( 'post.php?post=' . $footer_post->ID . '&action=elementor' ),
+            'meta'  => array( 'target' => '_blank' ),
+        ) );
+    }
+}
+add_action( 'admin_bar_menu', 'gfk_admin_bar_header_footer_links', 100 );
+
+// 10. Theme Customizer Header Controls
+function gfk_customize_register( $wp_customize ) {
+    $wp_customize->add_section( 'gfk_header_section', array(
+        'title'    => __( 'Header & Announcement Bar', 'greek-fit-kitchen' ),
+        'priority' => 30,
+    ) );
+
+    $wp_customize->add_setting( 'gfk_announcement_cutoff', array(
+        'default'           => 'Sundays & Wednesdays',
+        'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'gfk_announcement_cutoff', array(
+        'label'   => __( 'Batch Delivery Cutoff Text', 'greek-fit-kitchen' ),
+        'section' => 'gfk_header_section',
+        'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'gfk_pickup_text', array(
+        'default'           => 'Free Kitchen Pickup: <strong class="text-white">George the Greek</strong> (3575 Lake Shore Blvd W, Etobicoke, ON)',
+        'sanitize_callback' => 'wp_kses_post',
+    ) );
+    $wp_customize->add_control( 'gfk_pickup_text', array(
+        'label'   => __( 'Kitchen Pickup Text', 'greek-fit-kitchen' ),
+        'section' => 'gfk_header_section',
+        'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'gfk_header_cta_text', array(
+        'default'           => 'Build Your Plan',
+        'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'gfk_header_cta_text', array(
+        'label'   => __( 'Header CTA Button Text', 'greek-fit-kitchen' ),
+        'section' => 'gfk_header_section',
+        'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'gfk_header_cta_url', array(
+        'default'           => home_url( '/meal-plans/' ),
+        'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( 'gfk_header_cta_url', array(
+        'label'   => __( 'Header CTA Button URL', 'greek-fit-kitchen' ),
+        'section' => 'gfk_header_section',
+        'type'    => 'url',
+    ) );
+}
+add_action( 'customize_register', 'gfk_customize_register' );
