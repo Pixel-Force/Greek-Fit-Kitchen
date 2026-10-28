@@ -12,7 +12,16 @@ get_header(); ?>
 
 <main id="primary" class="site-main flex-1 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-    <?php woocommerce_content(); ?>
+    <?php
+    if ( function_exists( 'woocommerce_content' ) ) {
+        woocommerce_content();
+    } else {
+        while ( have_posts() ) :
+            the_post();
+            the_content();
+        endwhile;
+    }
+    ?>
   </div>
 </main>
 

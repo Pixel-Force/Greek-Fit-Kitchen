@@ -68,11 +68,15 @@ add_action( 'woocommerce_after_main_content', 'gfk_woocommerce_wrapper_end', 10 
  * 3. Dynamic Cart Fragments (AJAX Header Counter Update)
  */
 function gfk_woocommerce_cart_fragments( $fragments ) {
-    if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
+    if ( ! function_exists( 'WC' ) || is_null( WC() ) || ! isset( WC()->cart ) || ! is_object( WC()->cart ) ) {
         return $fragments;
     }
 
-    $count = WC()->cart->get_cart_contents_count();
+    try {
+        $count = WC()->cart->get_cart_contents_count();
+    } catch ( Exception $e ) {
+        $count = 0;
+    }
 
     ob_start();
     ?>
@@ -182,25 +186,34 @@ function gfk_wc_apply_volume_discount( $cart ) {
         return;
     }
 
-    if ( ! $cart || $cart->is_empty() ) {
+    if ( ! $cart || ! is_object( $cart ) || $cart->is_empty() ) {
         return;
     }
 
-    $meal_count = 0;
-    $food_subtotal = 0;
+    try {
+        $meal_count = 0;
+        $food_subtotal = 0;
 
-    foreach ( $cart->get_cart() as $cart_item ) {
-        $product = $cart_item['data'];
-        $qty     = $cart_item['quantity'];
+        foreach ( $cart->get_cart() as $cart_item ) {
+            if ( empty( $cart_item['data'] ) || ! is_object( $cart_item['data'] ) ) {
+                continue;
+            }
+            $product = $cart_item['data'];
+            $qty     = isset( $cart_item['quantity'] ) ? (int) $cart_item['quantity'] : 1;
 
-        $meal_count += $qty;
-        $food_subtotal += (float) $product->get_price() * $qty;
-    }
+            $meal_count += $qty;
+            if ( method_exists( $product, 'get_price' ) ) {
+                $food_subtotal += (float) $product->get_price() * $qty;
+            }
+        }
 
-    // Apply 10% volume discount for 7 or more meals
-    if ( $meal_count >= 7 && $food_subtotal > 0 ) {
-        $discount = round( $food_subtotal * 0.10, 2 );
-        $cart->add_fee( __( '10% Multi-Meal Volume Discount (7+ Meals)', 'greek-fit-kitchen' ), -$discount, true );
+        // Apply 10% volume discount for 7 or more meals
+        if ( $meal_count >= 7 && $food_subtotal > 0 ) {
+            $discount = round( $food_subtotal * 0.10, 2 );
+            $cart->add_fee( __( '10% Multi-Meal Volume Discount (7+ Meals)', 'greek-fit-kitchen' ), -$discount, false );
+        }
+    } catch ( Exception $e ) {
+        // Fail gracefully
     }
 }
 add_action( 'woocommerce_cart_calculate_fees', 'gfk_wc_apply_volume_discount', 20, 1 );
@@ -209,11 +222,15 @@ add_action( 'woocommerce_cart_calculate_fees', 'gfk_wc_apply_volume_discount', 2
  * 6. 6-Meal Minimum Order Enforcement on Checkout
  */
 function gfk_wc_enforce_min_meals() {
-    if ( ! function_exists( 'WC' ) || ! WC()->cart || WC()->cart->is_empty() ) {
+    if ( ! function_exists( 'WC' ) || is_null( WC() ) || ! isset( WC()->cart ) || ! is_object( WC()->cart ) || WC()->cart->is_empty() ) {
         return;
     }
 
-    $count = WC()->cart->get_cart_contents_count();
+    try {
+        $count = WC()->cart->get_cart_contents_count();
+    } catch ( Exception $e ) {
+        return;
+    }
     $min_meals = 6;
 
     if ( $count < $min_meals ) {
