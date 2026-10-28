@@ -1,7 +1,6 @@
 <?php
 /**
- * Site Header Template Part
- * Modular, separate header included across all website templates.
+ * Site Header Template Part (End-to-End Full Width)
  *
  * @package GreekFitKitchen
  */
@@ -16,8 +15,8 @@ $cta_text    = get_theme_mod( 'gfk_header_cta_text', 'Build Your Plan' );
 $cta_url     = get_theme_mod( 'gfk_header_cta_url', home_url( '/meal-plans/' ) );
 ?>
 
-<!-- Top Announcement Bar: Batch Delivery Cutoff & Location -->
-<aside class="bg-[#0C172E] text-white text-[11px] font-semibold py-2 px-4 border-b border-white/10" aria-label="Announcement">
+<!-- Top Announcement Bar: 100% End-to-End Full Width -->
+<aside class="w-full bg-[#0C172E] text-white text-[11px] font-semibold py-2 px-4 border-b border-white/10" aria-label="Announcement">
   <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1.5 text-center sm:text-left">
     <div class="flex items-center gap-2">
       <span class="inline-block w-2 h-2 rounded-full bg-greek-lime animate-pulse"></span>
@@ -30,27 +29,19 @@ $cta_url     = get_theme_mod( 'gfk_header_cta_url', home_url( '/meal-plans/' ) )
   </div>
 </aside>
 
-<!-- Main Header Bar -->
+<!-- Main Header Bar: 100% End-to-End Full Width -->
 <header id="siteHeader" class="sticky top-0 z-40 w-full bg-[#101D3A] text-white border-b border-white/10 shadow-md">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
     
-    <!-- Brand Logo -->
+    <!-- Brand Logo: Strict size constraints -->
     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center gap-3 group focus:outline-none shrink-0" aria-label="<?php bloginfo( 'name' ); ?>">
-      <?php
-      if ( has_custom_logo() ) {
-          the_custom_logo();
-      } else {
-          ?>
-          <img 
-            src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/brand/greek-fit-kitchen-logo.png' ); ?>" 
-            alt="<?php bloginfo( 'name' ); ?>" 
-            width="200" 
-            height="48"
-            class="h-11 sm:h-12 w-auto max-w-[190px] sm:max-w-[210px] object-contain drop-shadow" 
-          />
-          <?php
-      }
-      ?>
+      <img 
+        src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/brand/greek-fit-kitchen-logo.png' ); ?>" 
+        alt="<?php bloginfo( 'name' ); ?>" 
+        width="200" 
+        height="48"
+        class="h-11 sm:h-12 w-auto max-w-[190px] sm:max-w-[210px] object-contain drop-shadow" 
+      />
     </a>
 
     <!-- Primary Desktop Navigation -->
@@ -62,7 +53,6 @@ $cta_url     = get_theme_mod( 'gfk_header_cta_url', home_url( '/meal-plans/' ) )
               'container'      => false,
               'menu_class'     => 'flex items-center gap-6',
               'fallback_cb'    => 'gfk_primary_menu_fallback',
-              'items_wrap'     => '%3$s',
               'depth'          => 2,
           ) );
       } else {

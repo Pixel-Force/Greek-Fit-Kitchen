@@ -1,7 +1,6 @@
 <?php
 /**
- * Site Footer Template Part
- * Modular, separate footer included across all website templates.
+ * Site Footer Template Part (End-to-End Full Width)
  *
  * @package GreekFitKitchen
  */
@@ -10,8 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 ?>
-<!-- Main Footer -->
-<footer id="siteFooter" class="mt-auto bg-[#101D3A] text-white pt-14 pb-6 border-t border-white/10" aria-label="Site Footer">
+<!-- Main Footer: 100% End-to-End Full Width -->
+<footer id="siteFooter" class="mt-auto w-full bg-[#101D3A] text-white pt-14 pb-6 border-t border-white/10" aria-label="Site Footer">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <!-- 4-Column Responsive Grid -->
@@ -25,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             alt="<?php bloginfo( 'name' ); ?>" 
             width="180" 
             height="44"
-            class="h-10 w-auto" 
+            class="h-10 w-auto object-contain" 
           />
         </a>
         <p class="text-slate-300 leading-relaxed">

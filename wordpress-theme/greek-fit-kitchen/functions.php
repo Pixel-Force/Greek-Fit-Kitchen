@@ -108,13 +108,13 @@ function gfk_footer_menu_fallback() {
 // 4. Enqueue Styles & High-Performance Scripts
 function gfk_enqueue_scripts() {
     // Theme Master Stylesheet
-    wp_enqueue_style( 'gfk-style', get_stylesheet_uri(), array(), '2.3.0' );
+    wp_enqueue_style( 'gfk-style', get_stylesheet_uri(), array(), '2.4.0' );
 
     // Custom CSS with mobile image height protections
-    wp_enqueue_style( 'gfk-custom-styles', get_template_directory_uri() . '/assets/css/styles.css', array(), '2.3.0' );
+    wp_enqueue_style( 'gfk-custom-styles', get_template_directory_uri() . '/assets/css/styles.css', array(), '2.4.0' );
 
     // Master App Engine Script (deferred)
-    wp_enqueue_script( 'gfk-app', get_template_directory_uri() . '/assets/js/app.js', array(), '2.3.0', array(
+    wp_enqueue_script( 'gfk-app', get_template_directory_uri() . '/assets/js/app.js', array(), '2.4.0', array(
         'in_footer' => true,
         'strategy'  => 'defer',
     ) );
@@ -167,7 +167,7 @@ function gfk_get_kitchen_orders_endpoint() {
 
 // 8. Auto-populate Elementor Builder Data for Subpages & Global Header/Footer
 function gfk_auto_setup_elementor_pages() {
-    if ( get_option( 'gfk_elementor_pages_initialized_v7' ) ) {
+    if ( get_option( 'gfk_elementor_pages_initialized_v8' ) ) {
         return;
     }
 
@@ -209,9 +209,15 @@ function gfk_auto_setup_elementor_pages() {
             'title'    => 'Meal Plans',
             'widget'   => 'gfk_meal_plans',
             'settings' => array(
-                'badge'    => 'TIERED VALUE',
-                'title'    => 'Weekly Meal Prep Subscription & Bundle Plans',
-                'subtitle' => 'Choose your volume tier. Discounts apply automatically at checkout.',
+                'display_style' => 'builder',
+                'badge'         => 'Interactive Plan Builder',
+                'title'         => 'CUSTOMIZE YOUR WEEKLY MEAL PLAN',
+                'subtitle'      => 'Select at least 6 meals to meet our minimum order requirement. When you select 7 or more meals, a 10% volume discount is automatically applied to your entire food order.',
+                'starter_title' => "Chef's 6-Meal Starter Package",
+                'starter_desc'  => '6 diverse plates (Pork souvlaki, chicken leg, chicken souvlaki, grilled chicken, veggie souvlaki and pasta al greco).',
+                'starter_price' => '59.94',
+                'min_meals'     => 6,
+                'discount_text' => 'Save 10% automatically on 7+ meals',
             ),
         ),
         'how-it-works' => array(
@@ -429,7 +435,7 @@ function gfk_auto_setup_elementor_pages() {
     }
     set_theme_mod( 'nav_menu_locations', $locations );
 
-    update_option( 'gfk_elementor_pages_initialized_v7', 1 );
+    update_option( 'gfk_elementor_pages_initialized_v8', 1 );
 }
 add_action( 'init', 'gfk_auto_setup_elementor_pages' );
 

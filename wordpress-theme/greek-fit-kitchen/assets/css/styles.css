@@ -302,3 +302,33 @@ body, main, .site-main, #primary {
   color: #92400E !important;
   border: 1px solid #FCD34D !important;
 }
+
+
+/* Guarantee 100% End-to-End Full Width for Header & Footer */
+aside[aria-label="Announcement"],
+#siteHeader,
+header,
+#siteFooter,
+footer {
+  width: 100% !important;
+  max-width: 100vw !important;
+  min-width: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Strict Logo Dimensions Constraint - Never Blow Up */
+#siteHeader img,
+header img,
+a[aria-label*="Greek"] img,
+.custom-logo-link img {
+  height: 48px !important;
+  max-height: 48px !important;
+  width: auto !important;
+  max-width: 210px !important;
+  object-fit: contain !important;
+  display: block !important;
+}
