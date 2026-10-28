@@ -158,7 +158,7 @@ class GFK_Widget_Menu_Grid extends \Elementor\Widget_Base {
           <div id="menuGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <?php foreach ( $meals as $meal ) : 
               $is_pasta    = empty( $meal['hasSides'] );
-              $img_url     = get_template_directory_uri() . '/' . ltrim( $meal['image'], '/' );
+              $img_url = gfk_get_asset_url( $meal['image'] );
               $fallback_img = get_template_directory_uri() . '/assets/images/meals/grilled-chicken.jpg';
             ?>
               <div class="meal-card group bg-white rounded-2xl border border-slate-200 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300" data-meal-id="<?php echo esc_attr( $meal['id'] ); ?>" data-category="<?php echo esc_attr( $meal['category'] ); ?>">

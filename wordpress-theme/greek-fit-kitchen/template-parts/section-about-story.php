@@ -42,7 +42,7 @@ $theme_uri = get_template_directory_uri();
 
     <!-- Responsive Story Image: Restrained on mobile, aspect-[4/3] on desktop -->
     <div class="rounded-3xl overflow-hidden shadow-2xl border border-slate-200 h-52 sm:h-64 lg:h-auto lg:aspect-[4/3] bg-slate-100">
-      <img src="<?php echo esc_url( $theme_uri . '/assets/images/slider/slide-1-greek-feast.jpg' ); ?>" alt="About Greek Fit Kitchen" class="w-full h-full object-cover" />
+      <img src="<?php echo esc_url( gfk_get_asset_url( 'assets/images/slider/slide-1-greek-feast.jpg' ) ); ?>" alt="About Greek Fit Kitchen" class="w-full h-full object-cover" />
     </div>
 
   </div>

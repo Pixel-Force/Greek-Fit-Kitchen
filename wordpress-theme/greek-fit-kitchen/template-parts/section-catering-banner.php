@@ -38,7 +38,7 @@ $theme_uri = get_template_directory_uri();
 
       <!-- Responsive Showcase Image: Restrained on mobile, aspect-[16/10] on desktop -->
       <div class="w-full lg:w-1/2 rounded-3xl overflow-hidden shadow-2xl border border-slate-200 h-52 sm:h-64 lg:h-auto lg:aspect-[16/10] bg-slate-100">
-        <img src="<?php echo esc_url( $theme_uri . '/assets/images/meals/meal-prep-showcase.jpg' ); ?>" alt="Greek Fit Kitchen Catering" class="w-full h-full object-cover" />
+        <img src="<?php echo esc_url( gfk_get_asset_url( 'assets/images/meals/meal-prep-showcase.jpg' ) ); ?>" alt="Greek Fit Kitchen Catering" class="w-full h-full object-cover" />
       </div>
 
     </div>
