@@ -372,11 +372,8 @@
       </div>
     </div>
 
-    <div class="flex flex-col sm:flex-row gap-3 pt-2">
-      <a href="<?php echo esc_url( home_url( '/kitchen-display/' ) ); ?>" class="flex-1 py-3 px-4 rounded-xl text-xs font-bold bg-greek-navy text-white hover:bg-greek-navy/90 transition flex items-center justify-center gap-1.5">
-        <span>👨‍🍳 View in Kitchen Tablet</span>
-      </a>
-      <button onclick="closeConfirmationModal()" class="flex-1 py-3 px-4 btn-gold rounded-xl text-xs font-black transition">
+    <div class="pt-2">
+      <button onclick="closeConfirmationModal()" class="w-full py-3.5 px-4 btn-gold rounded-xl text-xs font-black transition text-center shadow-lg">
         <span>Done / Back to Home</span>
       </button>
     </div>
