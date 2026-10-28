@@ -62,16 +62,4 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
   </div>
 
-  <!-- Interactive Plan Tracker Drawer Trigger -->
-  <div class="p-6 rounded-3xl bg-[#172A4D] text-white border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">
-    <div class="space-y-1 text-center md:text-left">
-      <div class="text-xs uppercase font-black text-greek-gold tracking-widest">Save 10% automatically on 7+ meals</div>
-      <h4 class="text-lg sm:text-xl font-black">Live Meal Tracker &amp; Savings Summary</h4>
-      <p class="text-xs text-slate-300">Select any dish to open the side customizer and begin building your weekly order.</p>
-    </div>
-    <button onclick="openCartDrawer()" class="px-6 py-3.5 bg-greek-gold text-[#101D3A] hover:bg-greek-goldHover rounded-xl text-xs font-black shadow-lg transition whitespace-nowrap">
-      Review Selected Meals (<span class="cart-count-badge">0</span>)
-    </button>
-  </div>
-
 </section>
