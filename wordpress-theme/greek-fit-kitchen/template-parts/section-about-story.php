@@ -43,8 +43,7 @@ $about_img = gfk_get_asset_url( 'assets/images/brand/about-greek-fit.jpg' );
 
     <!-- Responsive Story Image: Restrained on mobile, rounded card with shadow -->
     <div class="rounded-3xl overflow-hidden shadow-2xl border border-slate-200 bg-[#101D3A]">
-      <img src="<?php echo esc_url( $about_img ); ?>" alt="Big Greek Flavour Meets Modern Meal Prep" class="w-full h-auto object-cover" />
-      <div class="h-6 sm:h-8 bg-slate-100 w-full border-t border-slate-200/50"></div>
+      <img src="<?php echo esc_url( $about_img ); ?>" alt="Big Greek Flavour Meets Modern Meal Prep" class="w-full h-full object-cover block" />
     </div>
 
   </div>
