@@ -1,0 +1,828 @@
+{
+  "version": "0.4",
+  "title": "Greek Fit Kitchen - Fully Editable Homepage",
+  "type": "page",
+  "content": [
+    {
+      "id": "hero_sec",
+      "elType": "section",
+      "isInner": false,
+      "settings": {},
+      "elements": [
+        {
+          "id": "hero_col",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "hero_wid",
+              "elType": "widget",
+              "isInner": false,
+              "widgetType": "gfk_hero_slider",
+              "settings": {
+                "slides": [
+                  {
+                    "_id": "slide_1",
+                    "badge": "Big Greek Flavour. Zero Meal Prep.",
+                    "title": "Chef-Prepared Greek Meals Delivered in Toronto & GTA",
+                    "subtitle": "Nutritious, authentic Greek taverna favourites cooked fresh by George the Greek. 6-meal packages starting from $59.94 CAD with 2 sides included.",
+                    "btn_text": "Build Your Meal Plan",
+                    "btn_url": {
+                      "url": "#mealPlans"
+                    },
+                    "btn_secondary_text": "Explore the Menu",
+                    "btn_secondary_url": {
+                      "url": "#featuredMeals"
+                    },
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/slider/slide-1-greek-feast.jpg"
+                    }
+                  },
+                  {
+                    "_id": "slide_2",
+                    "badge": "Sunday & Wednesday Delivery",
+                    "title": "Disciplined Weekly Meal Prep Made Delicious",
+                    "subtitle": "High protein, lean cuts, extra virgin olive oil and mountain herbs. Receive your fresh batch order right to your doorstep.",
+                    "btn_text": "View Delivery Schedule",
+                    "btn_url": {
+                      "url": "#deliverySection"
+                    },
+                    "btn_secondary_text": "View All 20 Dishes",
+                    "btn_secondary_url": {
+                      "url": "#featuredMeals"
+                    },
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/slider/slide-2-meal-prep.jpg"
+                    }
+                  },
+                  {
+                    "_id": "slide_3",
+                    "badge": "Save 10% On 7+ Meals",
+                    "title": "Volume Savings For Fitness & Busy Lifestyles",
+                    "subtitle": "Stock your fridge for the week with healthy, macro-balanced Greek meals. Automatic 10% discount applied at checkout on 7 or more plates.",
+                    "btn_text": "Order Now & Save",
+                    "btn_url": {
+                      "url": "#featuredMeals"
+                    },
+                    "btn_secondary_text": "How It Works",
+                    "btn_secondary_url": {
+                      "url": "#howItWorks"
+                    },
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/slider/slide-3-mediterranean.jpg"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "about_sec",
+      "elType": "section",
+      "isInner": false,
+      "settings": {},
+      "elements": [
+        {
+          "id": "about_col",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "about_wid",
+              "elType": "widget",
+              "isInner": false,
+              "widgetType": "gfk_about_story",
+              "settings": {
+                "badge": "ABOUT GREEK FIT KITCHEN",
+                "title": "Big Greek Flavour Meets Modern Meal Prep",
+                "story_p1": "Greek Fit Kitchen was established to bridge the gap between delicious Greek tavern cuisine and disciplined weekly meal preparation.",
+                "story_p2": "Managed by George the Greek at 3575 Lake Shore Blvd W in Etobicoke and powered by Lean Meal (leanmeal.ca), we prepare our marinades with extra virgin olive oil, mountain oregano, fresh garlic, and citrus. No shortcuts, no greasy takeaways \u2014 just clean, protein-packed fuel.",
+                "image": {
+                  "id": "",
+                  "url": "/wp-content/themes/greek-fit-kitchen/assets/images/brand/about-greek-fit.jpg"
+                },
+                "card_1_title": "George the Greek",
+                "card_1_desc": "Authentic tavern recipes & culinary kitchen operations in Etobicoke.",
+                "card_2_title": "Powered by Lean Meal",
+                "card_2_desc": "Professional meal-prep standards, nutritional discipline & fresh batches.",
+                "show_stats": "yes",
+                "stat_1_num": "6",
+                "stat_1_lbl": "Min Meals Plan",
+                "stat_2_num": "10%",
+                "stat_2_lbl": "Off 7+ Meals",
+                "stat_3_num": "2",
+                "stat_3_lbl": "Sides Per Meal",
+                "stat_4_num": "100%",
+                "stat_4_lbl": "Fresh Prepared"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu_sec",
+      "elType": "section",
+      "isInner": false,
+      "settings": {},
+      "elements": [
+        {
+          "id": "menu_col",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "menu_wid",
+              "elType": "widget",
+              "isInner": false,
+              "widgetType": "gfk_menu_grid",
+              "settings": {
+                "badge": "APPROVED FLYER SELECTION",
+                "title": "Our Main Dishes (20 Options)",
+                "subtitle": "All prices in Canadian Dollars (CAD). Any plate includes 2 sides of your choice (excludes Pasta al Greco).",
+                "show_search": "yes",
+                "search_placeholder": "Search chicken, salmon, souvlaki...",
+                "show_categories": "yes",
+                "custom_meals": [
+                  {
+                    "_id": "grilled",
+                    "id": "grilled-chicken",
+                    "name": "Grilled Chicken Plate",
+                    "price": "12.99",
+                    "category": "chicken",
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/meals/grilled-chicken.jpg"
+                    },
+                    "description": "Tender herb-marinated chicken breast flame-grilled with Greek oregano, garlic, and extra virgin olive oil.",
+                    "calories": "420",
+                    "protein": "48g",
+                    "carbs": "18g",
+                    "fat": "9g",
+                    "badge": "Popular",
+                    "has_sides": "yes",
+                    "btn_text": "Customize & Add"
+                  },
+                  {
+                    "_id": "chilly-",
+                    "id": "chilly-chicken",
+                    "name": "Chilly Chicken Plate",
+                    "price": "13.99",
+                    "category": "chicken",
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/meals/chilly-chicken.jpg"
+                    },
+                    "description": "Lean chicken breast tossed in a zesty Mediterranean chili and herb glaze for a vibrant metabolic kick.",
+                    "calories": "430",
+                    "protein": "46g",
+                    "carbs": "22g",
+                    "fat": "10g",
+                    "badge": "",
+                    "has_sides": "yes",
+                    "btn_text": "Customize & Add"
+                  },
+                  {
+                    "_id": "salmon",
+                    "id": "salmon",
+                    "name": "Mediterranean Salmon Plate",
+                    "price": "14.99",
+                    "category": "fish",
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/meals/salmon.jpg"
+                    },
+                    "description": "Pan-seared Atlantic salmon fillet with lemon butter emulsion, fresh dill, and Greek capers.",
+                    "calories": "460",
+                    "protein": "42g",
+                    "carbs": "4g",
+                    "fat": "22g",
+                    "badge": "High Omega-3",
+                    "has_sides": "yes",
+                    "btn_text": "Customize & Add"
+                  },
+                  {
+                    "_id": "spinach",
+                    "id": "spinach-feta-chicken",
+                    "name": "Spinach & Feta Stuffed Chicken",
+                    "price": "14.99",
+                    "category": "chicken",
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/meals/spinach-feta-chicken.jpg"
+                    },
+                    "description": "Juicy chicken breast pocket-stuffed with fresh baby spinach, genuine Greek feta cheese, and garlic.",
+                    "calories": "480",
+                    "protein": "52g",
+                    "carbs": "8g",
+                    "fat": "18g",
+                    "badge": "Chef Special",
+                    "has_sides": "yes",
+                    "btn_text": "Customize & Add"
+                  },
+                  {
+                    "_id": "tandoor",
+                    "id": "tandoori-chicken",
+                    "name": "Mediterranean Spiced Chicken",
+                    "price": "14.99",
+                    "category": "chicken",
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/meals/tandoori-chicken.jpg"
+                    },
+                    "description": "Yogurt-marinated chicken breast steeped in roasted cumin, paprika, coriander, and charred over open flame.",
+                    "calories": "440",
+                    "protein": "49g",
+                    "carbs": "12g",
+                    "fat": "11g",
+                    "badge": "",
+                    "has_sides": "yes",
+                    "btn_text": "Customize & Add"
+                  },
+                  {
+                    "_id": "chicken",
+                    "id": "chicken-mushroom",
+                    "name": "Chicken Mushroom Sauce",
+                    "price": "14.99",
+                    "category": "chicken",
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/meals/chicken-mushroom.jpg"
+                    },
+                    "description": "Tender flame-grilled chicken smothered in velvety Greek herb cream sauce with sliced cremini mushrooms.",
+                    "calories": "470",
+                    "protein": "47g",
+                    "carbs": "14g",
+                    "fat": "16g",
+                    "badge": "",
+                    "has_sides": "yes",
+                    "btn_text": "Customize & Add"
+                  },
+                  {
+                    "_id": "chicken",
+                    "id": "chicken-fajita",
+                    "name": "Greek Style Chicken Fajita",
+                    "price": "13.99",
+                    "category": "chicken",
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/meals/chicken-fajita.jpg"
+                    },
+                    "description": "Char-grilled chicken strips flash-saut\u00e9ed with crisp bell peppers, sweet red onions, and Aegean spices.",
+                    "calories": "410",
+                    "protein": "44g",
+                    "carbs": "19g",
+                    "fat": "11g",
+                    "badge": "",
+                    "has_sides": "yes",
+                    "btn_text": "Customize & Add"
+                  },
+                  {
+                    "_id": "beef-fa",
+                    "id": "beef-fajita",
+                    "name": "Taverna Steak Fajita Plate",
+                    "price": "14.99",
+                    "category": "beef",
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/meals/beef-fajita.jpg"
+                    },
+                    "description": "Thinly sliced flank steak flash-seared with tri-colour peppers, sweet red onions, and Greek spices.",
+                    "calories": "460",
+                    "protein": "45g",
+                    "carbs": "16g",
+                    "fat": "17g",
+                    "badge": "High Protein",
+                    "has_sides": "yes",
+                    "btn_text": "Customize & Add"
+                  },
+                  {
+                    "_id": "beef-mu",
+                    "id": "beef-mushroom",
+                    "name": "Tender Beef Mushroom Sauce",
+                    "price": "14.99",
+                    "category": "beef",
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/meals/beef-mushroom.jpg"
+                    },
+                    "description": "Slow-braised tender beef medallions blanketed in creamy garlic and wild mushroom sauce.",
+                    "calories": "490",
+                    "protein": "46g",
+                    "carbs": "12g",
+                    "fat": "20g",
+                    "badge": "",
+                    "has_sides": "yes",
+                    "btn_text": "Customize & Add"
+                  },
+                  {
+                    "_id": "smoked-",
+                    "id": "smoked-turkey",
+                    "name": "Smoked Turkey Breast Plate",
+                    "price": "13.99",
+                    "category": "chicken",
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/meals/smoked-turkey.jpg"
+                    },
+                    "description": "Naturally smoked lean turkey breast carving slices with Greek mountain thyme and citrus.",
+                    "calories": "380",
+                    "protein": "50g",
+                    "carbs": "6g",
+                    "fat": "7g",
+                    "badge": "Lean & Clean",
+                    "has_sides": "yes",
+                    "btn_text": "Customize & Add"
+                  },
+                  {
+                    "_id": "chicken",
+                    "id": "chicken-leg",
+                    "name": "Slow-Roasted Chicken Leg",
+                    "price": "11.99",
+                    "category": "chicken",
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/meals/chicken-leg.jpg"
+                    },
+                    "description": "Bone-in dark meat chicken leg quarter slow-roasted until fall-apart tender with oregano and lemon.",
+                    "calories": "460",
+                    "protein": "38g",
+                    "carbs": "4g",
+                    "fat": "24g",
+                    "badge": "Top Value",
+                    "has_sides": "yes",
+                    "btn_text": "Customize & Add"
+                  },
+                  {
+                    "_id": "chicken",
+                    "id": "chicken-fillet",
+                    "name": "Herb Grilled Chicken Fillet",
+                    "price": "12.99",
+                    "category": "chicken",
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/meals/chicken-fillet.jpg"
+                    },
+                    "description": "Lean trimmed chicken breast fillets brushed with lemon-oregano marinade and chargrilled.",
+                    "calories": "390",
+                    "protein": "47g",
+                    "carbs": "5g",
+                    "fat": "8g",
+                    "badge": "",
+                    "has_sides": "yes",
+                    "btn_text": "Customize & Add"
+                  },
+                  {
+                    "_id": "veggie-",
+                    "id": "veggie-souvlaki",
+                    "name": "Grilled Veggie Souvlaki Plate",
+                    "price": "11.99",
+                    "category": "vegetarian",
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/meals/veggie-souvlaki.jpg"
+                    },
+                    "description": "Two skewers of fire-roasted zucchini, button mushrooms, sweet peppers, red onion, and cherry tomatoes.",
+                    "calories": "280",
+                    "protein": "14g",
+                    "carbs": "34g",
+                    "fat": "11g",
+                    "badge": "Plant-Based",
+                    "has_sides": "yes",
+                    "btn_text": "Customize & Add"
+                  },
+                  {
+                    "_id": "chicken",
+                    "id": "chicken-souvlaki",
+                    "name": "Authentic Chicken Souvlaki",
+                    "price": "11.99",
+                    "category": "chicken",
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/meals/chicken-souvlaki.jpg"
+                    },
+                    "description": "Two marinated chicken breast skewers flame-broiled with Greek sea salt, oregano, and lemon.",
+                    "calories": "420",
+                    "protein": "46g",
+                    "carbs": "8g",
+                    "fat": "12g",
+                    "badge": "Most Popular",
+                    "has_sides": "yes",
+                    "btn_text": "Customize & Add"
+                  },
+                  {
+                    "_id": "beef-so",
+                    "id": "beef-souvlaki",
+                    "name": "Prime Beef Souvlaki Plate",
+                    "price": "13.99",
+                    "category": "beef",
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/meals/beef-souvlaki.jpg"
+                    },
+                    "description": "Two skewers of tender marinated Canadian beef sirloin cubes flame-broiled to juicy perfection.",
+                    "calories": "460",
+                    "protein": "44g",
+                    "carbs": "6g",
+                    "fat": "18g",
+                    "badge": "",
+                    "has_sides": "yes",
+                    "btn_text": "Customize & Add"
+                  },
+                  {
+                    "_id": "pork-so",
+                    "id": "pork-souvlaki",
+                    "name": "Traditional Pork Souvlaki",
+                    "price": "9.99",
+                    "category": "pork",
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/meals/pork-souvlaki.jpg"
+                    },
+                    "description": "Two traditional Greek pork tenderloin skewers marinated in taverna seasonings and open flame-grilled.",
+                    "calories": "440",
+                    "protein": "42g",
+                    "carbs": "6g",
+                    "fat": "16g",
+                    "badge": "Best Value $9.99",
+                    "has_sides": "yes",
+                    "btn_text": "Customize & Add"
+                  },
+                  {
+                    "_id": "spinach",
+                    "id": "spinach-pie",
+                    "name": "Greek Spanakopita Dinner",
+                    "price": "12.99",
+                    "category": "vegetarian",
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/meals/spinach-pie.jpg"
+                    },
+                    "description": "Crisp, golden flaky phyllo pastry filled with fresh spinach, scallions, Greek feta cheese, and dill.",
+                    "calories": "480",
+                    "protein": "18g",
+                    "carbs": "46g",
+                    "fat": "24g",
+                    "badge": "Traditional",
+                    "has_sides": "yes",
+                    "btn_text": "Customize & Add"
+                  },
+                  {
+                    "_id": "pasta-a",
+                    "id": "pasta-al-greco",
+                    "name": "Pasta al Greco with Feta",
+                    "price": "9.99",
+                    "category": "other",
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/meals/pasta-al-greco.jpg"
+                    },
+                    "description": "Penne pasta tossed in rich Greek tomato-basil sauce, topped with authentic crumbled Greek feta and kalamata olives.",
+                    "calories": "510",
+                    "protein": "19g",
+                    "carbs": "72g",
+                    "fat": "14g",
+                    "badge": "Quick Pick $9.99",
+                    "has_sides": "no",
+                    "btn_text": "Add to Plan"
+                  },
+                  {
+                    "_id": "smoked-",
+                    "id": "smoked-pork-loin",
+                    "name": "Smoked Pork Loin Chops",
+                    "price": "12.99",
+                    "category": "pork",
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/meals/smoked-pork-loin.jpg"
+                    },
+                    "description": "Thick tender cuts of smoked pork loin grilled over coals with mountain herbs and sweet mustard glaze.",
+                    "calories": "450",
+                    "protein": "44g",
+                    "carbs": "10g",
+                    "fat": "16g",
+                    "badge": "",
+                    "has_sides": "yes",
+                    "btn_text": "Customize & Add"
+                  },
+                  {
+                    "_id": "turkey-",
+                    "id": "turkey-souvlaki",
+                    "name": "Lean Turkey Souvlaki Plate",
+                    "price": "13.99",
+                    "category": "chicken",
+                    "image": {
+                      "id": "",
+                      "url": "/wp-content/themes/greek-fit-kitchen/assets/images/meals/turkey-souvlaki.jpg"
+                    },
+                    "description": "Two skewers of tender lean turkey breast chunks marinated in Greek citrus, garlic, and wild mountain oregano.",
+                    "calories": "400",
+                    "protein": "48g",
+                    "carbs": "6g",
+                    "fat": "9g",
+                    "badge": "Lean & Clean",
+                    "has_sides": "yes",
+                    "btn_text": "Customize & Add"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "how_sec",
+      "elType": "section",
+      "isInner": false,
+      "settings": {},
+      "elements": [
+        {
+          "id": "how_col",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "how_wid",
+              "elType": "widget",
+              "isInner": false,
+              "widgetType": "gfk_how_it_works",
+              "settings": {
+                "badge": "EFFORTLESS MEAL PREP",
+                "title": "How Greek Fit Kitchen Works",
+                "subtitle": "From George the Greek's commercial kitchen straight to your weekly schedule in three simple steps.",
+                "steps": [
+                  {
+                    "_id": "step_1",
+                    "step_num": "01",
+                    "title": "Choose Your Meals & Sides",
+                    "desc": "Explore 20 approved Greek dishes. Choose 2 included sides for eligible plates and select minimum 6 meals to start."
+                  },
+                  {
+                    "_id": "step_2",
+                    "step_num": "02",
+                    "title": "Select Batch Delivery Day",
+                    "desc": "We dispatch fresh scheduled batch deliveries on Sundays & Wednesdays. Order before local batch cutoff times."
+                  },
+                  {
+                    "_id": "step_3",
+                    "step_num": "03",
+                    "title": "Enjoy Authentic Greek Nutrition",
+                    "desc": "Chef-prepared meals delivered chilled and sealed. Heat in 2-3 minutes for authentic Greek taverna flavour with zero prep."
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "plans_sec",
+      "elType": "section",
+      "isInner": false,
+      "settings": {},
+      "elements": [
+        {
+          "id": "plans_col",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "plans_wid",
+              "elType": "widget",
+              "isInner": false,
+              "widgetType": "gfk_meal_plans",
+              "settings": {
+                "display_style": "builder",
+                "badge": "Interactive Plan Builder",
+                "title": "CUSTOMIZE YOUR WEEKLY MEAL PLAN",
+                "subtitle": "Select at least 6 meals to meet our minimum order requirement. When you select 7 or more meals, a 10% volume discount is automatically applied to your entire food order.",
+                "starter_badge": "Fastest Way to Start",
+                "starter_title": "Chef's 6-Meal Starter Package",
+                "starter_desc": "6 diverse plates (Pork souvlaki, chicken leg, chicken souvlaki, grilled chicken, veggie souvlaki & pasta al greco).",
+                "starter_price": "59.94",
+                "starter_btn_text": "Load 6-Meal Pack",
+                "min_meals": 6,
+                "discount_text": "Save 10% automatically on 7+ meals"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sides_sec",
+      "elType": "section",
+      "isInner": false,
+      "settings": {},
+      "elements": [
+        {
+          "id": "sides_col",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "sides_wid",
+              "elType": "widget",
+              "isInner": false,
+              "widgetType": "gfk_sides_showcase",
+              "settings": {
+                "badge": "CHEF-CRAFTED SIDES",
+                "title": "MAKE IT A PLATE YOU LOVE",
+                "subtitle": "Choose two sides with eligible plates and create a meal that suits your taste. Additional sides: $4.99 CAD each.",
+                "extra_price": "4.99",
+                "sides_list": [
+                  {
+                    "_id": "side_0",
+                    "name": "Rice Pilaf with Veggies",
+                    "badge": "Included",
+                    "desc": ""
+                  },
+                  {
+                    "_id": "side_1",
+                    "name": "Yellow Basmati Rice",
+                    "badge": "Included",
+                    "desc": ""
+                  },
+                  {
+                    "_id": "side_2",
+                    "name": "Spinach Mushroom Rice",
+                    "badge": "Included",
+                    "desc": ""
+                  },
+                  {
+                    "_id": "side_3",
+                    "name": "Orzo in Tomato Sauce",
+                    "badge": "Included",
+                    "desc": ""
+                  },
+                  {
+                    "_id": "side_4",
+                    "name": "Garlic Butter Baked Potatoes",
+                    "badge": "Included",
+                    "desc": ""
+                  },
+                  {
+                    "_id": "side_5",
+                    "name": "Lemon Roasted Potatoes",
+                    "badge": "Chef Favorite",
+                    "desc": ""
+                  },
+                  {
+                    "_id": "side_6",
+                    "name": "Sweet Potatoes",
+                    "badge": "Healthy Pick",
+                    "desc": ""
+                  },
+                  {
+                    "_id": "side_7",
+                    "name": "Mashed Potatoes",
+                    "badge": "Included",
+                    "desc": ""
+                  },
+                  {
+                    "_id": "side_8",
+                    "name": "Saut\u00e9ed Veggies",
+                    "badge": "Included",
+                    "desc": ""
+                  },
+                  {
+                    "_id": "side_9",
+                    "name": "Steamed Veggies",
+                    "badge": "Included",
+                    "desc": ""
+                  },
+                  {
+                    "_id": "side_10",
+                    "name": "Green Beans in Tomato Sauce",
+                    "badge": "Included",
+                    "desc": ""
+                  }
+                ],
+                "flexibility_title": "Sides Flexibility:",
+                "flexibility_text": "2 sides are included with every eligible plate. Additional sides can be selected inside the meal customizer for",
+                "btn_text": "Choose Meals & Sides \u2192",
+                "btn_url": {
+                  "url": "#featuredMeals"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "delivery_sec",
+      "elType": "section",
+      "isInner": false,
+      "settings": {},
+      "elements": [
+        {
+          "id": "delivery_col",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "delivery_wid",
+              "elType": "widget",
+              "isInner": false,
+              "widgetType": "gfk_delivery_calculator",
+              "settings": {
+                "badge": "SCHEDULED BATCH DISPATCH",
+                "title": "Delivery Schedule & Rates",
+                "subtitle": "Greek Fit Kitchen operates scheduled batch deliveries on Sundays & Wednesdays across Toronto and the GTA.",
+                "schedule_badge": "Toronto & GTA Delivery Schedule",
+                "schedule_heading": "Twice-Weekly Fresh Batches",
+                "schedule_desc": "Meals are cooked and blast-chilled immediately prior to scheduled dispatch to lock in taverna-quality freshness, tenderness, and aroma.",
+                "batch_1_day": "SUN",
+                "batch_1_title": "Sunday Batch Delivery",
+                "batch_1_cutoff": "Friday at 12:00 PM (noon) Toronto time",
+                "batch_2_day": "WED",
+                "batch_2_title": "Wednesday Batch Delivery",
+                "batch_2_cutoff": "Monday at 12:00 PM (noon) Toronto time",
+                "pickup_label": "Free local pickup @ George the Greek (Etobicoke)",
+                "pickup_rate": "0 km = $0.00 Delivery",
+                "calc_badge": "Interactive Delivery Estimator",
+                "calc_heading": "Distance-Based Delivery Pricing",
+                "calc_kitchen_address": "3575 Lake Shore Blvd W, Etobicoke",
+                "tier_1_fee": "0.00",
+                "tier_2_fee": "5.00",
+                "tier_3_rate": "1.00",
+                "calc_input_label": "Enter Postal Code or Distance (KM)",
+                "calc_placeholder": "e.g. M8W 1P5 or 8 km",
+                "calc_btn_text": "Calculate",
+                "calc_cta_text": "Start Your Order with 6+ Meals \u2192",
+                "calc_cta_url": {
+                  "url": "#featuredMeals"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "catering_sec",
+      "elType": "section",
+      "isInner": false,
+      "settings": {},
+      "elements": [
+        {
+          "id": "catering_col",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "catering_wid",
+              "elType": "widget",
+              "isInner": false,
+              "widgetType": "gfk_catering_banner",
+              "settings": {
+                "badge": "EVENTS, CORPORATE & PARTIES",
+                "title": "PLANNING SOMETHING BIGGER?",
+                "description": "Get in touch with Greek Fit Kitchen about custom catering orders, corporate wellness meals, or special bulk requests. Managed by George the Greek with authentic culinary pride.",
+                "btn_text": "Inquire About Catering",
+                "btn_secondary_text": "Special Dietary Inquiries",
+                "image": {
+                  "id": "",
+                  "url": "/wp-content/themes/greek-fit-kitchen/assets/images/meals/meal-prep-showcase.jpg"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

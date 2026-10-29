@@ -68,6 +68,52 @@ class GFK_Widget_Site_Footer extends \Elementor\Widget_Base {
 
         $this->end_controls_section();
 
+        // Section: Delivery Column
+        $this->start_controls_section(
+            'section_delivery_col',
+            array(
+                'label' => __( 'Scheduled Delivery Column', 'greek-fit-kitchen' ),
+            )
+        );
+
+        $this->add_control(
+            'delivery_col_title',
+            array(
+                'label'   => __( 'Column Title', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXT,
+                'default' => __( 'Scheduled Delivery', 'greek-fit-kitchen' ),
+            )
+        );
+
+        $this->add_control(
+            'delivery_sun_text',
+            array(
+                'label'   => __( 'Sunday Delivery Text', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXT,
+                'default' => __( 'Order by Friday 12:00 PM', 'greek-fit-kitchen' ),
+            )
+        );
+
+        $this->add_control(
+            'delivery_wed_text',
+            array(
+                'label'   => __( 'Wednesday Delivery Text', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXT,
+                'default' => __( 'Order by Monday 12:00 PM', 'greek-fit-kitchen' ),
+            )
+        );
+
+        $this->add_control(
+            'delivery_note',
+            array(
+                'label'   => __( 'Delivery Note', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXTAREA,
+                'default' => __( 'Strict weekly delivery batches guarantee peak freshness and zero food waste.', 'greek-fit-kitchen' ),
+            )
+        );
+
+        $this->end_controls_section();
+
         // Section: Kitchen & Location
         $this->start_controls_section(
             'section_location',
@@ -91,6 +137,34 @@ class GFK_Widget_Site_Footer extends \Elementor\Widget_Base {
                 'label'   => __( 'Address', 'greek-fit-kitchen' ),
                 'type'    => \Elementor\Controls_Manager::TEXTAREA,
                 'default' => "3575 Lake Shore Blvd W\nEtobicoke, ON M8W 1P5\nGreater Toronto Area",
+            )
+        );
+
+        $this->add_control(
+            'kitchen_note',
+            array(
+                'label'   => __( 'Pickup Note', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXT,
+                'default' => __( 'Free local customer pickup available during regular restaurant operating hours.', 'greek-fit-kitchen' ),
+            )
+        );
+
+        $this->end_controls_section();
+
+        // Section: Copyright
+        $this->start_controls_section(
+            'section_copyright',
+            array(
+                'label' => __( 'Copyright Text', 'greek-fit-kitchen' ),
+            )
+        );
+
+        $this->add_control(
+            'copyright_note',
+            array(
+                'label'   => __( 'Copyright Text', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXT,
+                'default' => __( 'All rights reserved. Managed by George the Greek. Powered by Lean Meal.', 'greek-fit-kitchen' ),
             )
         );
 
@@ -119,11 +193,13 @@ class GFK_Widget_Site_Footer extends \Elementor\Widget_Base {
               </div>
 
               <div class="space-y-3">
-                <h4 class="text-xs font-black text-white uppercase tracking-wider text-greek-gold">Scheduled Delivery</h4>
+                <h4 class="text-xs font-black text-white uppercase tracking-wider text-greek-gold">
+                  <?php echo esc_html( ! empty( $settings['delivery_col_title'] ) ? $settings['delivery_col_title'] : 'Scheduled Delivery' ); ?>
+                </h4>
                 <ul class="space-y-2 text-slate-300">
-                  <li><strong class="text-white">Sunday Delivery:</strong><br />Order by Friday 12:00 PM</li>
-                  <li><strong class="text-white">Wednesday Delivery:</strong><br />Order by Monday 12:00 PM</li>
-                  <li class="pt-1 text-slate-400">Strict weekly delivery batches guarantee peak freshness and zero food waste.</li>
+                  <li><strong class="text-white">Sunday Delivery:</strong><br /><?php echo esc_html( $settings['delivery_sun_text'] ); ?></li>
+                  <li><strong class="text-white">Wednesday Delivery:</strong><br /><?php echo esc_html( $settings['delivery_wed_text'] ); ?></li>
+                  <li class="pt-1 text-slate-400"><?php echo esc_html( $settings['delivery_note'] ); ?></li>
                 </ul>
               </div>
 
@@ -151,14 +227,25 @@ class GFK_Widget_Site_Footer extends \Elementor\Widget_Base {
                   <?php echo nl2br( esc_html( $settings['kitchen_address'] ) ); ?>
                 </p>
                 <div class="pt-2 text-[11px] text-slate-400">
-                  Free local customer pickup available during regular restaurant operating hours.
+                  <?php echo esc_html( $settings['kitchen_note'] ); ?>
                 </div>
               </div>
 
             </div>
 
             <div class="py-5 text-center text-xs text-slate-400">
-              <p>&copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. All rights reserved. Managed by George the Greek. Powered by Lean Meal.</p>
+              <p>&copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. <?php echo esc_html( $settings['copyright_note'] ); ?></p>
+            </div>
+            
+            <!-- Penta Services Credit Bottom Bar (Mandatory Rule 2) -->
+            <div class="border-t border-white/[0.08] py-4 mt-2">
+              <div class="flex flex-wrap items-center justify-center gap-x-3.5 gap-y-2.5 text-center text-[13px] text-white/50">
+                <span>Website designed &amp; developed by</span>
+                <a href="https://pentaservices.co.uk/en/?utm_source=referral&amp;utm_medium=site-credit" target="_blank" rel="noopener noreferrer" title="Penta Services: web design, development, SEO &amp; AI" class="group inline-flex items-center">
+                  <img alt="Penta Services" width="94" height="40" class="h-9 w-auto rounded-md opacity-90 transition group-hover:-translate-y-px group-hover:opacity-100" src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/brand/penta-services-logo.svg' ); ?>" />
+                </a>
+                <span>Web design, SEO &amp; digital solutions · <a href="https://pentaservices.co.uk/en/?utm_source=referral&amp;utm_medium=site-credit" target="_blank" rel="noopener noreferrer" class="ltr text-white/75 hover:text-white underline-offset-2 hover:underline transition-colors">pentaservices.co.uk</a></span>
+              </div>
             </div>
           </div>
         </footer>

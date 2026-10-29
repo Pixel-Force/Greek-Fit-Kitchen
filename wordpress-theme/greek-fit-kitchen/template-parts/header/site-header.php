@@ -64,6 +64,19 @@ $cta_url     = get_theme_mod( 'gfk_header_cta_url', home_url( '/meal-plans/' ) )
     <!-- Right Header Utilities: Cart Drawer & Order CTA -->
     <div class="flex items-center gap-3 shrink-0">
 
+            <!-- Interactive Light / Dark Theme Switcher (Mandatory Rule 1) -->
+      <button 
+        id="themeToggleBtn"
+        type="button" 
+        onclick="toggleTheme()"
+        aria-label="Toggle Light or Dark Mode"
+        class="theme-toggle-btn p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all border border-white/20 flex items-center justify-center focus:outline-none active:scale-95 shadow-sm"
+        title="Toggle Light or Dark Mode"
+      >
+        <svg id="themeIconSun" class="w-5 h-5 hidden text-greek-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        <svg id="themeIconMoon" class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+      </button>
+
       <!-- Shopping Cart Icon Button with Live Counter Badge -->
       <button 
         onclick="openCartDrawer()"

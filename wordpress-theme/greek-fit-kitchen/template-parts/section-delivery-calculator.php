@@ -65,7 +65,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <h3 class="text-2xl font-black text-white mb-2">Distance-Based Delivery Pricing</h3>
         <p class="text-xs text-slate-300 leading-relaxed mb-6">
           Calculated from our commercial kitchen at <strong>3575 Lake Shore Blvd W, Etobicoke</strong>.
-          Base fee: <strong class="text-greek-gold font-mono">$5.99 CAD</strong> + <strong class="text-greek-gold font-mono">$0.99 CAD/km</strong>.
+          <span class="text-greek-gold font-medium">Up to 2 km: <strong>FREE</strong> &middot; Over 2 to 5 km: <strong>$5.00 flat</strong> &middot; Over 5 km: <strong>$1.00/km</strong></span>
         </p>
 
         <div class="space-y-4">
@@ -74,7 +74,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <div class="flex gap-2">
               <input 
                 type="text" 
-                id="deliveryCalcInput"
+                id="deliveryCalcInput" oninput="calculateDeliveryEstimate()"
                 placeholder="e.g. M8W 1P5 or 8 km" 
                 class="flex-1 px-4 py-3 rounded-xl text-xs bg-white/10 border border-white/20 text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-greek-gold"
               />
@@ -92,10 +92,10 @@ if ( ! defined( 'ABSPATH' ) ) {
           <div id="deliveryCalcResult" class="p-4 rounded-2xl bg-white/5 border border-white/10 text-xs">
             <div class="flex items-center justify-between">
               <span class="text-slate-300">Estimated Delivery:</span>
-              <span id="deliveryEstPrice" class="text-base font-black font-mono text-greek-gold">$5.99 CAD</span>
+              <span id="deliveryEstPrice" class="text-base font-black font-mono text-greek-gold">FREE ($0.00 CAD)</span>
             </div>
             <div id="deliveryEstNotes" class="text-[11px] text-slate-400 mt-1">
-              Based on base rate. Enter your postal code above to calculate exact delivery charge.
+              Distance: 1.8 km from George the Greek kitchen (3575 Lake Shore Blvd W). Ultra-local delivery is FREE!
             </div>
           </div>
         </div>
@@ -109,4 +109,50 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
 
   </div>
+<script>
+function calculateDeliveryEstimate() {
+  var input = document.getElementById("deliveryCalcInput");
+  var price = document.getElementById("deliveryEstPrice");
+  var notes = document.getElementById("deliveryEstNotes");
+  if (!input || !price || !notes) return;
+  var val = input.value.trim();
+  if (!val) {
+    price.innerText = "FREE ($0.00 CAD)";
+    notes.innerText = "Enter your postal code or distance in km to calculate delivery.";
+    return;
+  }
+  var km = 5.0;
+  var clean = val.toUpperCase().replace(/\s+/g, '');
+  var postalMap = {
+    'M8W1P5': 1.8, 'M8W': 1.8, 'M8V': 3.5, 'M8Z': 4.2, 'M9C': 6.5,
+    'M6S': 6.0, 'M6R': 7.5, 'M5V': 12.0, 'M5H': 13.0, 'M4W': 15.0,
+    'L5E': 7.0, 'L5G': 8.5
+  };
+  if (postalMap[clean]) {
+    km = postalMap[clean];
+  } else if (clean.length >= 3 && postalMap[clean.substring(0, 3)]) {
+    km = postalMap[clean.substring(0, 3)];
+  } else {
+    var num = val.match(/([0-9]+(?:\.[0-9]+)?)/);
+    if (num) km = parseFloat(num[1]);
+  }
+  var fee = 0;
+  var note = "";
+  if (km <= 2.0) {
+    fee = 0.00;
+    note = "Distance: " + km.toFixed(1) + " km from our Etobicoke kitchen (3575 Lake Shore Blvd W). Ultra-local delivery (up to 2 km) is FREE!";
+    price.innerText = "FREE ($0.00 CAD)";
+  } else if (km <= 5.0) {
+    fee = 5.00;
+    note = "Distance: " + km.toFixed(1) + " km from our Etobicoke kitchen. Flat delivery fee (2 to 5 km): $5.00 CAD.";
+    price.innerText = "$5.00 CAD";
+  } else {
+    fee = Number((km * 1.00).toFixed(2));
+    note = "Distance: " + km.toFixed(1) + " km from our Etobicoke kitchen. Over 5 km rate ($1.00 per km): $" + fee.toFixed(2) + " CAD.";
+    price.innerText = "$" + fee.toFixed(2) + " CAD";
+  }
+  notes.innerText = note;
+}
+</script>
+
 </section>

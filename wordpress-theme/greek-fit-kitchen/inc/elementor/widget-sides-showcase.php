@@ -1,6 +1,7 @@
 <?php
 /**
  * Elementor Widget: Chef Sides Showcase
+ * Fully editable in Elementor: badges, titles, descriptions, extra price, flexibility notes, and custom sides repeater.
  *
  * @package GreekFitKitchen
  */
@@ -30,11 +31,14 @@ class GFK_Widget_Sides_Showcase extends \Elementor\Widget_Base {
     }
 
     public function get_keywords() {
-        return array( 'sides', 'chef', 'rice', 'potatoes', 'showcase', 'greek' );
+        return array( 'sides', 'chef', 'rice', 'potatoes', 'showcase', 'greek', 'veggies' );
     }
 
     protected function register_controls() {
-        // Section 1: Content
+
+        // ==========================================
+        // SECTION 1: HEADER & HEADINGS
+        // ==========================================
         $this->start_controls_section(
             'section_content',
             array(
@@ -65,6 +69,7 @@ class GFK_Widget_Sides_Showcase extends \Elementor\Widget_Base {
             array(
                 'label'   => __( 'Description', 'greek-fit-kitchen' ),
                 'type'    => \Elementor\Controls_Manager::TEXTAREA,
+                'rows'    => 2,
                 'default' => __( 'Choose two sides with eligible plates and create a meal that suits your taste. Additional sides: $4.99 CAD each.', 'greek-fit-kitchen' ),
             )
         );
@@ -80,44 +85,116 @@ class GFK_Widget_Sides_Showcase extends \Elementor\Widget_Base {
 
         $this->end_controls_section();
 
-        // Section 2: Sides Selection & Visibility
+        // ==========================================
+        // SECTION 2: EDITABLE SIDES REPEATER
+        // ==========================================
         $this->start_controls_section(
-            'section_sides_selection',
+            'section_sides_repeater',
             array(
-                'label' => __( 'Sides Visibility & Selection', 'greek-fit-kitchen' ),
+                'label' => __( 'Sides Items (Edit Names & Badges)', 'greek-fit-kitchen' ),
+            )
+        );
+
+        $repeater = new \Elementor\Repeater();
+
+        $repeater->add_control(
+            'name',
+            array(
+                'label'   => __( 'Side Name', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXT,
+                'default' => __( 'Lemon Roasted Potatoes', 'greek-fit-kitchen' ),
+            )
+        );
+
+        $repeater->add_control(
+            'badge',
+            array(
+                'label'   => __( 'Tag / Badge (Optional)', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXT,
+                'default' => __( 'Included', 'greek-fit-kitchen' ),
+            )
+        );
+
+        $repeater->add_control(
+            'desc',
+            array(
+                'label'   => __( 'Short Description (Optional)', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXT,
+                'default' => '',
             )
         );
 
         $this->add_control(
-            'show_sides_grid',
+            'sides_list',
             array(
-                'label'        => __( 'Show Sides Grid', 'greek-fit-kitchen' ),
-                'type'         => \Elementor\Controls_Manager::SWITCHER,
-                'label_on'     => __( 'Show', 'greek-fit-kitchen' ),
-                'label_off'    => __( 'Hide', 'greek-fit-kitchen' ),
-                'return_value' => 'yes',
-                'default'      => 'yes',
-            )
-        );
-
-        $default_sides = gfk_get_default_sides();
-        $sides_options = array();
-        foreach ( $default_sides as $side ) {
-            $sides_options[ $side ] = $side;
-        }
-
-        $this->add_control(
-            'selected_sides',
-            array(
-                'label'       => __( 'Select Sides to Display', 'greek-fit-kitchen' ),
-                'type'        => \Elementor\Controls_Manager::SELECT2,
-                'multiple'    => true,
-                'options'     => $sides_options,
-                'default'     => array_keys( $sides_options ),
-                'condition'   => array(
-                    'show_sides_grid' => 'yes',
+                'label'       => __( 'Sides List', 'greek-fit-kitchen' ),
+                'type'        => \Elementor\Controls_Manager::REPEATER,
+                'fields'      => $repeater->get_controls(),
+                'default'     => array(
+                    array( 'name' => __( 'Rice Pilaf with Veggies', 'greek-fit-kitchen' ), 'badge' => 'Included' ),
+                    array( 'name' => __( 'Yellow Basmati Rice', 'greek-fit-kitchen' ), 'badge' => 'Included' ),
+                    array( 'name' => __( 'Spinach Mushroom Rice', 'greek-fit-kitchen' ), 'badge' => 'Included' ),
+                    array( 'name' => __( 'Orzo in Tomato Sauce', 'greek-fit-kitchen' ), 'badge' => 'Included' ),
+                    array( 'name' => __( 'Garlic Butter Baked Potatoes', 'greek-fit-kitchen' ), 'badge' => 'Included' ),
+                    array( 'name' => __( 'Lemon Roasted Potatoes', 'greek-fit-kitchen' ), 'badge' => 'Chef Favorite' ),
+                    array( 'name' => __( 'Sweet Potatoes', 'greek-fit-kitchen' ), 'badge' => 'Healthy Pick' ),
+                    array( 'name' => __( 'Mashed Potatoes', 'greek-fit-kitchen' ), 'badge' => 'Included' ),
+                    array( 'name' => __( 'Sautéed Veggies', 'greek-fit-kitchen' ), 'badge' => 'Low Carb' ),
+                    array( 'name' => __( 'Steamed Veggies', 'greek-fit-kitchen' ), 'badge' => 'Clean Eat' ),
+                    array( 'name' => __( 'Green Beans in Tomato Sauce', 'greek-fit-kitchen' ), 'badge' => 'Traditional' ),
                 ),
-                'description' => __( 'Choose which side items are displayed in the showcase grid.', 'greek-fit-kitchen' ),
+                'title_field' => '{{{ name }}}',
+            )
+        );
+
+        $this->end_controls_section();
+
+        // ==========================================
+        // SECTION 3: BOTTOM BANNER & CTA
+        // ==========================================
+        $this->start_controls_section(
+            'section_bottom_bar',
+            array(
+                'label' => __( 'Bottom Flexibility Bar & CTA', 'greek-fit-kitchen' ),
+            )
+        );
+
+        $this->add_control(
+            'flexibility_title',
+            array(
+                'label'   => __( 'Flexibility Label', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXT,
+                'default' => __( 'Sides Flexibility:', 'greek-fit-kitchen' ),
+            )
+        );
+
+        $this->add_control(
+            'flexibility_text',
+            array(
+                'label'   => __( 'Flexibility Description', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXTAREA,
+                'rows'    => 2,
+                'default' => __( '2 sides are included with every eligible plate. Additional sides can be selected inside the meal customizer for', 'greek-fit-kitchen' ),
+            )
+        );
+
+        $this->add_control(
+            'btn_text',
+            array(
+                'label'   => __( 'Button Text', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXT,
+                'default' => __( 'Choose Meals & Sides →', 'greek-fit-kitchen' ),
+            )
+        );
+
+        $this->add_control(
+            'btn_url',
+            array(
+                'label'   => __( 'Button URL', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::URL,
+                'default' => array(
+                    'url' => '#featuredMeals',
+                ),
             )
         );
 
@@ -125,16 +202,17 @@ class GFK_Widget_Sides_Showcase extends \Elementor\Widget_Base {
     }
 
     protected function render() {
-        $settings      = $this->get_settings_for_display();
-        $all_sides     = gfk_get_default_sides();
-        $show_grid     = isset( $settings['show_sides_grid'] ) && 'yes' === $settings['show_sides_grid'];
-        $selected      = ! empty( $settings['selected_sides'] ) && is_array( $settings['selected_sides'] )
-            ? $settings['selected_sides']
-            : $all_sides;
+        $settings   = $this->get_settings_for_display();
+        $btn_url    = ! empty( $settings['btn_url']['url'] ) ? $settings['btn_url']['url'] : '#featuredMeals';
+        $sides_list = ! empty( $settings['sides_list'] ) ? $settings['sides_list'] : array();
 
-        $sides = array_values( array_filter( $all_sides, function( $s ) use ( $selected ) {
-            return in_array( $s, $selected, true );
-        } ) );
+        // Fallback if repeater is empty
+        if ( empty( $sides_list ) ) {
+            $default_sides = gfk_get_default_sides();
+            foreach ( $default_sides as $s ) {
+                $sides_list[] = array( 'name' => $s, 'badge' => '' );
+            }
+        }
         ?>
         <section class="py-16 sm:py-20 bg-[#101D3A] text-white" id="sidesSection">
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -144,9 +222,13 @@ class GFK_Widget_Sides_Showcase extends \Elementor\Widget_Base {
                   <?php echo esc_html( $settings['badge'] ); ?>
                 </span>
               <?php endif; ?>
-              <h2 class="text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-black text-white break-words">
-                <?php echo esc_html( $settings['title'] ); ?>
-              </h2>
+
+              <?php if ( ! empty( $settings['title'] ) ) : ?>
+                <h2 class="text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-black text-white break-words">
+                  <?php echo esc_html( $settings['title'] ); ?>
+                </h2>
+              <?php endif; ?>
+
               <?php if ( ! empty( $settings['subtitle'] ) ) : ?>
                 <p class="text-xs sm:text-sm text-slate-300 mt-2">
                   <?php echo esc_html( $settings['subtitle'] ); ?>
@@ -154,27 +236,42 @@ class GFK_Widget_Sides_Showcase extends \Elementor\Widget_Base {
               <?php endif; ?>
             </div>
 
-            <?php if ( $show_grid && ! empty( $sides ) ) : ?>
-              <!-- Selected Sides Grid -->
-              <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-10">
-                <?php foreach ( $sides as $index => $side ) : ?>
-                  <div class="p-3.5 sm:p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-greek-gold/50 transition flex items-center gap-3">
+            <!-- Editable Sides Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-10">
+              <?php foreach ( $sides_list as $index => $side_item ) : 
+                $name  = ! empty( $side_item['name'] ) ? $side_item['name'] : '';
+                $badge = ! empty( $side_item['badge'] ) ? $side_item['badge'] : '';
+              ?>
+                <div class="p-3.5 sm:p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-greek-gold/50 transition flex flex-col justify-between">
+                  <div class="flex items-center gap-3">
                     <span class="w-6 h-6 rounded-full bg-greek-gold/20 text-greek-gold font-mono font-black text-[11px] flex items-center justify-center shrink-0">
                       <?php echo esc_html( $index + 1 ); ?>
                     </span>
-                    <span class="text-xs font-bold text-white"><?php echo esc_html( $side ); ?></span>
+                    <span class="text-xs font-bold text-white"><?php echo esc_html( $name ); ?></span>
                   </div>
-                <?php endforeach; ?>
-              </div>
-            <?php endif; ?>
+                  <?php if ( ! empty( $badge ) ) : ?>
+                    <div class="mt-2 text-right">
+                      <span class="text-[9px] uppercase font-black px-2 py-0.5 rounded bg-greek-gold/10 text-greek-gold border border-greek-gold/20">
+                        <?php echo esc_html( $badge ); ?>
+                      </span>
+                    </div>
+                  <?php endif; ?>
+                </div>
+              <?php endforeach; ?>
+            </div>
 
+            <!-- Bottom Flexibility Info Bar -->
             <div class="p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-300">
               <div>
-                <strong class="text-white"><?php esc_html_e( 'Sides Flexibility:', 'greek-fit-kitchen' ); ?></strong> <?php esc_html_e( '2 sides are included with every eligible plate. Additional sides can be selected inside the meal customizer for', 'greek-fit-kitchen' ); ?> <span class="text-greek-gold font-bold font-mono">$<?php echo esc_html( $settings['extra_price'] ); ?> CAD each</span>.
+                <strong class="text-white"><?php echo esc_html( $settings['flexibility_title'] ); ?></strong> 
+                <?php echo esc_html( $settings['flexibility_text'] ); ?> 
+                <span class="text-greek-gold font-bold font-mono">$<?php echo esc_html( $settings['extra_price'] ); ?> CAD each</span>.
               </div>
-              <a href="#featuredMeals" class="px-5 py-2.5 bg-greek-gold text-[#101D3A] font-black rounded-xl hover:bg-greek-goldHover transition whitespace-nowrap shadow">
-                <?php esc_html_e( 'Choose Meals & Sides →', 'greek-fit-kitchen' ); ?>
-              </a>
+              <?php if ( ! empty( $settings['btn_text'] ) ) : ?>
+                <a href="<?php echo esc_url( $btn_url ); ?>" class="px-5 py-2.5 bg-greek-gold text-[#101D3A] font-black rounded-xl hover:bg-greek-goldHover transition whitespace-nowrap shadow">
+                  <?php echo esc_html( $settings['btn_text'] ); ?>
+                </a>
+              <?php endif; ?>
             </div>
 
           </div>

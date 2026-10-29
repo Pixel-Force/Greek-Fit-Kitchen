@@ -1,6 +1,7 @@
 <?php
 /**
  * Elementor Widget: Meal Plans & Interactive Builder
+ * Fully editable in Elementor: badges, titles, descriptions, starter package details, tier cards repeater, and summary sidebar notes.
  *
  * @package GreekFitKitchen
  */
@@ -27,11 +28,19 @@ class GFK_Widget_Meal_Plans extends \Elementor\Widget_Base {
         return array( 'greek-fit-kitchen' );
     }
 
+    public function get_keywords() {
+        return array( 'meal', 'plans', 'pricing', 'builder', 'tiers', 'packages', 'discount' );
+    }
+
     protected function register_controls() {
+
+        // ==========================================
+        // SECTION 1: HEADER & LAYOUT MODE
+        // ==========================================
         $this->start_controls_section(
             'section_content',
             array(
-                'label' => __( 'Meal Plan Builder Content', 'greek-fit-kitchen' ),
+                'label' => __( 'Meal Plan Content & Layout', 'greek-fit-kitchen' ),
             )
         );
 
@@ -42,8 +51,8 @@ class GFK_Widget_Meal_Plans extends \Elementor\Widget_Base {
                 'type'    => \Elementor\Controls_Manager::SELECT,
                 'default' => 'builder',
                 'options' => array(
-                    'builder' => __( 'Interactive Plan Builder (build-plan.html)', 'greek-fit-kitchen' ),
-                    'tiers'   => __( '3-Tier Value Cards', 'greek-fit-kitchen' ),
+                    'builder' => __( 'Interactive Plan Builder (Live Cart & Meal Selector)', 'greek-fit-kitchen' ),
+                    'tiers'   => __( '3-Tier Value Cards (Pricing Highlights)', 'greek-fit-kitchen' ),
                 ),
             )
         );
@@ -71,31 +80,51 @@ class GFK_Widget_Meal_Plans extends \Elementor\Widget_Base {
             array(
                 'label'   => __( 'Description', 'greek-fit-kitchen' ),
                 'type'    => \Elementor\Controls_Manager::TEXTAREA,
+                'rows'    => 3,
                 'default' => __( 'Select at least 6 meals to meet our minimum order requirement. When you select 7 or more meals, a 10% volume discount is automatically applied to your entire food order.', 'greek-fit-kitchen' ),
+            )
+        );
+
+        $this->end_controls_section();
+
+        // ==========================================
+        // SECTION 2: 1-CLICK STARTER PACKAGE CARD
+        // ==========================================
+        $this->start_controls_section(
+            'section_starter_card',
+            array(
+                'label'     => __( 'Starter Package Card', 'greek-fit-kitchen' ),
+                'condition' => array(
+                    'display_style' => 'builder',
+                ),
+            )
+        );
+
+        $this->add_control(
+            'starter_badge',
+            array(
+                'label'   => __( 'Starter Badge', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXT,
+                'default' => __( 'Fastest Way to Start', 'greek-fit-kitchen' ),
             )
         );
 
         $this->add_control(
             'starter_title',
             array(
-                'label'     => __( 'Starter Package Title', 'greek-fit-kitchen' ),
-                'type'      => \Elementor\Controls_Manager::TEXT,
-                'default'   => __( "Chef's 6-Meal Starter Package", 'greek-fit-kitchen' ),
-                'condition' => array(
-                    'display_style' => 'builder',
-                ),
+                'label'   => __( 'Starter Title', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXT,
+                'default' => __( "Chef's 6-Meal Starter Package", 'greek-fit-kitchen' ),
             )
         );
 
         $this->add_control(
             'starter_desc',
             array(
-                'label'     => __( 'Starter Package Description', 'greek-fit-kitchen' ),
-                'type'      => \Elementor\Controls_Manager::TEXTAREA,
-                'default'   => __( '6 diverse plates (Pork souvlaki, chicken leg, chicken souvlaki, grilled chicken, veggie souvlaki & pasta al greco).', 'greek-fit-kitchen' ),
-                'condition' => array(
-                    'display_style' => 'builder',
-                ),
+                'label'   => __( 'Starter Description', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXTAREA,
+                'rows'    => 2,
+                'default' => __( '6 diverse plates (Pork souvlaki, chicken leg, chicken souvlaki, grilled chicken, veggie souvlaki & pasta al greco).', 'greek-fit-kitchen' ),
             )
         );
 
@@ -105,6 +134,15 @@ class GFK_Widget_Meal_Plans extends \Elementor\Widget_Base {
                 'label'   => __( 'Starter Price (CAD)', 'greek-fit-kitchen' ),
                 'type'    => \Elementor\Controls_Manager::TEXT,
                 'default' => '59.94',
+            )
+        );
+
+        $this->add_control(
+            'starter_btn_text',
+            array(
+                'label'   => __( 'Starter Button Text', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXT,
+                'default' => __( 'Load 6-Meal Pack', 'greek-fit-kitchen' ),
             )
         );
 
@@ -120,9 +158,130 @@ class GFK_Widget_Meal_Plans extends \Elementor\Widget_Base {
         $this->add_control(
             'discount_text',
             array(
-                'label'   => __( 'Volume Discount Offer', 'greek-fit-kitchen' ),
+                'label'   => __( 'Volume Discount Offer Text', 'greek-fit-kitchen' ),
                 'type'    => \Elementor\Controls_Manager::TEXT,
                 'default' => __( 'Save 10% automatically on 7+ meals', 'greek-fit-kitchen' ),
+            )
+        );
+
+        $this->end_controls_section();
+
+        // ==========================================
+        // SECTION 3: 3-TIER VALUE CARDS REPEATER
+        // ==========================================
+        $this->start_controls_section(
+            'section_tiers',
+            array(
+                'label'     => __( '3-Tier Value Cards', 'greek-fit-kitchen' ),
+                'condition' => array(
+                    'display_style' => 'tiers',
+                ),
+            )
+        );
+
+        $tier_repeater = new \Elementor\Repeater();
+
+        $tier_repeater->add_control(
+            'badge',
+            array(
+                'label'   => __( 'Tier Badge', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXT,
+                'default' => __( 'Tier 1 · Starter Plan', 'greek-fit-kitchen' ),
+            )
+        );
+
+        $tier_repeater->add_control(
+            'title',
+            array(
+                'label'   => __( 'Tier Title', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXT,
+                'default' => __( '6-Meal Package', 'greek-fit-kitchen' ),
+            )
+        );
+
+        $tier_repeater->add_control(
+            'desc',
+            array(
+                'label'   => __( 'Tier Description', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXTAREA,
+                'rows'    => 2,
+                'default' => __( 'Perfect introductory week. Starting from $59.94 CAD with 2 sides included.', 'greek-fit-kitchen' ),
+            )
+        );
+
+        $tier_repeater->add_control(
+            'is_featured',
+            array(
+                'label'        => __( 'Featured / Highlighted Card', 'greek-fit-kitchen' ),
+                'type'         => \Elementor\Controls_Manager::SWITCHER,
+                'default'      => 'no',
+                'return_value' => 'yes',
+            )
+        );
+
+        $tier_repeater->add_control(
+            'feature_text',
+            array(
+                'label'   => __( 'Included Feature Note', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXT,
+                'default' => __( 'Includes 2 sides per plate', 'greek-fit-kitchen' ),
+            )
+        );
+
+        $tier_repeater->add_control(
+            'btn_text',
+            array(
+                'label'   => __( 'Button Text', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXT,
+                'default' => __( 'Choose Meals →', 'greek-fit-kitchen' ),
+            )
+        );
+
+        $tier_repeater->add_control(
+            'btn_url',
+            array(
+                'label'   => __( 'Button URL', 'greek-fit-kitchen' ),
+                'type'    => \Elementor\Controls_Manager::TEXT,
+                'default' => '#featuredMeals',
+            )
+        );
+
+        $this->add_control(
+            'tiers_list',
+            array(
+                'label'       => __( 'Tiers Cards List', 'greek-fit-kitchen' ),
+                'type'        => \Elementor\Controls_Manager::REPEATER,
+                'fields'      => $tier_repeater->get_controls(),
+                'default'     => array(
+                    array(
+                        'badge'        => __( 'Tier 1 · Starter Plan', 'greek-fit-kitchen' ),
+                        'title'        => __( '6-Meal Package', 'greek-fit-kitchen' ),
+                        'desc'         => __( 'Perfect introductory week. Starting from $59.94 CAD with 2 sides included.', 'greek-fit-kitchen' ),
+                        'is_featured'  => 'no',
+                        'feature_text' => __( 'Includes 2 sides per plate', 'greek-fit-kitchen' ),
+                        'btn_text'     => __( 'Choose Meals →', 'greek-fit-kitchen' ),
+                        'btn_url'      => '#featuredMeals',
+                    ),
+                    array(
+                        'badge'        => __( 'Most Popular Value', 'greek-fit-kitchen' ),
+                        'title'        => __( '7 to 9 Meals Plan', 'greek-fit-kitchen' ),
+                        'desc'         => __( 'Automatically qualifies for 10% OFF entire food subtotal at checkout.', 'greek-fit-kitchen' ),
+                        'is_featured'  => 'yes',
+                        'feature_text' => __( 'Active 10% Discount', 'greek-fit-kitchen' ),
+                        'btn_text'     => __( 'Build Plan →', 'greek-fit-kitchen' ),
+                        'btn_url'      => '#featuredMeals',
+                    ),
+                    array(
+                        'badge'        => __( 'Tier 3 · Maximum Fuel', 'greek-fit-kitchen' ),
+                        'title'        => __( '10+ Meals Family / Athlete', 'greek-fit-kitchen' ),
+                        'desc'         => __( 'Full weekly prep for couples or athletes. Full 10% volume savings on all plates.', 'greek-fit-kitchen' ),
+                        'is_featured'  => 'no',
+                        'feature_text' => __( 'Maximum Savings', 'greek-fit-kitchen' ),
+                        'btn_text'     => __( 'Customize →', 'greek-fit-kitchen' ),
+                        'btn_url'      => '#featuredMeals',
+                    ),
+                ),
+                'title_field' => '{{{ title }}}',
             )
         );
 
@@ -133,7 +292,7 @@ class GFK_Widget_Meal_Plans extends \Elementor\Widget_Base {
         $settings = $this->get_settings_for_display();
 
         if ( 'tiers' === $settings['display_style'] ) :
-            // 3-Tier Value Cards Layout
+            $tiers = ! empty( $settings['tiers_list'] ) ? $settings['tiers_list'] : array();
             ?>
             <section class="py-16 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="mealPlans">
               <div class="text-center max-w-3xl mx-auto mb-12">
@@ -142,11 +301,15 @@ class GFK_Widget_Meal_Plans extends \Elementor\Widget_Base {
                     <?php echo esc_html( $settings['badge'] ); ?>
                   </span>
                 <?php endif; ?>
-                <h2 class="text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-black text-[#101D3A] break-words">
-                  <?php echo esc_html( $settings['title'] ); ?>
-                </h2>
+
+                <?php if ( ! empty( $settings['title'] ) ) : ?>
+                  <h2 class="text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-black text-[#101D3A] dark:text-white break-words">
+                    <?php echo esc_html( $settings['title'] ); ?>
+                  </h2>
+                <?php endif; ?>
+
                 <?php if ( ! empty( $settings['subtitle'] ) ) : ?>
-                  <p class="text-xs sm:text-sm text-slate-600 mt-2">
+                  <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-2">
                     <?php echo esc_html( $settings['subtitle'] ); ?>
                   </p>
                 <?php endif; ?>
@@ -154,49 +317,42 @@ class GFK_Widget_Meal_Plans extends \Elementor\Widget_Base {
 
               <!-- Highlight Value Cards -->
               <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between">
-                  <div>
-                    <span class="text-[11px] font-black uppercase tracking-wider text-greek-gold block mb-1">Tier 1 · Starter Plan</span>
-                    <h3 class="text-xl font-black text-[#101D3A]">6-Meal Package</h3>
-                    <p class="text-xs text-slate-600 mt-2">Perfect introductory week. Starting from <strong class="text-[#101D3A] font-bold font-mono">$<?php echo esc_html( $settings['starter_price'] ); ?> CAD</strong>.</p>
+                <?php foreach ( $tiers as $t ) : 
+                  $is_feat = ( isset( $t['is_featured'] ) && 'yes' === $t['is_featured'] );
+                  $card_bg = $is_feat 
+                    ? 'bg-[#101D3A] text-white border-white/10 shadow-lg relative overflow-hidden' 
+                    : 'bg-white dark:bg-[#101D3A] text-[#101D3A] dark:text-white border-slate-200 dark:border-white/10 shadow-sm';
+                  $badge_class = $is_feat 
+                    ? 'inline-block px-2.5 py-0.5 rounded-full bg-greek-gold text-[#101D3A] text-[10px] font-black uppercase tracking-wider mb-2' 
+                    : 'text-[11px] font-black uppercase tracking-wider text-greek-gold block mb-1';
+                  $desc_class = $is_feat ? 'text-xs text-slate-300 mt-2' : 'text-xs text-slate-600 dark:text-slate-400 mt-2';
+                ?>
+                  <div class="<?php echo esc_attr( $card_bg ); ?> p-6 rounded-3xl border flex flex-col justify-between">
+                    <?php if ( $is_feat ) : ?>
+                      <div class="absolute -right-4 -top-4 w-24 h-24 bg-greek-gold/10 rounded-full blur-xl"></div>
+                    <?php endif; ?>
+                    <div>
+                      <span class="<?php echo esc_attr( $badge_class ); ?>"><?php echo esc_html( $t['badge'] ); ?></span>
+                      <h3 class="text-xl font-black"><?php echo esc_html( $t['title'] ); ?></h3>
+                      <p class="<?php echo esc_attr( $desc_class ); ?>"><?php echo esc_html( $t['desc'] ); ?></p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 dark:border-white/10 flex items-center justify-between">
+                      <span class="text-xs font-bold <?php echo $is_feat ? 'text-slate-300' : 'text-slate-500 dark:text-slate-400'; ?>">
+                        <?php echo esc_html( $t['feature_text'] ); ?>
+                      </span>
+                      <a href="<?php echo esc_attr( ! empty( $t['btn_url'] ) ? $t['btn_url'] : '#featuredMeals' ); ?>" class="text-xs font-black text-greek-gold hover:underline">
+                        <?php echo esc_html( $t['btn_text'] ); ?>
+                      </a>
+                    </div>
                   </div>
-                  <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-                    <span class="text-xs font-bold text-slate-500">Includes 2 sides per plate</span>
-                    <a href="<?php echo esc_url( home_url( '/meal-plans/' ) ); ?>" class="text-xs font-black text-greek-gold hover:underline">Choose Meals →</a>
-                  </div>
-                </div>
-
-                <div class="bg-[#101D3A] text-white p-6 rounded-3xl border border-white/10 shadow-lg relative overflow-hidden flex flex-col justify-between">
-                  <div class="absolute -right-4 -top-4 w-24 h-24 bg-greek-gold/10 rounded-full blur-xl"></div>
-                  <div>
-                    <div class="inline-block px-2.5 py-0.5 rounded-full bg-greek-gold text-[#101D3A] text-[10px] font-black uppercase tracking-wider mb-2">Most Popular Value</div>
-                    <h3 class="text-xl font-black text-white">7 to 9 Meals Plan</h3>
-                    <p class="text-xs text-slate-300 mt-2">Automatically qualifies for <strong class="text-greek-gold font-bold">10% OFF</strong> entire food subtotal at checkout.</p>
-                  </div>
-                  <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
-                    <span class="text-xs font-bold text-slate-300">Active 10% Discount</span>
-                    <a href="<?php echo esc_url( home_url( '/meal-plans/' ) ); ?>" class="text-xs font-black text-greek-gold hover:underline">Build Plan →</a>
-                  </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between">
-                  <div>
-                    <span class="text-[11px] font-black uppercase tracking-wider text-greek-gold block mb-1">Tier 3 · Maximum Fuel</span>
-                    <h3 class="text-xl font-black text-[#101D3A]">10+ Meals Family / Athlete</h3>
-                    <p class="text-xs text-slate-600 mt-2">Full weekly prep for couples or athletes. Full 10% volume savings on all plates.</p>
-                  </div>
-                  <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-                    <span class="text-xs font-bold text-slate-500">Maximum Savings</span>
-                    <a href="<?php echo esc_url( home_url( '/meal-plans/' ) ); ?>" class="text-xs font-black text-greek-gold hover:underline">Customize →</a>
-                  </div>
-                </div>
+                <?php endforeach; ?>
               </div>
-
             </section>
         <?php else : 
             // Default: Full Interactive Plan Builder matching build-plan.html
             require_once dirname( dirname( __DIR__ ) ) . '/inc/meals-data.php';
             $meals = gfk_get_meals();
+            $min_meals = ! empty( $settings['min_meals'] ) ? intval( $settings['min_meals'] ) : 6;
             ?>
             <!-- ================= PLAN BUILDER PAGE HERO ================= -->
             <section class="bg-[#101D3A] text-white py-12 border-b border-white/10">
@@ -228,138 +384,81 @@ class GFK_Widget_Meal_Plans extends \Elementor\Widget_Base {
                   
                   <!-- Live Progress Status Bar -->
                   <div id="planBuilderStatusNotice" class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-xs font-bold flex items-center justify-between">
-                    <span>⚠️ Select at least <?php echo esc_html( $settings['min_meals'] ); ?> meals. Add <?php echo esc_html( $settings['min_meals'] ); ?> more to unlock delivery.</span>
-                    <span class="font-mono text-xs">0 / <?php echo esc_html( $settings['min_meals'] ); ?></span>
+                    <span>⚠️ Select at least <?php echo esc_html( $min_meals ); ?> meals. Add <span id="planRemainingCount"><?php echo esc_html( $min_meals ); ?></span> more to unlock delivery.</span>
+                    <span class="font-mono text-xs"><span id="planSelectedCount">0</span> / <?php echo esc_html( $min_meals ); ?></span>
                   </div>
 
                   <!-- 1-Click Starter Plan Card -->
                   <div class="p-6 rounded-3xl bg-white dark:bg-[#101D3A] border border-slate-200 dark:border-white/10 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div class="space-y-1 text-center sm:text-left">
-                      <span class="text-[10px] uppercase font-black text-greek-gold tracking-wider">Fastest Way to Start</span>
+                      <span class="text-[10px] uppercase font-black text-greek-gold tracking-wider"><?php echo esc_html( $settings['starter_badge'] ); ?></span>
                       <h3 class="font-black text-lg text-[#101D3A] dark:text-white"><?php echo esc_html( $settings['starter_title'] ); ?></h3>
                       <p class="text-xs text-slate-500 dark:text-slate-400">
                         <?php echo esc_html( $settings['starter_desc'] ); ?>
                       </p>
                       <div class="text-greek-gold font-mono font-black text-base">$<?php echo esc_html( $settings['starter_price'] ); ?> CAD</div>
                     </div>
-                    <button type="button" onclick="addStarterSixMealPackage()" class="px-6 py-3 btn-gold rounded-xl text-xs font-black shadow whitespace-nowrap hover:scale-105 transition">
-                      Load 6-Meal Pack
+                    <button type="button" onclick="window.addStarterSixMealPackage ? window.addStarterSixMealPackage() : (location.href='#featuredMeals')" class="px-6 py-3 bg-greek-gold text-[#101D3A] hover:bg-greek-goldHover rounded-xl text-xs font-black shadow whitespace-nowrap hover:scale-105 transition">
+                      <?php echo esc_html( $settings['starter_btn_text'] ); ?>
                     </button>
                   </div>
 
-                  <!-- Selected Plates in Active Plan -->
-                  <div class="p-6 rounded-3xl bg-white dark:bg-[#101D3A] border border-slate-200 dark:border-white/10 shadow-sm space-y-4">
-                    <div class="flex items-center justify-between border-b border-slate-100 dark:border-white/5 pb-3">
-                      <div>
-                        <h3 class="font-black text-base text-[#101D3A] dark:text-white">Plates Selected in Plan</h3>
-                        <span class="text-[11px] text-slate-400">Each plate includes 2 sides (except Pasta al Greco)</span>
-                      </div>
-                      <button type="button" onclick="clearCart()" class="text-xs text-red-500 hover:underline font-bold">Clear All</button>
-                    </div>
-
-                    <div id="planBuilderSelectedList" class="space-y-2.5">
-                      <div class="py-8 text-center text-slate-400 text-xs">
-                        <p>No meals selected yet.</p>
-                        <p class="mt-1">Browse the menu cards below and customize your sides!</p>
-                      </div>
-                    </div>
+                  <!-- Quick Categories Selector -->
+                  <div class="flex flex-wrap items-center gap-2 pt-2">
+                    <button onclick="filterBuilderCategory('all')" class="builder-cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-[#101D3A] text-white">All (20)</button>
+                    <button onclick="filterBuilderCategory('chicken')" class="builder-cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-200">Poultry</button>
+                    <button onclick="filterBuilderCategory('beef')" class="builder-cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-200">Beef &amp; Steak</button>
+                    <button onclick="filterBuilderCategory('fish')" class="builder-cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-200">Fish / Salmon</button>
+                    <button onclick="filterBuilderCategory('pork')" class="builder-cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-200">Pork Plates</button>
+                    <button onclick="filterBuilderCategory('vegetarian')" class="builder-cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-200">Vegetarian</button>
                   </div>
 
-                  <!-- Add More Meals Strip (Full Menu Quick Cards) -->
-                  <div class="space-y-4">
-                    <div class="flex items-center justify-between">
-                      <h3 class="font-black text-lg text-[#101D3A] dark:text-white">Add Meals from Our Kitchen</h3>
-                      <a href="<?php echo esc_url( home_url( '/menu/' ) ); ?>" class="text-xs font-bold text-greek-gold hover:underline">View Menu Details →</a>
-                    </div>
-
-                    <div id="menuGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <?php foreach ( $meals as $meal ) : ?>
-                        <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
-                          <div class="relative h-44 sm:h-48 overflow-hidden bg-slate-100">
-                            <img src="<?php echo esc_url( $meal['image'] ); ?>" alt="<?php echo esc_attr( $meal['name'] ); ?>" class="w-full h-full object-cover">
-                            <span class="absolute bottom-2.5 right-2.5 px-2.5 py-1 rounded-full bg-[#101D3A]/90 text-white font-mono font-bold text-xs backdrop-blur-sm">$<?php echo esc_html( number_format( (float) $meal['price'], 2 ) ); ?> CAD</span>
-                            <?php if ( ! empty( $meal['isPopular'] ) ) : ?>
-                              <span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full bg-greek-gold text-[#101D3A] font-black text-[10px] uppercase">Popular</span>
-                            <?php endif; ?>
-                            <span class="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-full bg-white text-slate-800 border border-slate-200 font-bold text-[10px] shadow-sm">2 Sides Included</span>
-                          </div>
-                          <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
-                            <div>
-                              <h4 class="font-black text-base text-[#101D3A]"><?php echo esc_html( $meal['name'] ); ?></h4>
-                              <p class="text-xs text-slate-600 line-clamp-2 mt-1"><?php echo esc_html( $meal['description'] ); ?></p>
-                            </div>
-                            <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
-                              <div class="text-[11px] font-mono text-slate-500"><?php echo esc_html( $meal['calories'] ); ?> kcal · <?php echo esc_html( $meal['protein'] ); ?>g protein</div>
-                              <button type="button" onclick="openSideModal('<?php echo esc_js( $meal['id'] ); ?>')" class="px-3 py-1.5 btn-gold rounded-xl text-xs font-black shadow hover:scale-105 transition">Add Plate +</button>
-                            </div>
-                          </div>
+                  <!-- Dishes Grid for Selection -->
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="builderMealsGrid">
+                    <?php foreach ( $meals as $m ) : 
+                      $img_url = gfk_get_asset_url( $m['image'] );
+                    ?>
+                      <div class="p-4 rounded-2xl bg-white dark:bg-[#101D3A] border border-slate-200 dark:border-white/10 flex gap-4 items-center meal-builder-card" data-cat="<?php echo esc_attr( $m['category'] ); ?>" data-id="<?php echo esc_attr( $m['id'] ); ?>">
+                        <img src="<?php echo esc_url( $img_url ); ?>" alt="<?php echo esc_attr( $m['name'] ); ?>" class="w-16 h-16 rounded-xl object-cover shrink-0" />
+                        <div class="flex-1 min-w-0">
+                          <h4 class="font-black text-sm text-[#101D3A] dark:text-white truncate"><?php echo esc_html( $m['name'] ); ?></h4>
+                          <span class="text-xs font-mono font-bold text-greek-gold">$<?php echo esc_html( number_format( (float) $m['price'], 2 ) ); ?> CAD</span>
+                          <span class="text-[11px] text-slate-400 block"><?php echo esc_html( $m['calories'] ); ?> kcal &middot; <?php echo esc_html( $m['protein'] ); ?></span>
                         </div>
-                      <?php endforeach; ?>
-                    </div>
+                        <button type="button" onclick="window.addMealToCart ? window.addMealToCart('<?php echo esc_attr( $m['id'] ); ?>') : (location.href='#featuredMeals')" class="px-3 py-1.5 rounded-lg bg-[#101D3A] dark:bg-greek-gold text-white dark:text-[#101D3A] text-xs font-bold hover:opacity-90 shrink-0">
+                          + Add
+                        </button>
+                      </div>
+                    <?php endforeach; ?>
                   </div>
 
                 </div>
 
-                <!-- Right 1 Col: Sticky Live Summary & Checkout Action -->
-                <div class="lg:col-span-1">
-                  <div class="sticky top-28 p-6 rounded-3xl bg-white dark:bg-[#101D3A] border border-slate-200 dark:border-white/10 shadow-2xl space-y-5">
-                    <div class="border-b border-slate-200 dark:border-white/10 pb-4">
-                      <span class="text-[10px] uppercase font-black text-greek-gold tracking-wider">Live Calculation</span>
-                      <h3 class="text-xl font-black text-[#101D3A] dark:text-white">Order Summary (CAD)</h3>
-                    </div>
-
-                    <div class="space-y-3 text-xs">
+                <!-- Right Col: Summary Card -->
+                <div class="space-y-6">
+                  <div class="p-6 rounded-3xl bg-[#FAF9F5] dark:bg-[#101D3A] border border-slate-200 dark:border-white/10 shadow-sm space-y-4">
+                    <h3 class="text-lg font-black text-[#101D3A] dark:text-white border-b border-slate-200 dark:border-white/10 pb-3">Plan Summary</h3>
+                    <div class="space-y-2 text-xs text-slate-600 dark:text-slate-300">
                       <div class="flex justify-between">
-                        <span class="text-slate-500">Total Meals</span>
-                        <strong id="planBuilderCount" class="font-mono text-[#101D3A] dark:text-white font-bold">0 of <?php echo esc_html( $settings['min_meals'] ); ?> meals</strong>
+                        <span>Selected Meals:</span>
+                        <strong id="planSelectedTotal" class="font-mono text-[#101D3A] dark:text-white">0 meals</strong>
                       </div>
-
                       <div class="flex justify-between">
-                        <span class="text-slate-500">Food Subtotal</span>
-                        <span id="planBuilderSubtotal" class="font-mono font-bold text-slate-800 dark:text-slate-200">$0.00 CAD</span>
+                        <span>Volume Discount:</span>
+                        <strong class="text-greek-gold"><?php echo esc_html( $settings['discount_text'] ); ?></strong>
                       </div>
-
-                      <div class="flex justify-between text-greek-lime font-bold hidden">
-                        <span>10% Volume Savings (7+ Meals)</span>
-                        <span id="planBuilderDiscount" class="font-mono">-$0.00 CAD</span>
-                      </div>
-
                       <div class="flex justify-between">
-                        <span class="text-slate-500">Estimated Delivery</span>
-                        <span class="font-mono text-slate-800 dark:text-slate-200 font-bold">$10.94 CAD</span>
-                      </div>
-
-                      <div class="flex justify-between">
-                        <span class="text-slate-500">Ontario HST (13%)</span>
-                        <span class="font-mono text-slate-800 dark:text-slate-200 font-bold">Calculated at checkout</span>
-                      </div>
-
-                      <div class="pt-3 border-t border-slate-200 dark:border-white/10 flex justify-between items-baseline">
-                        <span class="font-black text-sm text-[#101D3A] dark:text-white">Estimated Total:</span>
-                        <span id="planBuilderGrandTotal" class="font-mono text-2xl font-black text-[#101D3A] dark:text-greek-gold">$0.00 CAD</span>
+                        <span>Sides Included:</span>
+                        <span class="font-bold text-greek-gold">2 per plate</span>
                       </div>
                     </div>
-
-                    <button 
-                      type="button"
-                      id="planBuilderCtaBtn"
-                      onclick="openCartDrawer()"
-                      class="w-full py-4 btn-gold rounded-2xl font-black text-sm shadow-xl flex items-center justify-center gap-2 text-center hover:scale-[1.02] transition"
-                    >
-                      <span>Proceed to Scheduled Checkout →</span>
-                    </button>
-
-                    <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[11px] text-slate-500 dark:text-slate-400 space-y-1">
-                      <div>✓ Minimum order: <strong><?php echo esc_html( $settings['min_meals'] ); ?> meals</strong></div>
-                      <div>✓ Sunday Delivery: Order by Friday 12 p.m.</div>
-                      <div>✓ Wednesday Delivery: Order by Monday 12 p.m.</div>
-                      <div>✓ Free store pickup at George the Greek</div>
-                    </div>
+                    <a href="#featuredMeals" class="block w-full py-3.5 bg-greek-gold text-[#101D3A] hover:bg-greek-goldHover text-center font-black text-xs rounded-xl shadow transition">
+                      Proceed to Review &amp; Sides →
+                    </a>
                   </div>
                 </div>
 
               </div>
-
             </main>
         <?php endif;
     }
