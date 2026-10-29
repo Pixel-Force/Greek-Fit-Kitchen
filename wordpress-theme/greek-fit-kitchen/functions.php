@@ -737,7 +737,7 @@ function gfk_get_elementor_full_homepage_sections() {
             'settings' => array(
                 'badge'    => 'EFFORTLESS MEAL PREP',
                 'title'    => 'How Greek Fit Kitchen Works',
-                'subtitle' => 'From George the Greek's commercial kitchen straight to your weekly schedule in three simple steps.',
+                'subtitle' => "From George the Greek's commercial kitchen straight to your weekly schedule in three simple steps.",
                 'steps'    => array(
                     array(
                         '_id'      => 'step_1',
